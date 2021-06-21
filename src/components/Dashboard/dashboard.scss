@@ -1,0 +1,67 @@
+.dashboard_wrapper {
+  div {
+    border: 1px solid black;
+  }
+  padding: 16px;
+  display: grid;
+  column-gap: 18px;
+  row-gap: 18px;
+  color: #444444;
+  height: calc(100vh - 82px);
+
+  &__token-chart {
+    grid-area: chart;
+  }
+  &__top-tokens {
+    grid-area: top-tokens;
+  }
+  &__liquidity {
+    grid-area: liquidity;
+  }
+  &__volume {
+    grid-area: volume;
+  }
+  &__total-users {
+    grid-area: total-users;
+  }
+  &__txs-window {
+    grid-area: txs-window;
+  }
+
+
+  grid-template-columns: 1fr 1fr 1fr;
+
+  grid-template-areas:
+  "chart chart top-tokens"
+  "liquidity volume total-users"
+  "txs-window txs-window txs-window";
+
+  //Smart phones
+  @media only screen and (min-device-width : 320px) and (max-device-width : 767px) {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "chart"
+      "top-tokens"
+      "liquidity"
+      "volume"
+      "total-users"
+      "txs-window"
+  ;
+    grid-template-rows: repeat(5, 200px) 400px;
+  }
+  // Tablets
+  @media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "chart"
+      "top-tokens"
+      "liquidity"
+      "volume"
+      "total-users"
+      "txs-window"
+  ;
+    grid-template-rows: repeat(5, 300px) 500px;
+  }
+
+
+}

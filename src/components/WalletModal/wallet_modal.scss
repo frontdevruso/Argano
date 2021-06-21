@@ -1,0 +1,264 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+.walletModal{
+  max-width: 500px;
+  width: 100%;
+  padding: 20px 40px 40px 60px;
+  cursor: initial;
+  height: 90%;
+  background: #fff;
+  color: #444;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 50px 50px 50px 100px 7fr;
+
+  &__bg{
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #000000a8;
+    width: 100%;
+    height: 100vh;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+
+    align-items: center;
+    cursor: pointer;
+  }
+
+  &__close{
+
+    display: flex;
+    justify-content: flex-end;
+
+
+    & svg{
+      justify-content: flex-end;
+      cursor: pointer;
+    }
+  }
+
+  &__h3{
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 28px;
+  }
+
+  &__h4{
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 23px;
+
+    color: #40BA93;
+  }
+
+  &__terms{
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 21px;
+    display: grid;
+    grid-template-columns: 1fr 10fr;
+    align-items: center;
+    margin: 20px 0 30px;
+
+    .container {
+      display: block;
+      position: relative;
+      padding-left: 15px;
+      margin: 0 0 17px;
+      max-width: 20px;
+      cursor: pointer;
+      font-size: 22px;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    .container input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      height: 0;
+      width: 0;
+    }
+
+    .checkmark {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 17px;
+      width: 17px;
+      background: none;
+      border: 1px solid #40BA93;
+    }
+
+    .checkmark:after {
+      content: "";
+      position: absolute;
+      display: none;
+    }
+
+    .container input:checked ~ .checkmark:after {
+      display: block;
+    }
+
+    .container .checkmark:after {
+      left: 5px;
+      top: 1px;
+      width: 5px;
+      height: 10px;
+      border: solid #40BA93;
+      border-width: 0 1px 1px 0;
+      -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg);
+    }
+
+    & p{
+      margin: 0;
+    }
+
+    & a{
+      color: inherit;
+      text-decoration: underline!important;
+      cursor: pointer!important;
+    }
+  }
+
+  &__list{
+    padding: 25px 35px;
+    display: grid;
+    grid-template-columns: 1fr;
+    column-gap: 20px;
+    row-gap: 20px;
+    min-height: 447px;
+    background: #1f1e2014;
+    color: #000;
+
+    &__item{
+      display: grid;
+      grid-template-columns: 50px 1fr;
+      padding: 10px 15px;
+      align-items: center;
+      column-gap: 15px;
+      cursor: pointer;
+      height: 72px;
+      background: #292a2d73;
+      &:hover {
+        transition: 0.3s;
+        background-color: #40BA93;
+      }
+
+      &__figure{
+        margin: 0;
+        width: 49px;
+        height: 49px;
+        border-radius: 50%;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #1F1E20;
+      }
+
+      &__h5{
+        margin: 0;
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 23px;
+      }
+    }
+  }
+
+  &__black{
+    color: #fff;
+    background: #292A2D;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+
+    .walletModal__list{
+      background: #1F1E20;
+      color: #fff;
+
+      &__item{
+        background: #292A2D;
+        &:hover {
+          transition: 0.3s;
+          background: #40BA93;
+        }
+      }
+    }
+  }
+}
+
+// Responsive area
+// Laptops and little PC screens
+@media only screen and (min-width : 1224px) and (max-device-width: 1824px) {
+  .walletModal {
+    grid-template-rows: 25px 50px 50px 1fr 7fr;
+    &__list {
+      min-height: 200px;
+      &__item {
+        height: 35px;
+      }
+    }
+  }
+}
+// Tablets
+@media only screen and (min-device-width : 769px) and (max-device-width : 1223px) {
+  .walletModal {
+    height: 50%;
+    grid-template-rows: 5px 50px 50px 1fr 7fr;
+
+    &__list {
+      min-height: 200px;
+      &__item {
+        height: 35px;
+      }
+    }
+  }
+}
+// Phones
+@media only screen and (min-device-width : 320px) and (max-device-width : 768px) {
+  .walletModal {
+    max-width: 320px;
+    padding: 10px 20px 20px 20px;
+    height: 80%;
+    grid-template-rows: 5px 30px 25px 80px 7fr;
+
+    span {
+      svg {
+        height: 20px;
+        width: 20px;
+      }
+    }
+    &__h3 {
+      font-size: 18px;
+    }
+    &__h4 {
+      font-size: 14px;
+    }
+    &__terms {
+
+      p {
+        font-size: 10px;
+      }
+
+    }
+
+    &__list {
+      min-height: 200px;
+      &__item {
+        height: 35px;
+      }
+    }
+  }
+}

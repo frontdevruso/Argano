@@ -1,0 +1,26 @@
+@font-face {
+    font-family: 'Roboto';
+    src: local('Roboto'), url(font/Roboto-Regular.ttf) format('truetype');
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Roboto !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 1.2em !important;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+@media screen and (max-width: 480px) {
+    body {
+        font-size: 16px !important;
+    }
+}
