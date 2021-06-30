@@ -1,0 +1,152 @@
+.tokenChart{
+    grid-area: 1/ span 2;
+    color: #fff;
+    min-height: 400px;
+
+&__viewSelect{
+     max-width: 170px;
+     width: 100%;
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+
+&__amount{
+     font-family: Roboto;
+     font-style: normal;
+     font-weight: bold;
+     font-size: 18px;
+     line-height: 21px;
+ }
+
+&__percent{
+     font-family: Roboto;
+     font-style: normal;
+     font-weight: 500;
+     font-size: 14px;
+     line-height: 16px;
+     color: #1D9B19;
+ }
+}
+
+.react-stockcharts-axis-domain{
+    stroke: none;
+}
+.tick{
+    color: inherit;
+line{
+    stroke: none;
+}
+
+text{
+    fill: #444;
+}
+}
+
+&__chartBg{
+     overscroll-behavior: contain;
+     background-color: transparent;
+     background-image: linear-gradient(0deg, transparent 24%, rgba(255, 255, 255, .05) 25%, rgba(255, 255, 255, .05) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .05) 75%, rgba(255, 255, 255, .05) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(255, 255, 255, .05) 25%, rgba(255, 255, 255, .05) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .05) 75%, rgba(255, 255, 255, .05) 76%, transparent 77%, transparent);
+ //height:100%;
+     background-size: 99px 29px;
+
+& .react-stockcharts-candlestick-wick{
+      display: none;
+  }
+& .react-stockcharts-candlestick-candle{
+& .up{
+      fill-opacity:1;
+      stroke-width:0;
+  }
+
+& .down{
+      fill-opacity:1;
+      stroke-width:0;
+  }
+}
+}
+}
+
+.dashboard__black{
+.tick{
+    color: inherit;
+line{
+    stroke: none;
+}
+
+text{
+    fill: #fff;
+}
+}
+}
+
+.red-span {
+    color: red;
+}
+
+.tokenChart-black {
+    grid-area: 1/ span 2;
+    color: #444;
+    min-height: 400px;
+
+&__viewSelect{
+     max-width: 170px;
+     width: 100%;
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+
+&__amount{
+     font-family: Roboto;
+     font-style: normal;
+     font-weight: bold;
+     font-size: 18px;
+     line-height: 21px;
+ }
+
+&__percent{
+     font-family: Roboto;
+     font-style: normal;
+     font-weight: 500;
+     font-size: 14px;
+     line-height: 16px;
+     color: #1D9B19;
+ }
+}
+
+.react-stockcharts-axis-domain{
+    stroke: none;
+}
+.tick{
+    color: inherit;
+line{
+    stroke: none;
+}
+
+text{
+    fill: #444;
+}
+}
+
+&__chartBg{
+     overscroll-behavior: contain;
+     background-color: transparent;
+     background-image: linear-gradient(0deg, transparent 24%, rgba(255, 255, 255, .05) 25%, rgba(255, 255, 255, .05) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .05) 75%, rgba(255, 255, 255, .05) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(255, 255, 255, .05) 25%, rgba(255, 255, 255, .05) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .05) 75%, rgba(255, 255, 255, .05) 76%, transparent 77%, transparent);
+ //height:100%;
+     background-size: 99px 29px;
+
+& .react-stockcharts-candlestick-wick{
+      display: none;
+  }
+& .react-stockcharts-candlestick-candle{
+& .up{
+      fill-opacity:1;
+      stroke-width:0;
+  }
+
+& .down{
+      fill-opacity:1;
+      stroke-width:0;
+  }
+}
+}
+}
