@@ -11,7 +11,7 @@ import tokenPocket from './wallet-icons/token-pocket.svg';
 import safepalWallet from './wallet-icons/safepal-logo.svg';
 
 import './wallet_modal.scss';
-import {authWeb3} from "../../utils/web3-auth";
+import {authWeb3} from "../../utils/web3Auth";
 export const WalletModal = () => {
 
 

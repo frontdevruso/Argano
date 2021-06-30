@@ -1,0 +1,51 @@
+.tokenList{
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: 35px;
+  &__list{
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 30px;
+    margin: 0;
+    padding: 0;
+
+    & li{
+      font-style: normal;
+      font-weight: normal;
+      font-size: 18px;
+      line-height: 21px;
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
+  &__span{
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 21px;
+
+    &--red{
+      color: #EB2207;
+    }
+
+    &--green{
+      color: #1D9B19;
+    }
+  }
+
+  &__arrowDown{
+    max-width: 200px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    justify-self: flex-end;
+    border: none;
+    background: none;
+    color: inherit;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 23px;
+  }
+}
