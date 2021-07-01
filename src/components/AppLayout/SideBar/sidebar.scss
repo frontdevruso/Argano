@@ -4,6 +4,9 @@
   background: #232429;
   box-shadow: 0px 4px 20px 2px rgba(41, 40, 40, 0.34);
 
+  div {
+    visibility: visible;
+  }
 
   &__top-header {
     grid-area: tp;
@@ -169,7 +172,6 @@
 // Phones
 @media only screen and (min-device-width : 320px) and (max-device-width : 768px) {
   .sidebar {
-    width: 100%;
     &__top-header {
       grid-template-columns: 2fr 1fr;
       button {
@@ -189,9 +191,14 @@
 
     }
   }
-
-
 }
+
+.disable-nav-links {
+  div {
+    visibility: hidden;
+  }
+}
+
 
 
 // Slider

@@ -35,231 +35,6 @@
     display: none;
   }
 
-  .gasPrice {
-      position: relative;
-      color: white;
-      justify-self: flex-start;
-      font-size: 15px;
-      width: 100%;
-    &__preView {
-        max-width: 155px;
-        height: 36px;
-        border: 1px solid #333333;
-        display: grid;
-        grid-template-columns: 25% 50% 25%;
-        align-items: center;
-        justify-items: center;
-        cursor: pointer;
-        color: #4F4F4F;
-
-        &.open {
-          & svg:last-child {
-            transform: rotate(
-                180deg
-            );
-          }
-        }
-
-        & span {
-          font-family: Roboto;
-          font-style: normal;
-          font-weight: 500;
-          font-size: 14px;
-          line-height: 16px;
-          color: white;
-        }
-
-        & svg:last-child {
-          transition: all .3s;
-          width: 10px;
-          height: 6px;
-        }
-      }
-
-      &__list {
-        position: absolute;
-        top: 37px;
-        z-index: 10000;
-        height: 0;
-        max-width: 155px;
-        width: 100%;
-        background: #292A2D;
-        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
-
-        padding: 0;
-        transition: all .3s;
-        overflow: hidden;
-
-        &__h4 {
-          font-family: Roboto;
-          font-style: normal;
-          font-weight: 500;
-          font-size: 13px;
-          line-height: 16px;
-          margin: 0;
-          padding: 0 0 15px 0;
-          color: white;
-        }
-
-        & input {
-          background: #1F1E20;
-          border: none;
-          padding: 5px;
-          color: inherit;
-          max-width: 100%;
-          color: #444;
-        }
-
-
-        &__item {
-          font-family: Roboto;
-          font-style: normal;
-          font-weight: 300;
-          font-size: 14px;
-          line-height: 16px;
-          background: #1F1E20;
-
-          padding: 8px 13px;
-          margin: 3px 0;
-          cursor: pointer;
-          color: white;
-
-          &--active {
-            background: #40BA93;
-          }
-        }
-
-        &--open {
-          height: 240px;
-          padding: 23px 9px 9px;
-        }
-      }
-    }
-
-  .walletBalance {
-    position: relative;
-    max-width: 271px;
-    width: 100%;
-
-
-    &__preView {
-      border: 1px solid #333333;
-      max-height: 36px;
-      height: 36px;
-      cursor: pointer;
-      display: grid;
-      justify-items: center;
-      grid-template-columns: 20% 40% 30% 10%;
-      align-items: center;
-
-      &__title {
-        font-family: Roboto;
-        font-style: normal;
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 16px;
-        justify-self: flex-start;
-        color: #40BA93;
-      }
-
-      &__value {
-        font-family: Roboto;
-        font-style: normal;
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 16px;
-        text-align: right;
-        color: white;
-      }
-
-      & svg:last-child {
-        transition: all .3s;
-        width: 10px;
-        height: 6px;
-      }
-    }
-
-    &__tokens {
-      position: absolute;
-      height: 0;
-      overflow: hidden;
-      top: 37px;
-      z-index: 10000;
-      padding: 0;
-      transition: all .3s;
-      background: #292A2D;
-      box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
-      max-width: 271px;
-      width: 100%;
-
-      &--open {
-        height: 200px;
-        padding: 17px 18px;
-      }
-
-      &__buttons {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 15px;
-
-        &__button {
-          font-family: Roboto;
-          font-style: normal;
-          font-weight: normal;
-          font-size: 12px;
-          line-height: 14px;
-          cursor: pointer;
-          max-width: 102px;
-          width: 100%;
-          padding: 8px 10px;
-          border: none;
-          color: #BDBDBD;
-          background: #1F1E20;
-
-          &--active {
-            color: #fff;
-            background: #3EB38E;
-          }
-        }
-      }
-
-      &__list {
-        background: #1F1E20;
-        padding: 14px 12px;
-        min-height: 100px;
-        max-width: 271px;
-
-        &__items {
-          display: flex;
-          justify-content: space-between;
-          margin-bottom: 10px;
-
-          & span {
-            font-family: Roboto;
-            font-style: normal;
-            font-weight: 300;
-            font-size: 12px;
-            line-height: 14px;
-
-            color: #BDBDBD;
-          }
-        }
-      }
-
-      &__nav {
-        margin-top: 13px;
-
-          .cardWithInfo__navigation__number {
-            color: #BDBDBD;
-
-            &--active {
-              color: #4F4F4F;
-            }
-          }
-      }
-    }
-  }
-
   .address {
     color: #40BA93;
   }
@@ -291,10 +66,10 @@
   @media only screen and (min-device-width : 320px) and (max-device-width : 768px) {
     display: grid;
     height: 82px;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 5fr 1fr;
     .search-field {
       input {
-        width: 250px;
+        width: 100%;
         justify-self: center;
         font-size: 12px;
       }
@@ -610,10 +385,10 @@
   .account-button {
 
     span {
-      color: black;
+      color: black!important;
     }
     button {
-      background-color: #40BA93;
+      background-color: #40BA93!important;
       i {
         color: white;
       }

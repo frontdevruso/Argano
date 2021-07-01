@@ -3,7 +3,13 @@ import SideBar from "./SideBar/sidebar";
 import Header from "./Header/header";
 import './applayout.scss';
 import {ThemeContext, Web3Context} from "../App/App";
+import useWindowDimensions from "../../utils/helpers";
+import {useSpring} from "react-spring";
+import {RightSideBar} from "./RightSideBar/right-side-bar";
 const Layout = ({children}) => {
+
+
+    const { height, width } = useWindowDimensions();
 
     const {theme, setTheme} = useContext(ThemeContext)
     const {web3, setModal} = useContext(Web3Context);
@@ -15,17 +21,21 @@ const Layout = ({children}) => {
         right: setRightSideBarOpened
     }
 
+    useEffect(() => {
+        if (width > 768) {
+            setLeftSideBarOpened(true)
+        }
+    }, [width])
+
+
     return(
 
         <>
-        {isLeftSideBarOpened !== true && isRightSideBarOpened !== true ?
             <div className={theme === 'dark' ? 'layout-wrapper' : 'layout-wrapper layout-light'}>
-                <div className={'layout-wrapper__sidebar'}>
-                    <SideBar handlers={sidebarsHandlers}/>
-                </div>
-                <div className={'layout-wrapper__header'}>
-                    <Header sidebarHandlers={sidebarsHandlers}/>
-                </div>
+
+                <SideBar isLeftSideBarOpened={isLeftSideBarOpened} handlers={sidebarsHandlers}/>
+                <Header sidebarHandlers={sidebarsHandlers}/>
+                <RightSideBar right={isRightSideBarOpened} sidebarsHandlers={sidebarsHandlers}/>
                 <div className={'layout-wrapper__content'}>
                     {web3 ?
                         children :
@@ -36,13 +46,9 @@ const Layout = ({children}) => {
                             </div>
                         </div>
                     }
-                    {}
                 </div>
             </div>
-        :
-            ""
-        }
-        {isLeftSideBarOpened === true ? <SideBar sidebarHandlers={sidebarsHandlers}/> : ""}
+
         </>
 
     )

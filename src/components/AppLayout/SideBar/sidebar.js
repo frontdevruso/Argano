@@ -1,9 +1,9 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {ThemeContext} from '../../App/App';
 import { Link } from 'react-router-dom';
 import './sidebar.scss';
 import agoLogo from './ago-sidebar-logo.svg';
-
+import {useSprings, animated} from "react-spring";
 // Dark theme icons
 import dashboardDark from './svg-dark-mode/dashboard-icon.svg';
 import mintRedeemDark from './svg-dark-mode/mint-redeem-icon.svg';
@@ -21,18 +21,39 @@ import stakingLight from './svg-light-mode/staking-icon.svg';
 import liquidityPoolsLight from './svg-light-mode/liquidity-pools-icon.svg';
 import tradingLight from './svg-light-mode/trading-icon.svg';
 import accountLight from './svg-light-mode/account-icon.svg';
+import useWindowDimensions from "../../../utils/helpers";
+import {useSpring} from "react-spring";
 
-export const SideBar = ({sidebarHandlers}) => {
+export const SideBar = ({isLeftSideBarOpened, handlers}) => {
 
     const {theme, setTheme} = useContext(ThemeContext)
+    const [showCloseButton, setShowCloseButton] = useState(true);
+    const { height, width } = useWindowDimensions();
 
-    console.log(theme);
+    const leftSideBarEffect = useSpring({
+        opacity: isLeftSideBarOpened ? 1 : 0,
+        width: isLeftSideBarOpened ? "100%" : "0%",
+        display: isLeftSideBarOpened ? "grid" : "block",
+    })
+
+    useEffect(() => {
+
+        if (width > 768) {
+            handlers.left(true)
+            setShowCloseButton(false)
+        }
+
+    }, [width])
+
+    const layoutSideBarThemeClassName = theme === 'dark' ? 'sidebar' : 'sidebar sidebar-light'
+    const mobileSideBarIsOpened = isLeftSideBarOpened ? '' : " disable-nav-links"
 
     return (
-        <div className={theme === 'dark' ? 'sidebar' : 'sidebar sidebar-light'}>
+
+        <animated.div style={leftSideBarEffect} className={layoutSideBarThemeClassName + mobileSideBarIsOpened}>
             <div className={'sidebar__top-header'}>
                 <img src={agoLogo}  alt='Ago logo' height='42px' width='47px'/>
-                {sidebarHandlers ? <button onClick={() => sidebarHandlers.left(false)}><i className="fas fa-times"/></button> : ""}
+                {showCloseButton ? <button onClick={() => handlers.left(false)}><i className="fas fa-times"/></button> : ""}
             </div>
 
             <div className={'sidebar__link-list'}>
@@ -110,7 +131,7 @@ export const SideBar = ({sidebarHandlers}) => {
                 </div>
             </div>
 
-        </div>
+        </animated.div>
     )
 }
 

@@ -1,0 +1,70 @@
+.right-sidebar {
+  background: #232429;
+  box-shadow: 0px 4px 20px 2px rgba(41, 40, 40, 0.34);
+  position: fixed;
+  display: grid;
+  align-items: center;
+  bottom: 0;
+  right: 0;
+  height: 100%;
+  &__container {
+    width: 100%;
+    height: 50%;
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: center;
+    justify-items: center;
+
+    &__close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: transparent;
+      z-index: 999999;
+      color: #40BA93;
+      border: 0;
+      box-shadow: none;
+      outline: 0;
+      font-size: 24px;
+    }
+    .address {
+      color: #40BA93;
+      span {
+        display: grid;
+        justify-self: center;
+      }
+    }
+
+    .account-button {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      align-items: center;
+      grid-gap: 1em;
+
+      span {
+        color: white;
+      }
+      button {
+        width: 55px;
+        cursor: pointer;
+        height: 55px;
+        border-radius: 50%;
+        border: 0;
+        background-color: black;
+        i {
+          font-size: 20px;
+          color: white;
+        }
+      }
+    }
+    .gasPrice {
+      display: grid;
+      justify-self: center;
+      width: 100%;
+    }
+  }
+}
+
+.light {
+  background-color: white;
+}

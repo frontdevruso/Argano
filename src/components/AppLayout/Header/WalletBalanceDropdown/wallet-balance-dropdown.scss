@@ -1,0 +1,123 @@
+.walletBalance {
+  position: relative;
+  max-width: 271px;
+  width: 100%;
+
+
+  &__preView {
+    border: 1px solid #333333;
+    max-height: 36px;
+    height: 36px;
+    cursor: pointer;
+    display: grid;
+    justify-items: center;
+    grid-template-columns: 20% 40% 30% 10%;
+    align-items: center;
+
+    &__title {
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 16px;
+      justify-self: flex-start;
+      color: #40BA93;
+    }
+
+    &__value {
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 16px;
+      text-align: right;
+      color: white;
+    }
+
+    & svg:last-child {
+      transition: all .3s;
+      width: 10px;
+      height: 6px;
+    }
+  }
+
+  &__tokens {
+    position: absolute;
+    height: 0;
+    overflow: hidden;
+    top: 37px;
+    z-index: 10000;
+    padding: 0;
+    transition: all .3s;
+    background: #292A2D;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+    max-width: 271px;
+    width: 100%;
+
+    &--open {
+      height: 200px;
+      padding: 17px 18px;
+    }
+
+    &__buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+
+      &__button {
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 14px;
+        cursor: pointer;
+        max-width: 102px;
+        width: 100%;
+        padding: 8px 10px;
+        border: none;
+        color: #BDBDBD;
+        background: #1F1E20;
+
+        &--active {
+          color: #fff;
+          background: #3EB38E;
+        }
+      }
+    }
+
+    &__list {
+      background: #1F1E20;
+      padding: 14px 12px;
+      min-height: 100px;
+      max-width: 271px;
+
+      &__items {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+
+        & span {
+          font-family: Roboto;
+          font-style: normal;
+          font-weight: 300;
+          font-size: 12px;
+          line-height: 14px;
+
+          color: #BDBDBD;
+        }
+      }
+    }
+
+    &__nav {
+      margin-top: 13px;
+
+      .cardWithInfo__navigation__number {
+        color: #BDBDBD;
+
+        &--active {
+          color: #4F4F4F;
+        }
+      }
+    }
+  }
+}
