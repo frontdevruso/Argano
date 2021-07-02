@@ -1,30 +1,41 @@
-import React, {useState, useContext, useEffect, useRef} from 'react';
-import {ThemeContext} from "../../App/App";
-import GasSvg from './svg/gasSvg';
-import ArrowDown from './svg/arrowDown';
-import BalanceSvg from './svg/balanceSvg';
-import './header.scss';
-import {GasPriceDropdown} from "./GasPriceDropdown/gas-price-dropdown";
-import {WalletBalanceDropdown} from "./WalletBalanceDropdown/wallet-balance-dropdown";
+import React, {useState, useContext, useEffect} from 'react'
+import {ThemeContext} from "../../App/App"
+import {Web3Context} from "../../App/App"
+import {GasPriceDropdown} from "./GasPriceDropdown/gas-price-dropdown"
+import {WalletBalanceDropdown} from "./WalletBalanceDropdown/wallet-balance-dropdown"
+import './header.scss'
+
+
 export const Header = ({sidebarHandlers}) => {
-
-    const {left, right} = sidebarHandlers;
-
-    const [viewGas, setViewGas] = useState(false);
-    const [connected, setConnected] = useState(true) //TODO: change it to Web3 (Test only);
-
-    // const {account} = useSelector(state => state.authReducer);
-
+    const {left, right} = sidebarHandlers
+    const [viewGas, setViewGas] = useState(false)
+    
     // Theme
-    const {theme, setTheme} = useContext(ThemeContext)
+    const {theme} = useContext(ThemeContext)
+    const {web3, setWeb3, modal, setModal} = useContext(Web3Context)
+    const [rightSideKurwa, setRightSideKurwa] = useState(right)
 
-    const [rightSideKurwa, setRightSideKurwa] = useState(right);
+    const [connected, setConnected] = useState(true) //TODO: change it to Web3 (Test only);
+    
+    const disconnect = () => {
+        setConnected(false)
+        setWeb3({instance: undefined, address: undefined})
+        setModal(true)
+    }
 
+    const connect = () => {
+        setModal(true)
+    }
+
+    useEffect( () => setConnected( Boolean(web3?.instance) ), [web3] )
+    
     useEffect(() => {
-
         right(rightSideKurwa) // TODO: take this stupid shit off.
-
     }, [rightSideKurwa])
+
+
+        
+    
 
 
     return (
@@ -45,14 +56,15 @@ export const Header = ({sidebarHandlers}) => {
             <GasPriceDropdown/>
             <WalletBalanceDropdown/>
             <div className={'address'}>
-                {connected ? <span> 0x6e6Baf3A4f...931f51 </span> : ""}
+                <span>{connected ? `${web3?.address.slice(0, 6)}...${web3?.address.slice(-4)}` : "not conncected"}</span>
             </div>
             <div className={'account-button'}>
-                <span> {connected ? "Change Wallet" : "Connect"} </span>
-                <button onClick={() => alert("Connect Wallet Bitch")}> {connected ? <i className='fas fa-wallet'/> : <i className='fas fa-user'/>} </button>
+                <button onClick={connected ? disconnect : connect}> 
+                    <i className={connected ? 'fas fa-user' : 'fas fa-wallet'} />
+                </button>
             </div>
         </div>
     )
 }
 
-export default Header;
+export default Header

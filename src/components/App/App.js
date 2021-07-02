@@ -1,38 +1,37 @@
-import React, {useEffect, useState} from 'react';
-import {BrowserRouter as Router, Route, Switch}  from "react-router-dom";
-import Web3 from "web3";
-import {WalletModal} from "../WalletModal/wallet_modal";
+import React, {useState, createContext} from 'react'
+import {BrowserRouter as Router, Route, Switch}  from "react-router-dom"
+import {WalletModal} from "../WalletModal/wallet_modal"
+
 // Pages
-import Home from '../Home/home';
-import Dashboard from "../Dashboard/dashboard";
-import MintRedeem from "../MintRedeem/mint_redeem";
+import Home from '../Home/home'
+import Dashboard from "../Dashboard/dashboard"
+import MintRedeem from "../MintRedeem/mint_redeem"
 
-import './App.scss';
+import './App.scss'
 
-export const ThemeContext = React.createContext({
+export const ThemeContext = createContext({
     theme: 'dark',
     setTheme: () => {}
 })
 
-export const Web3Context = React.createContext({
+export const Web3Context = createContext({
     web3: null,
     setWeb3: () => {},
     modal: true,
     setModal: () => {}
-
 })
-export const App = () => {
 
-    const provider = window.ethereum;
+export const App = () => {
+    // const provider = window.ethereum
 
     // Theme provider consumer
     const [theme, setTheme] = useState("dark")
-    const themeProviderValue = {theme, setTheme};
+    const themeProviderValue = {theme, setTheme}
 
     // Web3 provider consumer
-    const [web3, setWeb3] = useState(null);
-    const [modal, setModal] = useState(false);
-    const web3ProviderValue = {web3, setWeb3, modal, setModal};
+    const [web3, setWeb3]   = useState(null)
+    const [modal, setModal] = useState(false)
+    const web3ProviderValue = {web3, setWeb3, modal, setModal}
 
     return (
         <Web3Context.Provider value={web3ProviderValue}>
@@ -65,7 +64,5 @@ export const App = () => {
                 <WalletModal/>
             </ThemeContext.Provider>
         </Web3Context.Provider>
-
     )
-
 }

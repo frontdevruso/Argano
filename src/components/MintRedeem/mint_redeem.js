@@ -1,12 +1,10 @@
-import React, {useContext, useState} from 'react';
-import Layout from "../AppLayout/applayout";
-import './mint_redeem.scss';
-import {TokenIcon} from "../TokenIcon/token_icon";
-import {ThemeContext} from "../App/App";
+import React, {useContext, useState} from 'react'
+import Layout from "../AppLayout/applayout"
+import './mint_redeem.scss'
+import {TokenIcon} from "../TokenIcon/token_icon"
+import {ThemeContext} from "../App/App"
 
-export const MintInputs = (activeToken) => {
-
-
+export const MintInputs = activeToken => {
     const activeTokens = activeToken === 'AGOUSD' ? [
         {name: "USDT"},
         {name: "CNUSD"},
@@ -54,7 +52,7 @@ export const MintInputs = (activeToken) => {
 
 }
 
-const RedeemInputs = (activeToken) => {
+const RedeemInputs = activeToken => {
 
     const activeTokens = activeToken === 'AGOUSD' ? [
         {name: "AGOUSD"},
@@ -106,21 +104,20 @@ const RedeemInputs = (activeToken) => {
 }
 
 export const MintRedeem = () => {
+    const [activeTab, setActiveTab] = useState("Mint")
+    const [activeToken, setActiveToken] = useState('AGOUSD')
+    const {theme} = useContext(ThemeContext)
 
-    const [activeTab, setActiveTab] = useState("Mint");
-    const [activeToken, setActiveToken] = useState('AGOUSD');
-    const {theme} = useContext(ThemeContext);
-
-    const wrapperClassName = activeTab === 'Mint'? 'mint-redeem-wrapper ' : 'mint-redeem-wrapper redeem '
-    const classThemeAddon = theme === 'dark' ? "" : ' mint-redeem-light';
+    const wrapperClassName = activeTab === 'Mint' ? 'mint-redeem-wrapper' : 'mint-redeem-wrapper redeem'
+    const classThemeAddon = theme === 'dark' ? "" : 'mint-redeem-light'
 
     return (
         <Layout>
             <div className={wrapperClassName + classThemeAddon}>
 
                 <div className={'switcher'}>
-                    <button onClick={() => setActiveTab("Mint")} className={activeTab === "Mint" ? 'active': ''}>Mint</button>
-                    <button onClick={() => setActiveTab("Redeem")} className={activeTab === "Redeem" ? 'active' : ''}>Redeem</button>
+                    <button onClick={() => setActiveTab("Mint")}    className={activeTab === "Mint" ?   'active' :  ''}>Mint   </button>
+                    <button onClick={() => setActiveTab("Redeem")}  className={activeTab === "Redeem" ? 'active' :  ''}>Redeem </button>
                 </div>
 
                 <div className={'collect-redemption'}>
@@ -142,7 +139,6 @@ export const MintRedeem = () => {
                     </div>
 
                     {activeTab === "Mint" ? <MintInputs activeToken={activeToken}/> : <RedeemInputs activeToken={activeToken}/>}
-
 
                     <div className={'window__accept-button'}>
                         <button>{activeTab === "Mint" ? "Mint" : "Redeem"}</button>
@@ -175,7 +171,7 @@ export const MintRedeem = () => {
 
                     </div>
                     <div className={'scan-link'}>
-                        <a href={"#"}>View contract on PolyScan <i className="fas fa-external-link-alt"></i> </a>
+                        <a href={"#"}>View contract on PolygonScan <i className="fas fa-external-link-alt"></i> </a>
                     </div>
 
                 </div>
