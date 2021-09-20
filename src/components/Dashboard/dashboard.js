@@ -1,12 +1,12 @@
 import React, {useContext, useEffect, useState} from 'react';
-import Layout from "../AppLayout/applayout";
-import {TokenPriceChart} from "./TokenPriceChart/token_price_chart";
+import { Layout } from "../Layout/layout";
+
+import { TokenPricesCharts } from './TokenPricesCharts/token-prices-charts';
+import { TVLChart } from './TVLChart/TVLChart';
+import { Volume24h } from './Volume24h/volume24h';
+import { TokenTransactionTable } from './TokenTransactionsTable/token-transaction-table';
+
 import {ThemeContext} from "../App/App";
-import TopTokens from "./TopTokens/top-tokens";
-import {TokenLiquidityChart} from "./TokenLiquidityChart/token-liquidity-chart";
-import {TokenVolumeChart} from "./TokenVolumeChart/token-volume-chart";
-import {TokenHoldersDiagram} from "./TokenHoldersDiagram/token-holders-diagram";
-import {TokenTransactionTable} from "./TokenTransactionsTable/token-transaction-table";
 import {getLatestBlock} from "../../utils/getBlocksData";
 import {Error} from "../Error/error";
 import {Loader} from "../Loader/loader";
@@ -54,24 +54,25 @@ export const Dashboard = () => {
 
     return (
         <>
-            <Layout>
                 {error ? <Error/> :
                     <DashboardContext.Provider value={dashboardProviderValue}>
-                        <div className={theme === "dark" ? 'dashboard dashboard__black' : 'dashboard'}>
+                        <div className={theme === "dark" ? 'dashboard' : 'dashboard dash-light'}>
                                 {loading ? <Loader/> :
                                     <>
-                                        <TokenPriceChart/>
-                                        <TopTokens/>
-                                        <TokenLiquidityChart/>
-                                        <TokenVolumeChart/>
-                                        <TokenHoldersDiagram/>
+                                        <div className='dash-header'>
+                                            <h1> Dashboard </h1> 
+                                        </div>
+                                        <TokenPricesCharts/>
+                                        <div className='dash-tvl-volume'>
+                                            <TVLChart/>
+                                            <Volume24h/>
+                                        </div>
                                         <TokenTransactionTable/>
                                     </>
                                 }
                         </div>
                     </DashboardContext.Provider>
                 }
-            </Layout>
         </>
     )
 }

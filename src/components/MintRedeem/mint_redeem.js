@@ -1,189 +1,55 @@
 import React, {useContext, useState} from 'react'
-import Layout from "../AppLayout/applayout"
+import {Layout} from "../Layout/layout"
 import './mint_redeem.scss'
 import {TokenIcon} from "../TokenIcon/token_icon"
 import {ThemeContext} from "../App/App"
-
-export const MintInputs = activeToken => {
-    const activeTokens = activeToken === 'AGOUSD' ? [
-        {name: "USDT"},
-        {name: "CNUSD"},
-        {name: "AGOUSD"},
-    ] : [
-        {name: "WBTC"},
-        {name: "CNBTC"},
-        {name: "AGOBTC"}
-    ]
-
-    return (
-        <div className={'body'}>
-            <div className={'inputs'}>
-                <span> Input - 85.75% </span>
-                <input type={'number'} placeholder={0.00}/>
-                <div className={'token-block'}>
-                    <TokenIcon iconName={activeTokens[0].name}/>
-                    <h4>{activeTokens[0].name}</h4>
-                </div>
-            </div>
-            <div className={'sign'}>
-                <h1><i className="fas fa-plus"></i> </h1>
-            </div>
-            <div className={'inputs'}>
-                <span> Input - 14.25% </span>
-                <input type={'number'} placeholder={0.00}/>
-                <div className={'token-block'}>
-                    <TokenIcon iconName={activeTokens[1].name}/>
-                    <h4>{activeTokens[1].name}</h4>
-                </div>
-            </div>
-            <div className={'sign finished'}>
-                <h1><i className="fas fa-arrow-down"></i> </h1>
-            </div>
-            <div className={'inputs'}>
-                <span> Output(estimated) </span>
-                <input type={'number'} placeholder={0.00}/>
-                <div className={'token-block'}>
-                    <TokenIcon iconName={activeTokens[2].name}/>
-                    <h4>{activeTokens[2].name}</h4>
-                </div>
-            </div>
-        </div>
-    )
-
-}
-
-const RedeemInputs = activeToken => {
-
-    const activeTokens = activeToken === 'AGOUSD' ? [
-        {name: "AGOUSD"},
-        {name: "USDT"},
-        {name: "CNUSD"}
-    ] : [
-        {name: "AGOBTC"},
-        {name: "WBTC"},
-        {name: "CNBTC"}
-    ]
-
-    return (
-        <div className={'body'}>
-            <div className={'inputs'}>
-                <span> Input  </span>
-                <input type={'number'} placeholder={0.00}/>
-                <div className={'token-block'}>
-                    <TokenIcon iconName={activeTokens[0].name}/>
-                    <h4>{activeTokens[0].name}</h4>
-                </div>
-            </div>
-            <div className={'sign'}>
-                <h1><i className="fas fa-plus"></i> </h1>
-            </div>
-            <div className={'outputs'}>
-                <span> Output {activeTokens[1].name} - 91.6392% </span>
-                <span className={'balance-redeem'}> Balance: 0.00</span>
-                <input type={'number'} placeholder={0.00}/>
-                <div className={'token-block'}>
-                    <TokenIcon iconName={activeTokens[1].name}/>
-                    <h4>{activeTokens[1].name}</h4>
-                </div>
-            </div>
-            <div className={'sign finished'}>
-                <h1><i className="fas fa-arrow-down"></i> </h1>
-            </div>
-            <div className={'outputs'}>
-                <span> Output {activeTokens[2].name} - 8.3608% </span>
-                <span className={'balance-redeem'}> Balance: 0.00</span>
-                <input type={'number'} placeholder={0.00}/>
-                <div className={'token-block'}>
-                    <TokenIcon iconName={activeTokens[2].name}/>
-                    <h4>{activeTokens[2].name}</h4>
-                </div>
-            </div>
-        </div>
-    )
-
-}
+import {Mint} from './Mint/mint';
+import { Redeem } from './Redeem/redeem'
 
 export const MintRedeem = () => {
-    const [activeTab, setActiveTab] = useState("Mint")
-    const [activeToken, setActiveToken] = useState('AGOUSD')
-    const {theme} = useContext(ThemeContext)
 
-    const wrapperClassName = activeTab === 'Mint' ? 'mint-redeem-wrapper' : 'mint-redeem-wrapper redeem'
-    const classThemeAddon = theme === 'dark' ? "" : 'mint-redeem-light'
+    const [activeTab, setActiveTab] = useState("Mint")
+    const {theme} = useContext(ThemeContext);
+    const [mintRedeemSettingsModal, setMintRedeemSettingsModal] = useState(false);
+
+    const Content = () => {
+
+        switch (activeTab) {
+            case "Mint":
+                return (<Mint/>)
+            case "Redeem":
+                return (<Redeem/>)
+            default:
+                return <Redeem/>
+        }
+    }
 
     return (
-        <Layout>
-            <div className={wrapperClassName + classThemeAddon}>
-
-                <div className={'switcher'}>
-                    <button onClick={() => setActiveTab("Mint")}    className={activeTab === "Mint" ?   'active' :  ''}>Mint   </button>
-                    <button onClick={() => setActiveTab("Redeem")}  className={activeTab === "Redeem" ? 'active' :  ''}>Redeem </button>
-                </div>
-
-                <div className={'collect-redemption'}>
-                    <div className={'header'}>
-                        <h4>Collect redemption</h4>
-                        <button> Collect </button>
-                    </div>
-                    <div className={'body'}>
-                        <h4> 0.0 <b>WBTC</b> </h4>
-                        <h4> 0.0 <b>AGOBTC </b> </h4>
+            <div className={`mint-redeem-wrapper ${theme === "light" ? " mint-redeem-wrapper-light" : ""}`}>
+                <div className='mint-redeem-header'> 
+                    <h1>Mint/Redeem</h1>
+                </div>   
+                <div className='mint-redeem-tx-info'> 
+                    <div>
+                        <span> Minting fee: <b>0.20%</b></span>
+                        <i class="fas fa-circle"></i>
+                        <span> Pool balance: <b>$9,003,073.6227</b></span>
+                        <i class="fas fa-circle"></i>
+                        <span> Slippage: <b>0.10%</b></span>
+                        <i class="fas fa-circle"></i>
+                        <span> Rates: <span> 51 <b>WBTC</b> = 51.500 <b>AGOBTC</b> </span> </span>
+                        <span> <a href="https://polygonscan.com/"> View contracts on PolygonScan </a> <i class="fas fa-external-link-alt"></i> </span>
                     </div>
                 </div>
-
-                <div className={'window'}>
-
-                    <div className={'header'}>
-                        <h1> {activeTab === 'Mint' ? 'Mint' : 'Redeem'}</h1>
-                        <button><i className="fas fa-cog"/></button>
-                    </div>
-
-                    {activeTab === "Mint" ? <MintInputs activeToken={activeToken}/> : <RedeemInputs activeToken={activeToken}/>}
-
-                    <div className={'window__accept-button'}>
-                        <button>{activeTab === "Mint" ? "Mint" : "Redeem"}</button>
+                <div className='mint-redeem-switcher'> 
+                    <div> 
+                        <button className={activeTab === "Mint" ? "active-switcher-button" : ""} onClick={() => setActiveTab("Mint")}> Mint </button>
+                        <button className={activeTab === "Redeem" ? "active-switcher-button" : ""} onClick={() => setActiveTab("Redeem")}> Redeem </button>
                     </div>
                 </div>
-
-                <div className={'txinfo-window'}>
-                    <div className={'info'}>
-
-                        <div>
-                            <span>{activeTab === "Mint" ? "Minting fee" : "Redemption fee"}</span>
-                            <span> 0.20% </span>
-                        </div>
-                        <div>
-                            <span>Pool balance</span>
-                            <span> $9,003,073.6227</span>
-                        </div>
-                        <div>
-                            <span>Slippage</span>
-                            <span>0.10%</span>
-                        </div>
-                        <div>
-                            <span>Rates</span>
-                            {activeToken === "AGOUSD" ?
-                                <span> 1000 <b> USDT </b> = 998 <b> AGOUSD </b></span>
-                                :
-                                <span> 51 <b>WBTC</b> = 51.500 <b> AGOBTC </b></span>
-                            }
-                        </div>
-
-                    </div>
-                    <div className={'scan-link'}>
-                        <a href={"#"}>View contract on PolygonScan <i className="fas fa-external-link-alt"></i> </a>
-                    </div>
-
-                </div>
-
+                <Content/>
             </div>
-        </Layout>
     )
 }
-
-
-
-
-
 
 export default MintRedeem;

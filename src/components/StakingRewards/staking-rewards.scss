@@ -1,0 +1,272 @@
+.staking-wrapper {
+    display: grid;
+    grid-template-rows: 15% 85%;
+    height: 100%;
+    padding-left: 60px;
+    padding-right: 60px;
+
+    .staking-reward-header {
+        align-self: center;
+        h1 {
+            color: white; 
+            @media only screen and (max-width: 1500px) {
+                font-size: 24px;
+            } 
+        }
+        h3 {
+            color: #40BA93;
+            @media only screen and (max-width: 1500px) {
+                font-size: 18px;
+            } 
+        }
+
+    }
+
+    .staking-list {
+
+        display: grid;
+        grid-template-columns: 1fr;
+        align-items: flex-start;
+        grid-template-rows: 50px auto;
+
+        &__header {
+            max-height: 50px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            padding-left: 20px;
+            padding-right: 20px;
+            span {
+                font-size: 18px;
+                color: #4f4f4f
+            }
+        }
+
+        ul {
+            padding: 0;
+        }
+
+        &__item {
+            transition: 0.3s all ease-out;
+            background: linear-gradient(90.99deg, #1D1D1D 2.18%, #232323 104.4%);
+            box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.25);
+            border-radius: 40px;
+            color: white;
+            min-height: 107px;
+            max-height: 370px;
+            cursor: pointer;
+            height: 130px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            align-items: center;
+            padding-left: 20px;
+            padding-right: 20px;
+            margin-bottom: 40px;
+
+            @media only screen and (max-width: 1500px) {
+                height: 100px;
+            } 
+
+            .token {
+                display: grid;
+                align-items: center;
+                grid-template-columns: 10% 90%;
+                grid-column-gap: 10px;
+                span {
+                    @media only screen and (max-width: 1500px) {
+                        font-size: 14px;
+                    } 
+                    &:last-child {
+                        grid-column: 2/3;
+                    }
+                }
+            }
+            .roi {
+                @media only screen and (max-width: 1500px) {
+                    font-size: 14px;
+                } 
+            }
+            .contract {
+                @media only screen and (max-width: 1500px) {
+                    font-size: 14px;
+                } 
+                color: #40BA93;
+            }
+        }
+        &__item__opened {
+            height: 330px;
+            background: radial-gradient(63.69% 1148.13% at 41.28% 56.35%, rgba(46, 147, 115, 0.2) 0%, rgba(0, 0, 0, 0.2) 100%), linear-gradient(90.99deg, #1D1D1D 2.18%, #232323 104.4%);
+            box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.25);
+            border-radius: 50px;
+            transition: 0.3s all ease-out;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 20% 20% 60%;
+            padding: 20px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            color: white;
+            .token {
+                display: grid;
+                align-items: center;
+                grid-template-columns: 10% 90%;
+                padding-left: 20px;
+                grid-column-gap: 15px;
+                span {
+                    @media only screen and (max-width: 1500px) {
+                        font-size: 18px;
+                    } 
+                    font-size: 24px;
+                    color: white;
+                    &:last-child {
+                        grid-column: 2/3;
+                        color: #4f4f4f;
+                    }
+                }
+            }
+            .contract {
+                color: #40BA93;
+                @media only screen and (max-width: 1500px) {
+                    font-size: 18px;
+                } 
+            }
+
+            .roi {
+                @media only screen and (max-width: 1500px) {
+                    font-size: 18px;
+                } 
+            }
+
+            .claim-reward {
+                display: grid;
+                grid-column: 1/4;
+                grid-template-columns: 2fr 1fr;
+                padding-left: 50px;
+                padding-right: 40px;
+                align-items: center;
+                h5 {
+                    color: white;
+                    font-size: 18px;
+                    @media only screen and (max-width: 1500px) {
+                        font-size: 14px;
+                    } 
+                }
+                button {
+                    background: #1E1E1E;
+                    border-radius: 20px;
+                    width: 70px;
+                    height: 50px;
+                    @media only screen and (max-width: 1500px) {
+                        width: 55px;
+                        height: 35px;
+                        img {
+                            width: 15px;
+                            height: 15px;
+                        }
+                    } 
+                    border: 0;
+                    cursor: pointer;
+                }
+            }
+
+            .info-control-panel {
+                display: grid;
+                grid-column: 1/4;
+                grid-template-columns: 3fr 1fr;
+                align-items: center;
+                justify-items: center;
+                .info {
+                    display: grid;
+                    background-color: #1E1E1E;
+                    height: 100px;
+                    width: 90%;
+                    padding: 20px;
+                    border-radius: 40px;
+                    grid-template-rows: 50% 50%;
+                    align-items: center;
+                    &__row {
+                        display: grid;
+                        grid-template-columns: 1fr 1fr 1fr;
+                        color: #4f4f4f;
+                        h5 {
+                            @media only screen and (max-width: 1500px) {
+                                font-size: 14px;
+                            } 
+                        }
+                        &:last-child {
+                            color: white;
+                        }
+                    }
+                }
+                .control-stake {
+                    display: grid;
+                    grid-template-columns: 1fr;
+                    grid-gap: 10px;
+                    button {
+                        border: 1px solid #4F4F4F;
+                        box-sizing: border-box;
+                        color: #4f4f4f;
+                        border-radius: 30px;
+                        width: 145px;
+                        height: 57px;
+                        cursor: pointer;
+                        background-color: transparent;
+                        font-size: 18px;
+                        &:first-child {
+                            background: #40BA93;
+                            border-radius: 30px;
+                            color: white;
+                            border: 1px solid #40BA93;
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+}
+
+.staking-wrapper-light {
+    .staking-reward-header {
+        h1 {
+            color: black;
+        }
+    }
+    .staking-list {
+        ul {
+            li {
+                background: #F2F2F2;
+                .token {
+                    span {
+                        color: #333333;
+                    }
+                }
+                .roi {
+                    span {
+                        color: #333333;
+                    }
+                }
+                .claim-reward {
+                    h5 {
+                       color:#4F4F4F;
+                    }
+                    button {
+                        background: #E0E0E0;
+                    }
+                }
+                .info-control-panel {
+                    .info {
+                        background-color: #E0E0E0;
+                        &__row {
+                            &:last-child {
+                                h5 {
+                                    color: black;
+                                }
+                            }
+                        }
+                    }   
+                }
+            }   
+
+        }
+    }
+}

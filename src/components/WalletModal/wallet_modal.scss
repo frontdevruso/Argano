@@ -1,32 +1,34 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
-.walletModal{
-  max-width: 500px;
+.walletModal-bg{
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #000000a8;
   width: 100%;
-  padding: 20px 40px 40px 60px;
+  height: 100%;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+
+  align-items: center;
+  cursor: pointer;
+}
+
+.walletModal{
+  width: clamp(1000px, 75%, 1400px);
+  height: clamp(375px, 75%, 775px);
+
   cursor: initial;
-  height: 90%;
-  background: #fff;
+  background: #292A2D;
+  padding: 3.5% 5%;
+  box-sizing: border-box;
   color: #444;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+  border-radius: 50px;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 50px 50px 50px 100px 7fr;
+  grid-template-rows: 7.5% 7.5% 5% 15% 65%;
 
-  &__bg{
-    position: absolute;
-    top: 0;
-    left: 0;
-    background: #000000a8;
-    width: 100%;
-    height: 100vh;
-    z-index: 1000;
-    display: flex;
-    justify-content: center;
-
-    align-items: center;
-    cursor: pointer;
-  }
-
-  &__close{
+  .walletModal-close{
 
     display: flex;
     justify-content: flex-end;
@@ -38,34 +40,41 @@
     }
   }
 
-  &__h3{
-    font-family: Roboto;
+  .walletModal-h3{
     font-style: normal;
     font-weight: bold;
     font-size: 24px;
     line-height: 28px;
+    color: white;
+    @media only screen and (max-width: 1500px) {
+        font-size: 20px;
+    }
   }
 
-  &__h4{
-    font-family: Roboto;
+  .walletModal-h4{
     font-style: normal;
     font-weight: 300;
     font-size: 20px;
+    @media only screen and (max-width: 1500px) {
+        font-size: 18px;
+    }
     line-height: 23px;
 
     color: #40BA93;
   }
 
-  &__terms{
-    font-family: Roboto;
+  .walletModal-terms{
     font-style: normal;
     font-weight: 300;
     font-size: 18px;
+    color: white;
+    @media only screen and (max-width: 1500px) {
+      font-size: 14px;
+  }
     line-height: 21px;
     display: grid;
     grid-template-columns: 1fr 10fr;
     align-items: center;
-    margin: 20px 0 30px;
 
     .container {
       display: block;
@@ -132,28 +141,40 @@
     }
   }
 
-  &__list{
-    padding: 25px 35px;
+  .walletModal-list{
+    padding: 2.5% 4%;
+    box-sizing: border-box;
     display: grid;
-    grid-template-columns: 1fr;
-    column-gap: 20px;
-    row-gap: 20px;
-    min-height: 447px;
-    background: #1f1e2014;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    column-gap: 5px;
+    row-gap: 25px;
+    background: #1F1E20;
+    border-radius: 30px;
     color: #000;
 
     &__item{
       display: grid;
-      grid-template-columns: 50px 1fr;
+      grid-template-columns: 20% 1fr;
       padding: 10px 15px;
+      box-sizing: border-box;
       align-items: center;
-      column-gap: 15px;
+      width: clamp(169px ,100%, 269px);
+      column-gap: 5%;
       cursor: pointer;
-      height: 72px;
-      background: #292a2d73;
+      height: clamp(72px ,100%, 72px);
+      background: #292A2D;
+      border-radius: 30px;
+      color: white;
+      @media only screen and (max-width: 1500px) {
+        h5 {
+          font-size: 16px;
+        }
+      }
       &:hover {
         transition: 0.3s;
         background-color: #40BA93;
+        color: white;
       }
 
       &__figure{
@@ -170,7 +191,6 @@
 
       &__h5{
         margin: 0;
-        font-family: Roboto;
         font-style: normal;
         font-weight: 500;
         font-size: 20px;
@@ -178,87 +198,24 @@
       }
     }
   }
-
-  &__black{
-    color: #fff;
-    background: #292A2D;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
-
-    .walletModal__list{
-      background: #1F1E20;
-      color: #fff;
-
-      &__item{
-        background: #292A2D;
-        &:hover {
-          transition: 0.3s;
-          background: #40BA93;
-        }
-      }
-    }
-  }
 }
 
-// Responsive area
-// Laptops and little PC screens
-@media only screen and (min-width : 1224px) and (max-device-width: 1824px) {
-  .walletModal {
-    grid-template-rows: 25px 50px 50px 1fr 7fr;
-    &__list {
-      min-height: 200px;
-      &__item {
-        height: 35px;
-      }
+.walletModal-light {
+  background: #FFFFFF;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+  .walletModal-h3 {
+    color: black;
+  }
+  .walletModal-terms {
+    p {
+      color: black;
     }
   }
-}
-// Tablets
-@media only screen and (min-device-width : 769px) and (max-device-width : 1223px) {
-  .walletModal {
-    height: 50%;
-    grid-template-rows: 5px 50px 50px 1fr 7fr;
-
-    &__list {
-      min-height: 200px;
-      &__item {
-        height: 35px;
-      }
-    }
-  }
-}
-// Phones
-@media only screen and (min-device-width : 320px) and (max-device-width : 768px) {
-  .walletModal {
-    max-width: 320px;
-    padding: 10px 20px 20px 20px;
-    height: 80%;
-    grid-template-rows: 5px 30px 25px 80px 7fr;
-
-    span {
-      svg {
-        height: 20px;
-        width: 20px;
-      }
-    }
-    &__h3 {
-      font-size: 18px;
-    }
-    &__h4 {
-      font-size: 14px;
-    }
-    &__terms {
-
-      p {
-        font-size: 10px;
-      }
-
-    }
-
-    &__list {
-      min-height: 200px;
-      &__item {
-        height: 35px;
-      }
+  .walletModal-list {
+    background: #F2F2F2;
+    &__item {
+      background: #BDBDBD;
+      color: black;
     }
   }
 }

@@ -1,6 +1,7 @@
 import {blockClient, healthClient} from "../api/clients";
 import {GET_BLOCK, GET_BLOCKS,  SUBGRAPH_HEALTH} from "../api/queries";
 import {splitQuery} from "./helpers";
+import {READ_TODO} from "../components/App/App";
 
 // Gets the latest healthy block;
 export const getLatestBlock = async () => {
@@ -34,6 +35,7 @@ export const getBlocks = async (timestamps, skipCount=500) => {
 
     let fetchedData = await splitQuery(GET_BLOCKS, blockClient, [], timestamps, skipCount)
     let blocks = []
+
     if (fetchedData) {
         for (var t in fetchedData) {
             if (fetchedData[t].length > 0) {
@@ -44,10 +46,11 @@ export const getBlocks = async (timestamps, skipCount=500) => {
             }
         }
     }
+
     return blocks
 }
 
-// Get a single block by a timestamp TODO: Maybe remove it.
+// Get a single block by a timestamp
 export async function getBlockFromTimestamp(timestamp) {
     let result = await blockClient.query({
         query: GET_BLOCK,

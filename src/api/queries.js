@@ -339,6 +339,17 @@ export const TOKEN_DATA_TEST = gql`
   }
 `
 
+export const TEST_CACHE = gql`
+    query blocks {
+      blocks(first: 5) {
+        id
+        number
+        timestamp
+        parentHash
+      }
+    }
+`
+
 export const TOP_TOKEN_LIST = gql`
   query tokens {
     tokens(orderBy: tradeVolumeUSD, orderDirection: desc, first: 5) {

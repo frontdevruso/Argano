@@ -2,11 +2,12 @@ import React, {useContext, useEffect, useState} from 'react';
 import {DashboardContext} from "../dashboard";
 import {Loader} from "../../Loader/loader";
 import {getTokenPairs, getTokenTransactions} from "../../../utils/getDashboardData";
+import { ThemeContext } from '../../App/App';
 
-import './token-transaction-table.scss';
 
 export const TokenTransactionTable = () => {
 
+    const {theme} = useContext(ThemeContext);
     const [activeTab, setActiveTab] = useState("All");
     const [transactionDataAll, setTransactionDataAll] = useState([]);
     const [filteredTransactionData, setFilteredTransactionData] = useState([]);
@@ -103,7 +104,7 @@ export const TokenTransactionTable = () => {
                     item.time = (item.time / 60).toFixed(0) + " hour ago"
                 }
                 else if (item.time < 1) {
-                    item.time = "Less than 1 minute ago"
+                    item.time = "< 1 minute ago"
                 }
                 else {
                     item.time = parseFloat(item.time).toFixed(0) + " minutes ago"
@@ -196,14 +197,14 @@ export const TokenTransactionTable = () => {
 
 
     return (
-        <div className={'transactions dashBox'}>
-            <div className={'transactions__heading'}>
-                <h2 className={'dashBox__h2'}>Transactions</h2>
-                <div className={'transactions__heading__viewTypes'}>
-                    <button onClick={() => handleTabChange("All")} className={activeTab === "All" ? 'transactions__heading__viewTypes__button transactions__heading__viewTypes__button--active' : 'transactions__heading__viewTypes__button'}> All </button>
-                    <button onClick={() => handleTabChange("Swap")} className={activeTab === "Swap" ? 'transactions__heading__viewTypes__button transactions__heading__viewTypes__button--active' : 'transactions__heading__viewTypes__button'}> Swaps </button>
-                    <button onClick={() => handleTabChange("Add")} className={activeTab === "Add" ?'transactions__heading__viewTypes__button transactions__heading__viewTypes__button--active' : 'transactions__heading__viewTypes__button'}> Adds </button>
-                    <button onClick={() => handleTabChange("Remove")} className={activeTab === "Remove" ? 'transactions__heading__viewTypes__button transactions__heading__viewTypes__button--active' : 'transactions__heading__viewTypes__button'}> Removes </button>
+        <div className={`transactions dashBox ${theme === "light" ? " dashBoxLightTxs" : ""}`}>
+            <div className={'transactions-heading'}>
+                <h2>Transactions</h2>
+                <div className={'transactions-heading__viewTypes'}>
+                    <button onClick={() => handleTabChange("All")} className={activeTab === "All" ? 'transactions-heading__viewTypes__button transactions-heading__viewTypes__button--active' : 'transactions-heading__viewTypes__button'}> All </button>
+                    <button onClick={() => handleTabChange("Swap")} className={activeTab === "Swap" ? 'transactions-heading__viewTypes__button transactions-heading__viewTypes__button--active' : 'transactions-heading__viewTypes__button'}> Swaps </button>
+                    <button onClick={() => handleTabChange("Add")} className={activeTab === "Add" ?'transactions-heading__viewTypes__button transactions-heading__viewTypes__button--active' : 'transactions-heading__viewTypes__button'}> Adds </button>
+                    <button onClick={() => handleTabChange("Remove")} className={activeTab === "Remove" ? 'transactions-heading__viewTypes__button transactions-heading__viewTypes__button--active' : 'transactions-heading__viewTypes__button'}> Removes </button>
                 </div>
             </div>
             <div className={'transactions__table'}>
@@ -215,14 +216,16 @@ export const TokenTransactionTable = () => {
                     <div className={'transactions__table__head__item'}>Account</div>
                     <div className={'transactions__table__head__item transactions__table__head__item__time'}>Time</div>
                 </div>
+                <div className={'border-line-transactions'}></div>
+
 
                 {loading ? <Loader/> : <TableBody/>}
 
                 <div className={'transactions__table__pagination'}>
                     <div>
-                        <button onClick={() => handlePageChange("-")}> <i class="fas fa-arrow-left"></i> </button>
-                        <span>Page {page} of {pageMax}</span>
-                        <button onClick={() => handlePageChange("+")}> <i class="fas fa-arrow-right"></i> </button>
+                        <button onClick={() => handlePageChange("-")}> Prev </button>
+                        <span>Page {page} of {pageMax} </span>
+                        <button onClick={() => handlePageChange("+")}> Next </button>
 
                     </div>
                 </div>

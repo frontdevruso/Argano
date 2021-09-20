@@ -56,6 +56,8 @@ export const getTokenChartData = async (number, timeWindow, interval=3600, token
         }
 
 
+
+
         let result = await splitQuery(PRICES_BY_BLOCK, client, [tokenAddress], blocks, 50);
         let resultLastDay = await splitQuery(PRICES_BY_BLOCK, client, [tokenAddress], blocksLastDay, 50);
 
@@ -391,7 +393,6 @@ export const getTokenPairs = async (tokenAddress) => {
         })
 
 
-        console.log(result);
 
         let finalArray = []
 

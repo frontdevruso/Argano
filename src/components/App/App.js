@@ -1,17 +1,25 @@
-import React, {useState, createContext} from 'react'
+import React, {useState, createContext, useEffect} from 'react'
 import {BrowserRouter as Router, Route, Switch}  from "react-router-dom"
 import {WalletModal} from "../WalletModal/wallet_modal"
 
 // Pages
-import Home from '../Home/home'
-import Dashboard from "../Dashboard/dashboard"
-import MintRedeem from "../MintRedeem/mint_redeem"
+import Dashboard from '../Dashboard/dashboard';
+import MintRedeem from '../MintRedeem/mint_redeem';
+import { StakingRewards } from '../StakingRewards/staking-rewards';
+import LiquidityPools from '../LiquidityPools/liquidity-pools';
+import { Trading } from '../Trading/trading';
 
-import './App.scss'
+import {blockClient} from "../../api/clients";
+import {TEST_CACHE} from "../../api/queries";
+import gql from "graphql-tag";
+import { Layout } from '../Layout/layout';
+import { Accounts } from '../Accounts/accounts';
 
 export const ThemeContext = createContext({
     theme: 'dark',
-    setTheme: () => {}
+    setTheme: () => {},
+    sideBarMountedOneTime: false,
+    setSideBarMountedOneTime: () => {}
 })
 
 export const Web3Context = createContext({
@@ -22,11 +30,11 @@ export const Web3Context = createContext({
 })
 
 export const App = () => {
-    // const provider = window.ethereum
 
     // Theme provider consumer
     const [theme, setTheme] = useState("dark")
-    const themeProviderValue = {theme, setTheme}
+    const [sideBarMountedOneTime, setSideBarMountedOneTime] = useState(false);
+    const themeProviderValue = {theme, setTheme, sideBarMountedOneTime, setSideBarMountedOneTime}
 
     // Web3 provider consumer
     const [web3, setWeb3]   = useState(null)
@@ -37,29 +45,16 @@ export const App = () => {
         <Web3Context.Provider value={web3ProviderValue}>
             <ThemeContext.Provider value={themeProviderValue}>
                 <Router>
-                    <Switch>
-                        <Route path="/" exact>
-                            <Home/>
-                        </Route>
-                        <Route path="/dashboard" exact>
-                            <Dashboard/>
-                        </Route>
-                        <Route path="/mint-redeem" exact>
-                            <MintRedeem/>
-                        </Route>
-                        {/*<Route path="/liqudity-pools" exact>*/}
-                        {/*    <NewLiquidityPools/>*/}
-                        {/*</Route>*/}
-                        {/*<Route path="/trading" exact>*/}
-                        {/*    <Trading/>*/}
-                        {/*</Route>*/}
-                        {/*<Route path="/staking" exact>*/}
-                        {/*    <StakingRewards/>*/}
-                        {/*</Route>*/}
-                        {/*<Route path="/account" exact>*/}
-                        {/*    <Account/>*/}
-                        {/*</Route>*/}
+                    <Layout>
+                        <Switch>
+                            <Route path="/dashboard" component={Dashboard} exact/>
+                            <Route path="/mint-redeem" component={MintRedeem} exact/>
+                            <Route path="/staking" component={StakingRewards} exact/>
+                            <Route path="/liqudity-pools" component={LiquidityPools} exact/>
+                            <Route path="/trading" component={Trading} exact/>
+                            <Route path="/accounts" component={Accounts} exact/>
                     </Switch>
+                    </Layout>
                 </Router>
                 <WalletModal/>
             </ThemeContext.Provider>

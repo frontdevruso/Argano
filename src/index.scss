@@ -1,12 +1,12 @@
 @font-face {
-    font-family: 'Roboto';
-    src: local('Roboto'), url(font/Roboto-Regular.ttf) format('truetype');
+    font-family: 'Popins';
+    src: local('Popins'), url(font/Poppins-Regular.ttf) format('truetype');
 }
 
 body {
     margin: 0;
     padding: 0;
-    font-family: Roboto !important;
+    font-family: Popins !important;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-size: 1.2em !important;
@@ -17,6 +17,16 @@ body {
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+}
+h1 {
+    color: black;
 }
 
 @media screen and (max-width: 480px) {
