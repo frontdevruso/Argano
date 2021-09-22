@@ -138,7 +138,8 @@
     .secondary-block {
         background: linear-gradient(90.99deg, #1D1D1D 2.18%, #232323 104.4%);
         border-radius: 40px;
-        align-self: flex-start;
+        align-self: center;
+        justify-self: center;
         width: clamp(380px, 80%,620px);
         height: clamp(245px, 70%, 300px);
         box-sizing: border-box;

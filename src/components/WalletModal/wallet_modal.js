@@ -12,6 +12,7 @@ import safepalWallet from './wallet-icons/safepal-logo.svg'
 
 import './wallet_modal.scss'
 import {authWeb3} from "../../utils/web3Auth"
+import { useWeb3Context } from '../../web3Provider'
 
 const walletList = [
     {name:'MetaMask',       icon: <img width={40} height={40} src={metaMask}         alt={'icon'} /> },
@@ -25,15 +26,11 @@ const walletList = [
 
 export const WalletModal = () => {
     const {theme, setTheme} = useContext(ThemeContext)
-    const {modal, setWeb3, setModal} = useContext(Web3Context)
+    const {modal, setModal, initWeb3} = useWeb3Context()
     const closeModal = e => e.target === document.querySelector('#modalBg') && setModal(false)
         
-    const handleConnect = async walletName => {
-        const result = await authWeb3(walletName)
-        if (result.instance){
-            setWeb3(result)
-            setModal(false)
-        }
+    const handleConnect = async (name) => {
+        await initWeb3(name)
     }
 
     return (

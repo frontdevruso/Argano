@@ -38,7 +38,7 @@ export const TVLChart = () => {
 
         <div className={`dashBox tvl ${theme === "light" ? " dashBoxLight" : ""}`}>
             <div className={'tvl-info'}>
-                <p>TVL</p>
+                <p>Total Value Locked</p>
                 <h1>${formattedNum(chartValue.value)}</h1>
                 <p>{chartValue.time}</p>
             </div>

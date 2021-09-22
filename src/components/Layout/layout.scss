@@ -14,7 +14,7 @@
     &__sidebar {
         grid-area: sb;
         display: grid;
-        grid-template-rows: 10% 65% 10% 15%;
+        grid-template-rows: 10% 65% 15% 10%;
         align-items: center;
         justify-items: center;
         animation: initialSideBar 1s;
@@ -132,7 +132,7 @@
         }
         &__links {
             display: grid;
-            align-self: flex-end;
+            align-self: center;
             a {
                 font-size: 14px;
                 color: white;

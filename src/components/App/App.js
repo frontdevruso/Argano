@@ -19,6 +19,7 @@ import ago_logo from '../../assets/icons/ago-logo.svg'
 import gql from "graphql-tag";
 import { Layout } from '../Layout/layout';
 import { Accounts } from '../Accounts/accounts';
+import { Web3Provider } from '../../web3Provider';
 
 export const ThemeContext = createContext({
     theme: 'dark',
@@ -61,26 +62,30 @@ export const App = () => {
 
 
     return (
-        <>
-        {isMobile ? <MobileWarning/> : 
-                    <Web3Context.Provider value={web3ProviderValue}>
-                    <ThemeContext.Provider value={themeProviderValue}>
-                        <Router>
-                            <Layout>
-                                <Switch>
-                                    <Route path="/dashboard" component={Dashboard} exact/>
-                                    <Route path="/mint-redeem" component={MintRedeem} exact/>
-                                    <Route path="/staking" component={StakingRewards} exact/>
-                                    <Route path="/liqudity-pools" component={LiquidityPools} exact/>
-                                    <Route path="/trading" component={Trading} exact/>
-                                    <Route path="/accounts" component={Accounts} exact/>
-                            </Switch>
-                            </Layout>
-                        </Router>
-                        <WalletModal/>
-                    </ThemeContext.Provider>
-                </Web3Context.Provider>
-        }
-        </>
+
+        // TODO: Leave it until production
+        // <>
+        // {isMobile ? <MobileWarning/> : 
+
+        // }
+        // </>
+        // <Web3Context.Provider value={web3ProviderValue}>
+        <Web3Provider>
+            <ThemeContext.Provider value={themeProviderValue}>
+                <Router>
+                    <Layout>
+                        <Switch>
+                            <Route path="/dashboard" component={Dashboard} exact/>
+                            <Route path="/mint-redeem" component={MintRedeem} exact/>
+                            <Route path="/staking" component={StakingRewards} exact/>
+                            <Route path="/liqudity-pools" component={LiquidityPools} exact/>
+                            <Route path="/trading" component={Trading} exact/>
+                            <Route path="/accounts" component={Accounts} exact/>
+                    </Switch>
+                    </Layout>
+                </Router>
+                <WalletModal/>
+            </ThemeContext.Provider>
+        </Web3Provider>
     )
 }

@@ -4,6 +4,7 @@ import ago_icon from '../../assets/icons/ago-logo.svg';
 import pig_icon from '../../assets/icons/pig-balances.svg';
 import disconnect_icon from '../../assets/icons/plugging-plugs.svg';
 import disconnect_icon_white from '../../assets/icons/plugging-plugs-white.svg';
+import { formatAddress } from '../../utils/helpers';
 
 import {ThemeContext, Web3Context} from '../App/App';
 // Dark theme icons.
@@ -27,12 +28,13 @@ import accounts_acitve from '../../assets/icons/nav-links/active/accounts-active
 
 import './layout.scss';
 import { TokenIcon } from '../TokenIcon/token_icon';
+import { useWeb3Context } from '../../web3Provider';
 
 export const Layout = ({children}) => {
 
     const history = useHistory();
     const {theme, setTheme} = useContext(ThemeContext);
-    const {setModal} = useContext(Web3Context);
+    const {setModal, userAddress, web3} = useWeb3Context();
     const [themeChecked, setThemeChecked] = useState("night");
     const [expandSocMedias, setExpandSocMedias] = useState(false);
     const [activeTab, setActiveTab] = useState(history.location.pathname);
@@ -60,6 +62,8 @@ export const Layout = ({children}) => {
         // {name: "WBTC", value: 0.000001244423423, portfolioPrecente: 12.5, color: "blue"},
     ]
 
+    console.log(userAddress?.slice())
+
     return (
         <div className={`layout-wrapper ${theme === "light" ? "layout-light" : ""}`}> 
             <div className='layout-wrapper__sidebar'> 
@@ -85,9 +89,10 @@ export const Layout = ({children}) => {
                     </li>
                 </ul>
                 <div className={`layout-wrapper__sidebar__links ${theme === "light" ? " links-light" : ""}`}> 
-                    <a href="#"> Documentation </a>
-                    <a href="#"> Audit </a> 
-                    <a href="#"> Polygonscan </a> 
+                    <a href="#"> White Paper </a>
+                    <a href="#"> GitBook </a> 
+                    <a href="#"> Audit Report </a> 
+                    <a href="#"> $AGO contracts </a> 
                 </div>
                 <div className={`layout-wrapper__sidebar__switcher ${theme === "light" ? " sidebar-switch-light" : ""}`}> 
                     <i className={`fas fa-moon ${theme === "dark" ? "acitve-daytime" : ""}`}></i>
@@ -103,7 +108,7 @@ export const Layout = ({children}) => {
             <div className='layout-wrapper-header'> 
                 <div className={`layout-wrapper-header__balances ${balancesExpanded ? "expanded" : ""}`} onClick={() => setBalancesExpaned(!balancesExpanded)}> 
                     <img src={pig_icon} width={20} height={20}/>
-                    <p> Balance </p>
+                    <p> Protocol Balance </p>
                     <p> 17.02$ </p>
                     {mockUserAssetsList.map((item) => {
                         return (
@@ -113,9 +118,9 @@ export const Layout = ({children}) => {
                 </div>
 
                 <div className={`layout-wrapper-header__connect-wallet ${connectWalletExpanded ? " expand-connect-wallet" : ""}`}> 
-                    <span> {mockWalletConnected ? "Disconnect Wallet" : "Connect Wallet"}</span>
+                    <span> {userAddress && web3 ? formatAddress(userAddress) : "Connect Wallet"}</span>
                     <button onClick={() => setModal(true)}>
-                        {mockWalletConnected ?  <img src={theme === "dark" ? disconnect_icon_white : disconnect_icon}/> : <i className="fas fa-plug"/>}
+                        {userAddress && web3 ?  <img src={theme === "dark" ? disconnect_icon_white : disconnect_icon}/> : <i className="fas fa-plug"/>}
                     </button>
                 </div>
             </div>
