@@ -5,7 +5,7 @@ import pig_icon from '../../assets/icons/pig-balances.svg';
 import pig_icon_light from '../../assets/icons/pig-balances-light.svg';
 import disconnect_icon from '../../assets/icons/plugging-plugs.svg';
 import disconnect_icon_white from '../../assets/icons/plugging-plugs-white.svg';
-import { formatAddress } from '../../utils/helpers';
+import { formatAddress, formattedNum } from '../../utils/helpers';
 import {ThemeContext, Web3Context} from '../App/App';
 // Dark theme icons.
 import dashboard_black from '../../assets/icons/nav-links/dark-theme/dashboard-black.svg';
@@ -34,7 +34,7 @@ export const Layout = ({children}) => {
 
     const history = useHistory();
     const {theme, setTheme} = useContext(ThemeContext);
-    const {setModal, disconnectWallet, userAddress, web3, modal} = useWeb3Context();
+    const {setModal, disconnectWallet, userAddress, web3, modal, userAssets} = useWeb3Context();
     const [expandSocMedias, setExpandSocMedias] = useState(false);
     const [activeTab, setActiveTab] = useState(history.location.pathname);
     const [balancesExpanded, setBalancesExpaned] = useState(false);
@@ -117,14 +117,13 @@ export const Layout = ({children}) => {
                 <div className={`layout-wrapper-header__balances ${balancesExpanded ? "expanded" : ""}`} onClick={() => setBalancesExpaned(!balancesExpanded)}> 
                     <img src={theme === "light" ? pig_icon_light : pig_icon} width={20} height={20}/>
                     <p> Protocol Balance </p>
-                    <p> 17.02$ </p>
-                    {mockUserAssetsList.map((item) => {
+                    <p> { userAssets ? formattedNum(userAssets.reduce((a, {usdBalance}) => a + usdBalance, 0)) : 0.00 }$ </p>
+                    {userAssets?.map((item) => {
                         return (
-                            <span className='token-asset-list'> <TokenIcon iconName={item.name}/> <span> {item.value}{item.name}/2$ </span> </span>
+                            <span className='token-asset-list'> <TokenIcon iconName={item.name}/> <span> {formattedNum(+item.balance)}{item.name}/{formattedNum(item.usdBalance)}$ </span> </span>
                         )
                     })}
                 </div>
-
                 <div className={`layout-wrapper-header__connect-wallet`}> 
                     <span> {userAddress && web3 ? formatAddress(userAddress) : "Connect Wallet"}</span>
                     <button onClick={() => handleConnection()}>

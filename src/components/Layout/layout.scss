@@ -175,8 +175,8 @@
         display: grid;
         grid-template-columns: 3fr 1fr;
         &__balances {
-            transition: 0.3s width;
-            width: 287px;
+            transition: 0.3s all;
+            width: 270px;
             align-self: center;
             height: 52px;
             padding: 5px 10px;
@@ -185,7 +185,7 @@
             box-sizing: border-box;
             border-radius: 25px;
             display: grid;
-            grid-template-columns: 1fr 2fr 1fr;
+            grid-template-columns: 15% 60% 25%;
             align-items: center;
             font-size: 14px;
             cursor: pointer;
@@ -194,6 +194,7 @@
             }
             p {
                 color: white;
+                white-space: nowrap;
             }
             .token-asset-list {
                 opacity: 0;
@@ -215,7 +216,7 @@
         }
         .expanded {
             transition: 0.3s all;
-            width: clamp(600px, 100%, 1080px);
+            width: clamp(1000px,100%, 1250px);
             grid-template-columns: 5% 10% 5% repeat(7, auto);
             grid-column-gap: 5px;
             .token-asset-list {

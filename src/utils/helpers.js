@@ -3,7 +3,13 @@ import {getBlockFromTimestamp} from "./getBlocksData";
 import dayjs from 'dayjs';
 import {client} from "../api/clients";
 import {ETH_PRICE} from "../api/queries";
+import BigNumber from "bignumber.js";
+import fromExponential from "from-exponential";
+
 import Numeral from 'numeral';
+
+
+export const MAX_INT = '115792089237316195423570985008687907853269984665640564039457584007913129639935';
 
 // Splits final query output for better understandingΩ
 export async function splitQuery(query, localClient, vars, list, skipCount) {
@@ -44,6 +50,46 @@ export async function splitQuery(query, localClient, vars, list, skipCount) {
 
     return fetchedData
 }
+
+
+export const getCoinGeckoCurrentPrice = (tokenName) => {
+
+
+
+    const data = fetch(`https://api.coingecko.com/api/v3/coins/${tokenName}?tickers=false&community_data=false&developer_data=false&sparkline=false`)
+    .then((res) => res.json())
+    .then((fin) => fin.market_data.current_price.usd);
+
+    return data;
+
+}
+
+
+export const formatToDecimal = (value, decimals) => {
+    if (value === "MAX") return MAX_INT;
+    let returned_amount = new BigNumber(new BigNumber(value).multipliedBy(new BigNumber(10**decimals))).toString()
+    if (returned_amount.includes('e')) {
+      returned_amount = fromExponential(returned_amount)
+    }
+    const result = returned_amount;
+    console.log('To Decimal: ', result)
+    return result
+}
+  
+export const formatFromDecimal = (value, decimals) => {
+    if(isNaN(Number(value))) {
+      // console.log(`Error: ${value} is not a number`)
+      return;
+    }
+  
+    let returned_amount = new BigNumber(value).div(new BigNumber(10**decimals)).toString()
+  
+    if (returned_amount.includes('e')) {
+      returned_amount = fromExponential(returned_amount)
+    }
+    return returned_amount;
+}
+
 
 // Get current ETH price to format tokens derivedETH to USD
 export const getEthPrice = async () => {
