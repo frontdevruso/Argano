@@ -5,7 +5,6 @@ import pig_icon from '../../assets/icons/pig-balances.svg';
 import disconnect_icon from '../../assets/icons/plugging-plugs.svg';
 import disconnect_icon_white from '../../assets/icons/plugging-plugs-white.svg';
 import { formatAddress } from '../../utils/helpers';
-
 import {ThemeContext, Web3Context} from '../App/App';
 // Dark theme icons.
 import dashboard_black from '../../assets/icons/nav-links/dark-theme/dashboard-black.svg';
@@ -34,13 +33,12 @@ export const Layout = ({children}) => {
 
     const history = useHistory();
     const {theme, setTheme} = useContext(ThemeContext);
-    const {setModal, userAddress, web3} = useWeb3Context();
-    const [themeChecked, setThemeChecked] = useState("night");
+    const {setModal, disconnectWallet, userAddress, web3, modal} = useWeb3Context();
     const [expandSocMedias, setExpandSocMedias] = useState(false);
     const [activeTab, setActiveTab] = useState(history.location.pathname);
     const [balancesExpanded, setBalancesExpaned] = useState(false);
-    const [connectWalletExpanded, setConnectWalletExpanded] = useState(false);
-    const [mockWalletConnected, setMockWalletConnected] = useState(false);
+
+
 
     const pages = [
         {path: "/dashboard", img: dashboard_black, imgActive: dashboard_active},
@@ -62,7 +60,16 @@ export const Layout = ({children}) => {
         // {name: "WBTC", value: 0.000001244423423, portfolioPrecente: 12.5, color: "blue"},
     ]
 
-    console.log(userAddress?.slice())
+    console.log(modal)
+
+    const handleConnection = () => {
+        if (web3) {
+            disconnectWallet()
+        }
+        else {
+            setModal(true)
+        }
+    }
 
     return (
         <div className={`layout-wrapper ${theme === "light" ? "layout-light" : ""}`}> 
@@ -117,9 +124,9 @@ export const Layout = ({children}) => {
                     })}
                 </div>
 
-                <div className={`layout-wrapper-header__connect-wallet ${connectWalletExpanded ? " expand-connect-wallet" : ""}`}> 
+                <div className={`layout-wrapper-header__connect-wallet`}> 
                     <span> {userAddress && web3 ? formatAddress(userAddress) : "Connect Wallet"}</span>
-                    <button onClick={() => setModal(true)}>
+                    <button onClick={() => handleConnection()}>
                         {userAddress && web3 ?  <img src={theme === "dark" ? disconnect_icon_white : disconnect_icon}/> : <i className="fas fa-plug"/>}
                     </button>
                 </div>

@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import React, { useContext, useEffect, useState } from 'react';
 import Web3 from 'web3';
 const Web3Context = React.createContext();
@@ -9,8 +10,8 @@ export const Web3Provider = ({children}) => {
     const [web3, setWeb3] = useState(null);
     const [userAddress, setUserAddress] = useState(null);
     const [modal, setModal] = useState(false);
-    
-    
+    const [isReadyConnected, setIsReadyConnected] = useState(false);
+
     useEffect(() => {
 
         if (!web3 && window.web3) {
@@ -32,12 +33,21 @@ export const Web3Provider = ({children}) => {
     }, [web3, userAddress])
 
 
+    const disconnectWallet = () => {
+
+        setWeb3(null);
+        setUserAddress(null);
+        setModal(true);        
+    }
+
+
     const initWeb3 = async (providerName) => {  
         switch (providerName) {
           case "MetaMask":
 
             try {
                 if (window.ethereum) {
+                    message.loading({className: "ant-argano-message",content: "Connecting your wallet", key: "wallet", duration: 999999});
                     window.web3 = new Web3(window.ethereum)
                     await window.ethereum.enable();
                     setWeb3(window.web3);
@@ -46,7 +56,10 @@ export const Web3Provider = ({children}) => {
             }
             catch (e) {
                 console.log(e);
-        }      
+            }
+            finally {
+                message.success({className: "ant-argano-message", content: "Connected successfully", key: "wallet", duration: 3})
+            }      
           default:
             console.log(`Unsupported wallet: ${providerName}`)
             return undefined
@@ -58,6 +71,7 @@ export const Web3Provider = ({children}) => {
           setModal,
           web3,
           initWeb3,
+          disconnectWallet,
           userAddress,
     }
 

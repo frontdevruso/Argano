@@ -20,6 +20,7 @@ import gql from "graphql-tag";
 import { Layout } from '../Layout/layout';
 import { Accounts } from '../Accounts/accounts';
 import { Web3Provider } from '../../web3Provider';
+import 'antd/dist/antd.css';
 
 export const ThemeContext = createContext({
     theme: 'dark',
@@ -53,13 +54,6 @@ export const App = () => {
     const [theme, setTheme] = useState("dark")
     const [sideBarMountedOneTime, setSideBarMountedOneTime] = useState(false);
     const themeProviderValue = {theme, setTheme, sideBarMountedOneTime, setSideBarMountedOneTime}
-
-    // Web3 provider consumer
-    const [web3, setWeb3]   = useState(null)
-    const [modal, setModal] = useState(false)
-    const web3ProviderValue = {web3, setWeb3, modal, setModal}
-
-
 
     return (
 
