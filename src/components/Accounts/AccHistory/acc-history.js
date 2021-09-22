@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import calculate_txs from '../../../assets/icons/calculate-txs.svg';
+import { ThemeContext } from '../../App/App';
 
 
 export const AccHistory = ({isOpened, setIsOpened}) => {
+
+
+    const {theme} = useContext(ThemeContext);
 
     // const mockUserHistory = [
     //     {
@@ -20,7 +24,7 @@ export const AccHistory = ({isOpened, setIsOpened}) => {
 
 
     return (
-        <div className={`acc-hisotry ${isOpened ? " acc-history-opened" : ""}`}>
+        <div className={`acc-hisotry ${isOpened ? " acc-history-opened" : ""} ${theme === "light" ? " acc-history-light" : ""}`}>
             <a href="#" onClick={() => setIsOpened(false)}> <i className="fas fa-chevron-left"/> Account </a>
             <div className='acc-hisotry-header'> 
                 <h1> History </h1>

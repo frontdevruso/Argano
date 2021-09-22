@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
 import ago_icon from '../../assets/icons/ago-logo.svg';
 import pig_icon from '../../assets/icons/pig-balances.svg';
+import pig_icon_light from '../../assets/icons/pig-balances-light.svg';
 import disconnect_icon from '../../assets/icons/plugging-plugs.svg';
 import disconnect_icon_white from '../../assets/icons/plugging-plugs-white.svg';
 import { formatAddress } from '../../utils/helpers';
@@ -114,7 +115,7 @@ export const Layout = ({children}) => {
             </div>
             <div className='layout-wrapper-header'> 
                 <div className={`layout-wrapper-header__balances ${balancesExpanded ? "expanded" : ""}`} onClick={() => setBalancesExpaned(!balancesExpanded)}> 
-                    <img src={pig_icon} width={20} height={20}/>
+                    <img src={theme === "light" ? pig_icon_light : pig_icon} width={20} height={20}/>
                     <p> Protocol Balance </p>
                     <p> 17.02$ </p>
                     {mockUserAssetsList.map((item) => {

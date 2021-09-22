@@ -77,8 +77,7 @@
                     border: 1px solid #40BA93;
                 }
             }
-        }
-        
+        } 
     }
     .acc-history-opened {
         animation: historyMount 1s;
@@ -426,7 +425,20 @@
         }
     }
 }
+
+
+
 .accounts-wrapper-light {
+
+    .acc-hisotry {
+        background-color: white;
+        .acc-hisotry-header {
+            h1 {
+                color: black;
+            }
+        }
+    }
+
     .accounts-wrapper-header {
         color: black;
     }
