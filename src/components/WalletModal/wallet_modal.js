@@ -11,7 +11,6 @@ import tokenPocket from './wallet-icons/token-pocket.svg'
 import safepalWallet from './wallet-icons/safepal-logo.svg'
 
 import './wallet_modal.scss'
-import {authWeb3} from "../../utils/web3Auth"
 import { useWeb3Context } from '../../web3Provider'
 
 const walletList = [
