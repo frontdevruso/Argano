@@ -54,6 +54,7 @@ export const Web3Provider = ({children}) => {
     const disconnectWallet = () => {
 
         setWeb3(null);
+        setUserAssets(null);
         setUserAddress(null);
         setModal(true);        
     }
@@ -88,7 +89,7 @@ export const Web3Provider = ({children}) => {
             {name: "AGOBTC", balance: agobtcBalance, usdBalance: agobtcUsdPrice * agobtcBalance},
             {name: "CNBTC", balance: cnbtcBalance, usdBalance: cnbtcUsdPrice * cnbtcBalance},
         ])
-        
+
     }
 
     const initWeb3 = async (providerName) => {  
@@ -114,7 +115,7 @@ export const Web3Provider = ({children}) => {
             console.log(`Unsupported wallet: ${providerName}`)
             return undefined
         }
-      }
+    }
 
     const providerValues = {
           modal,
