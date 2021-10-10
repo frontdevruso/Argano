@@ -6,12 +6,12 @@ import { TVLChart } from './TVLChart/TVLChart';
 import { Volume24h } from './Volume24h/volume24h';
 import { TokenTransactionTable } from './TokenTransactionsTable/token-transaction-table';
 
-import {ThemeContext} from "../App/App";
 import {getLatestBlock} from "../../utils/getBlocksData";
 import {Error} from "../Error/error";
 import {Loader} from "../Loader/loader";
 
 import './dashboard.scss';
+import { useSystemContext } from '../../systemProvider';
 
 // Dashboard context init
 export const DashboardContext = React.createContext({
@@ -23,7 +23,7 @@ export const DashboardContext = React.createContext({
 
 export const Dashboard = () => {
 
-    const {theme} = useContext(ThemeContext);
+    const {theme} = useSystemContext();
 
     //Dashboard context consumer
     const [latestBlock, setLatestBlock] = useState(null);

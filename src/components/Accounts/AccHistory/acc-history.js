@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
 import calculate_txs from '../../../assets/icons/calculate-txs.svg';
-import { ThemeContext } from '../../App/App';
+import { useSystemContext } from '../../../systemProvider';
 
 
 export const AccHistory = ({isOpened, setIsOpened}) => {
 
 
-    const {theme} = useContext(ThemeContext);
+    const {theme} = useSystemContext()
 
     // const mockUserHistory = [
     //     {

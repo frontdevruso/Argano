@@ -4,12 +4,12 @@ import { TokenIcon } from '../TokenIcon/token_icon';
 import { ResponsiveContainer, Pie, PieChart, Cell, Tooltip } from 'recharts';
 import './accounts.scss';
 import { PortfolioPerfomance } from './PortfolioPerfomance/portfolio_perfomance';
-import { ThemeContext } from '../App/App';
 import { AccHistory } from './AccHistory/acc-history';
+import { useSystemContext } from '../../systemProvider';
 
 export const Accounts = () => {
 
-    const {theme} = useContext(ThemeContext);
+    const {theme} = useSystemContext();
 
     const mockAssetsList = [
         {name: "AGO", value: 10, color: "#40BA93"},

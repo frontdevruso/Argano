@@ -2,15 +2,14 @@ import React, {useContext, useState} from 'react'
 import {Layout} from "../Layout/layout"
 import './mint_redeem.scss'
 import {TokenIcon} from "../TokenIcon/token_icon"
-import {ThemeContext} from "../App/App"
 import {Mint} from './Mint/mint';
 import { Redeem } from './Redeem/redeem'
+import { useSystemContext } from '../../systemProvider';
 
 export const MintRedeem = () => {
 
     const [activeTab, setActiveTab] = useState("Mint")
-    const {theme} = useContext(ThemeContext);
-    const [mintRedeemSettingsModal, setMintRedeemSettingsModal] = useState(false);
+    const {theme} = useSystemContext();
 
     const Content = () => {
 
