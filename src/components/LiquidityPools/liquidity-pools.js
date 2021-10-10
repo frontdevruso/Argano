@@ -6,7 +6,7 @@ import { Liquidity } from './Liquidity/liquidity';
 import { Volume } from './Volume/volume';
 import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from 'recharts';
 import './liquidity-pools.scss';
-import { ThemeContext } from '../App/App';
+import { useSystemContext } from '../../systemProvider';
 
 export const LiquidityPools = () => {
 
@@ -17,7 +17,7 @@ export const LiquidityPools = () => {
         {firstToken: "AGOUSD", secondToken: "USDT", liquidity: "$400,000,000", myLiquidity: "-", apy: "30%"},
         {firstToken: "CNUSD", secondToken: "MATIC", liquidity: "$400,000,000", myLiquidity: "-", apy: "30%"},
     ]);
-    const {theme} = useContext(ThemeContext);
+    const {theme} = useSystemContext();
 
     const [itemChoosenWindow, setItemChoosenWindow] = useState("Volume");
 

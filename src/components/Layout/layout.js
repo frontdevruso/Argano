@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
 import ago_icon from '../../assets/icons/ago-logo.svg';
 import pig_icon from '../../assets/icons/pig-balances.svg';
@@ -6,7 +6,6 @@ import pig_icon_light from '../../assets/icons/pig-balances-light.svg';
 import disconnect_icon from '../../assets/icons/plugging-plugs.svg';
 import disconnect_icon_white from '../../assets/icons/plugging-plugs-white.svg';
 import { formatAddress, formattedNum } from '../../utils/helpers';
-import {ThemeContext, Web3Context} from '../App/App';
 // Dark theme icons.
 import dashboard_black from '../../assets/icons/nav-links/dark-theme/dashboard-black.svg';
 import mint_redeem_black from '../../assets/icons/nav-links/dark-theme/mint-redeem-black.svg';
@@ -28,18 +27,17 @@ import accounts_acitve from '../../assets/icons/nav-links/active/accounts-active
 
 import './layout.scss';
 import { TokenIcon } from '../TokenIcon/token_icon';
-import { useWeb3Context } from '../../web3Provider';
+import { useSystemContext } from '../../systemProvider';
+import { useWeb3React } from '@web3-react/core';
 
 export const Layout = ({children}) => {
 
     const history = useHistory();
-    const {theme, setTheme} = useContext(ThemeContext);
-    const {setModal, disconnectWallet, userAddress, web3, modal, userAssets} = useWeb3Context();
+    const {theme, setTheme, userProtfolio, disconnectWallet, setIsWalletModal} = useSystemContext();
+    const { account } = useWeb3React();
     const [expandSocMedias, setExpandSocMedias] = useState(false);
     const [activeTab, setActiveTab] = useState(history.location.pathname);
     const [balancesExpanded, setBalancesExpaned] = useState(false);
-
-
 
     const pages = [
         {path: "/dashboard", img: dashboard_black, imgActive: dashboard_active},
@@ -50,32 +48,10 @@ export const Layout = ({children}) => {
         {path: "/accounts", img: accounts_black, imgActive: accounts_acitve},
     ]
 
-    const mockUserAssetsList = [
-        {name: "AGO", value: 10, portfolioPrecente: 12.5, color: "#EF3725"},
-        {name: "AGOUSD", value: 10, portfolioPrecente: 12.5, color: "blue"},
-        {name: "AGOBTC", value: 10, portfolioPrecente: 12.5, color: "#EFBF14"},
-        {name: "CNUSD", value: 10, portfolioPrecente: 12.5, color: "black"},
-        {name: "CNBTC", value: 10, portfolioPrecente: 12.5, color: "green"},
-        {name: "MATIC", value: 10, portfolioPrecente: 12.5, color: "violet"},
-        {name: "USDT", value: 10, portfolioPrecente: 12.5, color: "gray"},
-        // {name: "WBTC", value: 0.000001244423423, portfolioPrecente: 12.5, color: "blue"},
-    ]
-
-    console.log(modal)
-
-    const handleConnection = () => {
-        if (web3) {
-            disconnectWallet()
-        }
-        else {
-            setModal(true)
-        }
-    }
-
     return (
         <div className={`layout-wrapper ${theme === "light" ? "layout-light" : ""}`}> 
             <div className='layout-wrapper__sidebar'> 
-                <img src={ago_icon} width={47} height={42}/>
+                <img src={ago_icon} width={47} height={42} alt="ago-coin"/>
                 <ul> 
                     <div onMouseEnter={() => setExpandSocMedias(true)} onMouseLeave={() => setExpandSocMedias(false)} className={`social-medias-expanded-list ${theme === "light" ? " soc-list-light": ""} ${expandSocMedias ? " opened-expanded-list" : ""}`}> 
                         <a href="#"> <i class="fas fa-envelope"></i> </a>
@@ -88,12 +64,12 @@ export const Layout = ({children}) => {
                     {pages.map((item) => {
                         return (
                             <li className={activeTab === item.path ? "active-nav-tab" : ""}>
-                                <NavLink to={item.path} onClick={() => setActiveTab(item.path)}><img src={activeTab === item.path ? item.imgActive : item.img} width={20} height={20}/></NavLink>
+                                <NavLink to={item.path} onClick={() => setActiveTab(item.path)}><img src={activeTab === item.path ? item.imgActive : item.img} width={20} height={20} alt={`${item.path}`}/></NavLink>
                             </li> 
                         )
                     })}
                     <li onMouseEnter={() => setExpandSocMedias(true)} >
-                        <img src={comments_black} width={20} height={20}/>
+                        <img src={comments_black} width={20} height={20} alt={'comments'}/>
                     </li>
                 </ul>
                 <div className={`layout-wrapper__sidebar__links ${theme === "light" ? " links-light" : ""}`}> 
@@ -115,19 +91,19 @@ export const Layout = ({children}) => {
             </div>
             <div className='layout-wrapper-header'> 
                 <div className={`layout-wrapper-header__balances ${balancesExpanded ? "expanded" : ""}`} onClick={() => setBalancesExpaned(!balancesExpanded)}> 
-                    <img src={theme === "light" ? pig_icon_light : pig_icon} width={20} height={20}/>
+                    <img src={theme === "light" ? pig_icon_light : pig_icon} width={20} height={20} alt="balance"/>
                     <p> Protocol Balance </p>
-                    <p> { userAssets ? formattedNum(userAssets.reduce((a, {usdBalance}) => a + usdBalance, 0)) : 0.00 }$ </p>
-                    {userAssets?.map((item) => {
+                    <p> { userProtfolio ? formattedNum(userProtfolio.reduce((a, {userUsdBalance}) => a + userUsdBalance, 0)) : 0.00 }$ </p>
+                    {userProtfolio?.map((item) => {
                         return (
-                            <span className='token-asset-list'> <TokenIcon iconName={item.name}/> <span> {formattedNum(+item.balance)}{item.name}/{formattedNum(item.usdBalance)}$ </span> </span>
+                            <span className='token-asset-list'> <TokenIcon iconName={item.name}/> <span> {formattedNum(+item.userNativeBalance)}{item.name}/{formattedNum(item.userUsdBalance)}$ </span> </span>
                         )
                     })}
                 </div>
                 <div className={`layout-wrapper-header__connect-wallet`}> 
-                    <span> {userAddress && web3 ? formatAddress(userAddress) : "Connect Wallet"}</span>
-                    <button onClick={() => handleConnection()}>
-                        {userAddress && web3 ?  <img src={theme === "dark" ? disconnect_icon_white : disconnect_icon}/> : <i className="fas fa-plug"/>}
+                    <span> {account ? formatAddress(account) : "Connect Wallet"}</span>
+                    <button onClick={() => account ?  disconnectWallet() : setIsWalletModal(true)}>
+                        {account ? <img src={theme === "dark" ? disconnect_icon_white : disconnect_icon} alt="disconnect-connect"/> : <i className="fas fa-plug"/>}
                     </button>
                 </div>
             </div>

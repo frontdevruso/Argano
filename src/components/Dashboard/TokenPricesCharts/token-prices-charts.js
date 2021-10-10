@@ -3,11 +3,12 @@ import { formattedNum } from '../../../utils/helpers';
 import arrowUp from './arrow-up.svg';
 import arrowDown from './arrow-down.svg';
 import { LineChart, XAxis, Line, ResponsiveContainer, Tooltip } from 'recharts';
-import { ThemeContext } from '../../App/App';
+import {  } from '../../App/App';
+import { useSystemContext } from '../../../systemProvider';
 export const TokenPricesCharts = () => {
 
     const [expandWindow, setExpandWindow] = useState(false);
-    const {theme} = useContext(ThemeContext);
+    const {theme} = useSystemContext();
 
     const [tokensData, setTokensData] = useState([
         {

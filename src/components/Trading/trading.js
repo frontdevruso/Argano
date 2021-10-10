@@ -9,7 +9,7 @@ import swap_trading_dark from '../../assets/icons/swap-trading-dark.svg';
 import {TradingChart} from './trading-chart/trading-chart';
 import { TokenIcon } from '../TokenIcon/token_icon';
 import './trading.scss';
-import { ThemeContext } from '../App/App';
+import { useSystemContext } from '../../systemProvider';
 
 export const Trading = () => {
 
@@ -18,7 +18,7 @@ export const Trading = () => {
     const [chartDimensions, setChartDimensions] = useState(null);
     const [loading, setLoading] = useState(true);
     const [chartData, setChartData] = useState(null);
-    const {theme} = useContext(ThemeContext);
+    const {theme} = useSystemContext();
 
     useEffect(() => {
 

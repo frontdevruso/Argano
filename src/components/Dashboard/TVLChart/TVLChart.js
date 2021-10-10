@@ -1,10 +1,10 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import { LineChart, Line, Tooltip, XAxis, ResponsiveContainer } from 'recharts';
+import { useSystemContext } from '../../../systemProvider';
 import { formattedNum } from '../../../utils/helpers';
-import { ThemeContext } from '../../App/App';
 export const TVLChart = () => {
 
-    const {theme} = useContext(ThemeContext);
+    const {theme} = useSystemContext();
 
     const data = [
         {time: '01', uv: 100000, date: "Jul 1, 2021"},

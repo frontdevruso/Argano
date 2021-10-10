@@ -1,13 +1,12 @@
 import React, { useContext, useState } from 'react';
-import { ThemeContext } from '../App/App';
-import {Layout} from '../Layout/layout';
+import { useSystemContext } from '../../systemProvider';
 import { TokenIcon } from '../TokenIcon/token_icon';
 import claimRewardIcon from './claim-reward.svg';
 import './staking-rewards.scss';
 
 export const StakingRewards = () => {
 
-    const {theme} = useContext(ThemeContext);
+    const {theme} = useSystemContext();
 
     const stakingPools = [
         {name: "Argano", symbol: "AGO", roi: "30%", contract: "0x213fsar124f12f1r31fsdfg34t9"},

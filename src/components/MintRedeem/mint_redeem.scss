@@ -239,6 +239,12 @@
                 box-shadow: -6px -6px 30px rgba(51, 51, 51, 0.25), 4px 4px 20px rgba(0, 0, 0, 0.25);
                 border-radius: 30px;
                 cursor: pointer;
+                &:disabled {
+                    background-color: lightgray;
+                    cursor: none;
+                    pointer-events: none;
+                    color: black;
+                }
             }
         }
     }

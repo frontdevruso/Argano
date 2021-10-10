@@ -1,11 +1,11 @@
 import React, {useState, useRef, useContext} from 'react';
 import { BarChart, XAxis, Bar, Tooltip, ResponsiveContainer, Cell, YAxis, CartesianGrid } from 'recharts';
+import { useSystemContext } from '../../../systemProvider';
 import { formattedNum } from '../../../utils/helpers';
-import { ThemeContext } from '../../App/App';
 
 export const Volume = () => {
 
-    const {theme} = useContext(ThemeContext);
+    const {theme} = useSystemContext();
 
     const data = [
         {time: '01', uv: 100000, date: "Jul 1, 2021"},

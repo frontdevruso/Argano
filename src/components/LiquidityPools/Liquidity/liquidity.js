@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { ThemeContext } from '../../App/App';
+import { useSystemContext } from '../../../systemProvider';
 
 export const Liquidity = () => {
 
-  const {theme} = useContext(ThemeContext);
+  const {theme} = useSystemContext();
 
     const data = [
         {time: '01', uv: 100000, date: "Jul 1, 2021"},

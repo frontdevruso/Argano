@@ -2,12 +2,12 @@ import React, {useContext, useEffect, useState} from 'react';
 import {DashboardContext} from "../dashboard";
 import {Loader} from "../../Loader/loader";
 import {getTokenPairs, getTokenTransactions} from "../../../utils/getDashboardData";
-import { ThemeContext } from '../../App/App';
+import { useSystemContext } from '../../../systemProvider';
 
 
 export const TokenTransactionTable = () => {
 
-    const {theme} = useContext(ThemeContext);
+    const {theme} = useSystemContext();
     const [activeTab, setActiveTab] = useState("All");
     const [transactionDataAll, setTransactionDataAll] = useState([]);
     const [filteredTransactionData, setFilteredTransactionData] = useState([]);
