@@ -17,6 +17,8 @@ export const useSystemContext = () => useContext(SystemContext);
 
 export const SystemProvider = ({children}) => {
 
+    const {account, activate, active, library, deactivate} = useWeb3React();
+
     const [theme, setTheme] = useState("dark");
 
     const [mintRedeemCurrency, setMintRedeemCurrency] = useState("AGOUSD");
@@ -27,11 +29,8 @@ export const SystemProvider = ({children}) => {
 
     const [userProtfolio, setUserPortfolio] = useState(null);
     const [isWalletModal, setIsWalletModal] = useState(false);
-    const {account, activate, active, library, deactivate} = useWeb3React();
 
-    const hook = useWeb3React();
-
-    console.log(hook);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         metaMask.isAuthorized()
@@ -57,6 +56,15 @@ export const SystemProvider = ({children}) => {
         }
 
     }, [active, library, tokens, account]);
+
+    useEffect(() => {
+
+        if (userProtfolio) {
+            setLoading(false);
+        }
+
+
+    }, [userProtfolio])
 
 
     const initTokens = async () => {
@@ -130,15 +138,25 @@ export const SystemProvider = ({children}) => {
 
     }
 
+    const getTokenBalance = (name) => {
+
+        if (userProtfolio) {
+            return parseFloat(userProtfolio.find((item) => item.name === name).userNativeBalance).toFixed(2)
+        }
+
+    }
+
     const systemValue = {
         theme,
         setTheme,
         mintRedeemCurrencyModal,
         setMintRedeemCurrencyModal,
         mintRedeemCurrency,
+        getTokenBalance,
         setMintRedeemCurrency,
         connectWallet,
         disconnectWallet,
+        loading,
         isWalletModal,
         setIsWalletModal,
         tokens,

@@ -38,3 +38,6 @@ export const network = new NetworkConnector({ urls: { 137: "https://rpc-mainnet.
 
 // Message keys
 export const MINT_REDEEM_KEY = "MINT_REDEEM_KEY";
+
+// Other
+export const MAX_INT = '115792089237316195423570985008687907853269984665640564039457584007913129639935';
