@@ -29,11 +29,14 @@ import './layout.scss';
 import { TokenIcon } from '../TokenIcon/token_icon';
 import { useSystemContext } from '../../systemProvider';
 import { useWeb3React } from '@web3-react/core';
+import { Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
+
 
 export const Layout = ({children}) => {
 
     const history = useHistory();
-    const {theme, setTheme, userProtfolio, disconnectWallet, setIsWalletModal} = useSystemContext();
+    const {theme, setTheme, userProtfolio, disconnectWallet, setIsWalletModal, loading} = useSystemContext();
     const { account } = useWeb3React();
     const [expandSocMedias, setExpandSocMedias] = useState(false);
     const [activeTab, setActiveTab] = useState(history.location.pathname);
@@ -47,6 +50,8 @@ export const Layout = ({children}) => {
         {path: "/trading", img: trading_black, imgActive: trading_active},
         {path: "/accounts", img: accounts_black, imgActive: accounts_acitve},
     ]
+
+    const loadingIcon = <LoadingOutlined style={{fontSize: 100, color: "#40BA93", position: "fixed", top: "50%", left: "50%"}}/>
 
     return (
         <div className={`layout-wrapper ${theme === "light" ? "layout-light" : ""}`}> 
@@ -108,7 +113,13 @@ export const Layout = ({children}) => {
                 </div>
             </div>
             <div className='layout-wrapper__content'> 
-                {children}
+                    <>
+                        {loading ? 
+                            <Spin size="large" indicator={loadingIcon}/>    
+                        :
+                            children
+                        }
+                    </>
             </div>
         </div>
     )

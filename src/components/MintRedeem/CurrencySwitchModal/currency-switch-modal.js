@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Switch } from 'antd';
 import './currency-switch-modal.scss';
 import { useSystemContext } from '../../../systemProvider';
@@ -6,9 +6,6 @@ import { useSystemContext } from '../../../systemProvider';
 export const CurrencySwitchModal = () => {
 
     const {setMintRedeemCurrencyModal, mintRedeemCurrencyModal, setMintRedeemCurrency, mintRedeemCurrency, theme} = useSystemContext();
-
-    console.log(mintRedeemCurrency);
-
 
     return (
         <>

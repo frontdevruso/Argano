@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react'
 import {Layout} from "../Layout/layout"
 import './mint_redeem.scss'
 import {TokenIcon} from "../TokenIcon/token_icon"
-import {Mint} from './Mint/mint';
+import Mint from './Mint/mint';
 import { Redeem } from './Redeem/redeem'
 import { useSystemContext } from '../../systemProvider';
 
