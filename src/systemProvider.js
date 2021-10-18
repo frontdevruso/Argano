@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useWeb3React } from '@web3-react/core';
+import { useWeb3React, UnsupportedChainIdError } from '@web3-react/core';
 import { NoEthereumProviderError, UserRejectedRequestError } from '@web3-react/injected-connector';
 import { metaMask, network } from './constants';
 import ERC20_ABI from './abi/ERC20.json';
@@ -7,9 +7,10 @@ import TREASURY_ABI from './abi/TREASURY.json';
 import STABLE_ABI from './abi/STABLE.json';
 import SHARE_ABI from './abi/SHARE.json';
 import STABLE_POOL_ABI from './abi/STABLE_POOL.json';
-
+import TOKEN_ORACLE_ABI from './abi/TOKEN_ORACLE.json';
 import { CONTRACT_ADRESESS, MOCK_PRICE_ADDRESS, USD_PRICE_ENDPOINT } from './constants';
 import { formatFromDecimal } from './utils/helpers';
+import { message } from 'antd';
 
 
 const SystemContext = React.createContext();
@@ -17,7 +18,7 @@ export const useSystemContext = () => useContext(SystemContext);
 
 export const SystemProvider = ({children}) => {
 
-    const {account, activate, active, library, deactivate} = useWeb3React();
+    const {account, activate, active, library, deactivate, error} = useWeb3React();
 
     const [theme, setTheme] = useState("dark");
 
@@ -30,6 +31,9 @@ export const SystemProvider = ({children}) => {
     const [userProtfolio, setUserPortfolio] = useState(null);
     const [isWalletModal, setIsWalletModal] = useState(false);
 
+    const [mintRedeemInfo, setMintRedeemInfo] = useState(null);
+    const [mintRedeemSlipage, setMintRedeemSlipage] = useState(3);
+
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -40,10 +44,25 @@ export const SystemProvider = ({children}) => {
             }
             else {
                 activate(network);
+                setLoading(false);
             }
         })
 
     }, [])
+
+    useEffect(() => {
+
+        if (error instanceof UnsupportedChainIdError ) {
+            message.error({content: "You choose wrong network in your wallet please change it to Polygon Mainnet", key: "NETWORK", className: "ant-argano-message", duration: 3000})
+        }
+        else {
+            message.success({content: "Success!", key: "NETWORK", className: "ant-argano-message", duration: 3})
+        }
+
+        console.log(error);
+
+    }, [error])
+
 
     useEffect(() => {
 
@@ -56,6 +75,14 @@ export const SystemProvider = ({children}) => {
         }
 
     }, [active, library, tokens, account]);
+
+    useEffect(() => {
+
+        if (contracts && account) {
+            getMintRedeemInfo();
+        }
+
+    }, [contracts, mintRedeemCurrency])
 
     useEffect(() => {
 
@@ -111,6 +138,26 @@ export const SystemProvider = ({children}) => {
 
     }
 
+    const getMintRedeemInfo = async () => {
+
+        // FIXME: Onchange currency for AGOUSD and AGOBTC
+
+        console.log("CHANGING CURRENCY!")
+
+
+        const info = await contracts.TREASURY_AGOUSD.methods.info(account).call();
+        const poolBalance = formatFromDecimal(await contracts.POOL_AGOUSD.methods.collateralDollarBalance().call(), 18);
+        //TODO: Inputs first: TCR second: 100 - TCR,
+
+        setMintRedeemInfo({
+            mintFee: formatFromDecimal(info["5"], 6) * 100,
+            redeemFee: formatFromDecimal(info["6"], 6) * 100,
+            poolBalance,
+            rates: formatFromDecimal(info["1"], 18)
+        })
+
+    }
+
     const disconnectWallet = () => {
         deactivate();
         activate(network);
@@ -128,8 +175,18 @@ export const SystemProvider = ({children}) => {
                 decimals: await item[1].instance.methods.decimals().call()
             }
 
-            obj.userNativeBalance = formatFromDecimal(obj.userNativeBalance, obj.decimals)  
+            obj.userNativeBalance = parseInt(formatFromDecimal(obj.userNativeBalance, obj.decimals))  
             obj.userUsdBalance = parseInt(obj.userNativeBalance) * usdBalance[MOCK_PRICE_ADDRESS[item[0]]].usd
+
+            if (item[0].startsWith("AGO")) {
+                obj.color = "#40BA93"
+            }
+            else if (item[0].startsWith("CN")) {
+                obj.color = "#EFBF14"
+            }
+            else {
+                obj.color = "#B3362A"
+            }
 
             return obj
         })
@@ -161,7 +218,10 @@ export const SystemProvider = ({children}) => {
         setIsWalletModal,
         tokens,
         contracts,
-        userProtfolio
+        userProtfolio,
+        mintRedeemSlipage,
+        setMintRedeemSlipage,
+        mintRedeemInfo,
     }
 
     return (

@@ -96,14 +96,22 @@ export const Layout = ({children}) => {
             </div>
             <div className='layout-wrapper-header'> 
                 <div className={`layout-wrapper-header__balances ${balancesExpanded ? "expanded" : ""}`} onClick={() => setBalancesExpaned(!balancesExpanded)}> 
-                    <img src={theme === "light" ? pig_icon_light : pig_icon} width={20} height={20} alt="balance"/>
-                    <p> Protocol Balance </p>
-                    <p> { userProtfolio ? formattedNum(userProtfolio.reduce((a, {userUsdBalance}) => a + userUsdBalance, 0)) : 0.00 }$ </p>
-                    {userProtfolio?.map((item) => {
-                        return (
-                            <span className='token-asset-list'> <TokenIcon iconName={item.name}/> <span> {formattedNum(+item.userNativeBalance)}{item.name}/{formattedNum(item.userUsdBalance)}$ </span> </span>
-                        )
-                    })}
+                <>
+                    {account ? 
+                        <>
+                            <img src={theme === "light" ? pig_icon_light : pig_icon} width={20} height={20} alt="balance"/>
+                            <p> Protocol Balance </p>
+                            <p> { userProtfolio ? formattedNum(userProtfolio.reduce((a, {userUsdBalance}) => a + userUsdBalance, 0)) : 0.00 }$ </p>
+                            {userProtfolio?.map((item) => {
+                                return (
+                                    <span className='token-asset-list'> <TokenIcon iconName={item.name}/> <span> {formattedNum(+item.userNativeBalance)}{item.name}/{formattedNum(item.userUsdBalance)}$ </span> </span>
+                                )
+                            })}
+                        </>
+                        :
+                        <p> No balance, connect wallet! </p> 
+                    }
+                </>
                 </div>
                 <div className={`layout-wrapper-header__connect-wallet`}> 
                     <span> {account ? formatAddress(account) : "Connect Wallet"}</span>
@@ -114,8 +122,8 @@ export const Layout = ({children}) => {
             </div>
             <div className='layout-wrapper__content'> 
                     <>
-                        {loading ? 
-                            <Spin size="large" indicator={loadingIcon}/>    
+                        {loading ?
+                            <Spin size="large" indicator={loadingIcon}/>  
                         :
                             children
                         }

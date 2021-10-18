@@ -5,11 +5,14 @@ import {TokenIcon} from "../TokenIcon/token_icon"
 import Mint from './Mint/mint';
 import { Redeem } from './Redeem/redeem'
 import { useSystemContext } from '../../systemProvider';
+import { formattedNum } from '../../utils/helpers';
+import { useWeb3React } from '@web3-react/core';
 
 export const MintRedeem = () => {
 
-    const [activeTab, setActiveTab] = useState("Mint")
-    const {theme} = useSystemContext();
+    const [activeTab, setActiveTab] = useState("Mint");
+    const {account} = useWeb3React();
+    const {theme, mintRedeemSlipage, mintRedeemInfo} = useSystemContext();
 
     const Content = () => {
 
@@ -24,19 +27,22 @@ export const MintRedeem = () => {
     }
 
     return (
-            <div className={`mint-redeem-wrapper ${theme === "light" ? " mint-redeem-wrapper-light" : ""}`}>
+
+        <>
+            {account ? 
+                <div className={`mint-redeem-wrapper ${theme === "light" ? " mint-redeem-wrapper-light" : ""}`}>
                 <div className='mint-redeem-header'> 
                     <h1>Mint/Redeem</h1>
                 </div>   
                 <div className='mint-redeem-tx-info'> 
                     <div>
-                        <span> Minting fee: <b>0.20%</b></span>
+                        <span> {activeTab === "Mint" ? "Minting" : "Redeem"} fee: <b>{activeTab === "Mint" ?  mintRedeemInfo.mintFee : mintRedeemInfo.redeemFee}%</b></span>
                         <i class="fas fa-circle"></i>
-                        <span> Pool balance: <b>$9,003,073.6227</b></span>
+                        <span> Pool balance: <b>${formattedNum(mintRedeemInfo.poolBalance)}</b></span>
                         <i class="fas fa-circle"></i>
-                        <span> Slippage: <b>0.10%</b></span>
+                        <span> Slippage: <b>{mintRedeemSlipage}%</b></span>
                         <i class="fas fa-circle"></i>
-                        <span> Rates: <span> 51 <b>WBTC</b> = 51.500 <b>AGOBTC</b> </span> </span>
+                        <span> Rates: <span> 1 <b>AGOUSD</b> = {mintRedeemInfo.rates} <b>USDT</b> </span> </span>
                         <span> <a href="https://polygonscan.com/"> View contracts on PolygonScan </a> <i class="fas fa-external-link-alt"></i> </span>
                     </div>
                 </div>
@@ -48,6 +54,11 @@ export const MintRedeem = () => {
                 </div>
                 <Content/>
             </div>
+            :
+            <h1 className='connect-wallet-alert'> Please connect wallet to use Mint/Redeem page </h1>            
+        }
+
+        </>
     )
 }
 

@@ -5,89 +5,12 @@ import arrowDown from './arrow-down.svg';
 import { LineChart, XAxis, Line, ResponsiveContainer, Tooltip } from 'recharts';
 import {  } from '../../App/App';
 import { useSystemContext } from '../../../systemProvider';
+import { useDashboardContext } from '../../../providers/dashboard-provider';
 export const TokenPricesCharts = () => {
 
     const [expandWindow, setExpandWindow] = useState(false);
     const {theme} = useSystemContext();
-
-    const [tokensData, setTokensData] = useState([
-        {
-            name: "AGOUSD",
-            price: formattedNum(1),
-            dayPercent: "-3%",
-            priceData: [
-                {value: 10, time: "01"},
-                {value: 20, time: "02"},
-                {value: 20, time: "03"},
-                {value: 17, time: "04"},
-                {value: 20, time: "05"},
-                {value: 15, time: "06"},
-                {value: 13, time: "07"},
-                {value: 14, time: "08"},
-                {value: 10, time: "09"},
-                {value: 12, time: "10"},
-                {value: 9, time: "11"},
-                {value: 7, time: "12"},
-            ]
-        },
-        {
-            name: "CNUSD",
-            price: formattedNum(10),
-            dayPercent: "+10%",
-            priceData: [
-                {value: 10, time: "01"},
-                {value: 20, time: "02"},
-                {value: 20, time: "03"},
-                {value: 17, time: "04"},
-                {value: 20, time: "05"},
-                {value: 15, time: "06"},
-                {value: 13, time: "07"},
-                {value: 14, time: "08"},
-                {value: 10, time: "09"},
-                {value: 12, time: "10"},
-                {value: 9, time: "11"},
-                {value: 7, time: "12"},
-            ]
-        },
-        {
-            name: "AGOBTC",
-            price: formattedNum(38369),
-            dayPercent: "+20%",
-            priceData: [
-                {value: 10, time: "01"},
-                {value: 20, time: "02"},
-                {value: 20, time: "03"},
-                {value: 17, time: "04"},
-                {value: 20, time: "05"},
-                {value: 15, time: "06"},
-                {value: 13, time: "07"},
-                {value: 14, time: "08"},
-                {value: 10, time: "09"},
-                {value: 12, time: "10"},
-                {value: 9, time: "11"},
-                {value: 7, time: "12"},
-            ]
-        },
-        {
-            name: "CNBTC",
-            price: formattedNum(220),
-            dayPercent: "-15%",
-            priceData: [
-                {value: 10, time: "01"},
-                {value: 20, time: "02"},
-                {value: 20, time: "03"},
-                {value: 17, time: "04"},
-                {value: 20, time: "05"},
-                {value: 15, time: "06"},
-                {value: 13, time: "07"},
-                {value: 14, time: "08"},
-                {value: 10, time: "09"},
-                {value: 12, time: "10"},
-                {value: 9, time: "11"},
-                {value: 7, time: "12"},
-            ]
-        }    
-    ])
+    const {dashTokens} = useDashboardContext()
 
     const CustomToolTip = ({active, payload, label}) => {
 
@@ -118,9 +41,9 @@ export const TokenPricesCharts = () => {
             <ResponsiveContainer width={'100%'} height={"80%"}>
                 <LineChart
                 margin={{
-                    top: 5,
+                    top: 50,
                     right: 30,
-                    left: 20,
+                    left: 30,
                     bottom: 1,
                 }}  
                 data={data}
@@ -143,8 +66,7 @@ export const TokenPricesCharts = () => {
                         axisLine={false}
                         tickLine={false}
                         stroke={tickColor}
-                        // tickFormatter={(time) => dayjs(time).format('DD')}
-                        minTickGap={10}
+                        minTickGap={5}
                     />
                     :
                     ""
@@ -164,9 +86,10 @@ export const TokenPricesCharts = () => {
             className={`charts-wrapper-block ${expandWindow ? "expanded-chart-block" : ""} dashBox ${theme === "light" ? " dashBoxLight" : ""}`}
 
         >
-            {tokensData.map((item, _ind) => {
+            {dashTokens.map((item, _ind) => {
 
-                const Arrow = item.dayPercent.charAt(0) === "+" ? <img src={arrowUp}/> : <img src={arrowDown}/>
+
+                const Arrow = item.change24h.charAt(0) === "-" ? <img src={arrowDown}/> : <img src={arrowUp}/>
 
                 const expandClassName = showChart.active && showChart.index === _ind ? "expand-price-block" : "";
 
@@ -177,9 +100,9 @@ export const TokenPricesCharts = () => {
                         key={_ind}
                     > 
                         <h3> {item.name} </h3>
-                        <h1> ${item.price} </h1>
-                        <span> {Arrow} {item.dayPercent} <span>(24h)</span> </span>
-                        {_ind !== tokensData.length - 1 ? 
+                        <h1> ${item.currentPrice} </h1>
+                        <span> {Arrow} {item.change24h} <span>(24h)</span> </span>
+                        {_ind !== dashTokens.length - 1 ? 
                             <div id={_ind + "-line-block"} className='price-block__border-line' style={{display: expandWindow && (_ind === 0 || _ind === 2) ? "none" : "block"}}> </div> 
                             :
                             ""
@@ -187,16 +110,16 @@ export const TokenPricesCharts = () => {
                         {showChart.active && showChart.index === _ind ? 
 
                             <div className='chart-mini-block'>
-                                <Chart data={item.priceData} fullSize={false}/>
+                                <Chart data={item.chartPrices} fullSize={false}/>
                             </div>
                             :
                             ""
                         }
                         {expandWindow ?
                             <>
-                                <Chart data={item.priceData} fullSize={true}/>
-                                <span className='supply'>  <text>Supply:</text> <b> $253.22k </b> </span>
-                                <span className='market-cap'> <text>Market cap: </text>  <b>$253.22k</b> </span>
+                                <Chart data={item.chartPrices} fullSize={true}/>
+                                <span className='supply'>  <text>Supply:</text> <b> {formattedNum(item.supply)} $ </b> </span>
+                                <span className='market-cap'> <text>Market cap: </text>  <b>{ formattedNum(item.marketCap)} $</b> </span>
                             </>
                             :
                             ""                        
