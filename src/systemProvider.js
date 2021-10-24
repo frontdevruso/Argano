@@ -106,13 +106,13 @@ export const SystemProvider = ({children}) => {
 
 
         setTokens({
-            AGO: {instance: AGO, decimals: await AGO.methods.decimals().call()},
-            AGOUSD: {instance: AGOUSD, decimals: await AGOUSD.methods.decimals().call()},
-            AGOBTC: {instance: AGOBTC, decimals: await AGOBTC.methods.decimals().call()},
-            CNUSD: {instance: CNUSD, decimals: await CNUSD.methods.decimals().call()},
-            CNBTC: {instance: CNBTC, decimals: await CNBTC.methods.decimals().call()},
-            USDT: {instance: USDT, decimals: await USDT.methods.decimals().call()},
-            WBTC: {instance: WBTC, decimals: await WBTC.methods.decimals().call()}
+            AGO: {name: "AGO",instance: AGO, decimals: await AGO.methods.decimals().call()},
+            AGOUSD: {name: "AGOUSD",instance: AGOUSD, decimals: await AGOUSD.methods.decimals().call()},
+            AGOBTC: {name: "AGOBTC",instance: AGOBTC, decimals: await AGOBTC.methods.decimals().call()},
+            CNUSD: {name: "CNUSD",instance: CNUSD, decimals: await CNUSD.methods.decimals().call()},
+            CNBTC: {name: "CNBTC",instance: CNBTC, decimals: await CNBTC.methods.decimals().call()},
+            USDT: {name: "USDT",instance: USDT, decimals: await USDT.methods.decimals().call()},
+            WBTC: {name: "WBTC",instance: WBTC, decimals: await WBTC.methods.decimals().call()}
         });
 
     }

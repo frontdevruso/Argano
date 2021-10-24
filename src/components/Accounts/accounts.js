@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import history_accounts from '../../assets/icons/history-accounts.svg';
 import { TokenIcon } from '../TokenIcon/token_icon';
 import { ResponsiveContainer, Pie, PieChart, Cell, Tooltip } from 'recharts';
@@ -12,9 +12,16 @@ import { formattedNum } from '../../utils/helpers';
 export const Accounts = () => {
 
     const {theme, userProtfolio} = useSystemContext();
+    const [sumUserBalances, setSumUserBalances] = useState(0.00);
     const {account} = useWeb3React();
 
-    const sumUserBalance = formattedNum(userProtfolio.reduce((a, {userUsdBalance}) => a + userUsdBalance, 0));
+    useEffect(() => {
+
+        if (userProtfolio) {
+            setSumUserBalances(formattedNum(userProtfolio.reduce((a, {userUsdBalance}) => a + userUsdBalance, 0)))
+        }
+    
+    }, [userProtfolio])
  
     const [historyOpened, setHistoryOpened] = useState(false);
 
@@ -87,10 +94,10 @@ export const Accounts = () => {
             <div className="accounts-wrapper-portoflio-assets main-block"> 
                 <div className='accounts-wrapper-portoflio-assets__header'> 
                     <div> 
-                        <h1> ${sumUserBalance} </h1>
+                        <h1> ${sumUserBalances} </h1>
                         <h1> -$0.175557 (1.2%) </h1>
                     </div>
-                    <button onClick={() => setHistoryOpened(true)}> History <img src={history_accounts}/> </button>
+                    <button onClick={() => setHistoryOpened(true)}> History <img src={history_accounts} alt={"history"}/> </button>
                 </div>
                 <div className='accounts-wrapper-portoflio-assets__assets-chart-info'> 
                     <div className='accounts-wrapper-portoflio-assets__assets-chart-info__pie-chart'>
@@ -161,9 +168,7 @@ export const Accounts = () => {
         </div>
         :
         <h1 className='connect-wallet-alert'> Please connect wallet to use Accounts page. </h1>
-
-        }
-        
+        }       
         </>
     )
 }

@@ -1,9 +1,12 @@
 import React, {useState} from 'react';
 
 import { ResponsiveContainer, LineChart, Line, Tooltip, XAxis} from 'recharts';
+import { useSystemContext } from '../../../systemProvider';
 import { formattedNum } from '../../../utils/helpers';
 
 export const PortfolioPerfomance = () => {
+
+    const {userPortfolio} = useSystemContext();
 
     const mockPortfolioPerfChart = [
         {time: '01', uv: 100, date: "Jul 1, 2021"},
@@ -23,6 +26,10 @@ export const PortfolioPerfomance = () => {
         {time: '15', uv: 100, date: "Jul 15, 2021"},
         {time: '16', uv: 150, date: "Jul 16, 2021"},
     ]
+
+    const getPortfolioData = async () => {
+
+    }
 
     const [portfolioPerfValue, setPortfolioPerfValue] = useState(mockPortfolioPerfChart[mockPortfolioPerfChart.length - 1].uv);
 
@@ -52,10 +59,6 @@ export const PortfolioPerfomance = () => {
                     bottom: 1,
                 }}  
                 data={mockPortfolioPerfChart}
-                // onMouseLeave={() => setChartValue({
-                //     time: data[data.length-1].date,
-                //     value: data[data.length-1].uv
-                // })}
                 >
                 <Line
                     type="monotone"

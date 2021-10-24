@@ -1,26 +1,35 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import calculate_txs from '../../../assets/icons/calculate-txs.svg';
 import { useSystemContext } from '../../../systemProvider';
+import { useWeb3React } from '@web3-react/core';
+import axios from 'axios';
 
 
 export const AccHistory = ({isOpened, setIsOpened}) => {
 
 
+    const {account} = useWeb3React();
     const {theme} = useSystemContext()
 
-    // const mockUserHistory = [
-    //     {
-    //         date: "September 20, 2021",
-    //         actions: [
-    //             {name: "Approve", time: "01:05 PM EST", contractName: "Treasury", address: "0x6e6Baf3A4fE4b2290C7E9C40a06dEe9026931fF5"},
-    //             {name: "Mint", time: "01:07 PM EST",  txCost: "20.00 MATIC", contractName: "Treasury", address: "0x6e6Baf3A4fE4b2290C7E9C40a06dEe9026931fF5"},
-    //             {name: "Approve", time: "01:05 PM EST", txCost: "0.00 MATIC", contractName: "Treasury", address: "0x6e6Baf3A4fE4b2290C7E9C40a06dEe9026931fF5"},
-    //         ]
-    //     },
-    //     {date: "September 19, 2021"},
-    //     {date: "September 18, 2021"},
-    //     {date: "September 17, 2021"},
-    // ]
+    const [history, setHistory] = useState(null);
+    const [data, setData] = useState(null);
+
+    useEffect(() => {
+
+        
+        const fetchData = async () => {
+            const {data} = await axios.get("https://argano-rest-api-sever.herokuapp.com/api/userActions/?address=0x0")
+            setData(data)
+        }
+
+
+        fetchData()
+
+
+    }, [])
+
+
+    console.log(data);
 
 
     return (
