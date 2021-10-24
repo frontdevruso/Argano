@@ -520,3 +520,19 @@
         }
     }
 }
+
+.pie-account-custom {
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr;
+    width: fit-content;
+    height: 60px;
+    border-radius: 16px;
+    background-color: #171717;
+    color: white;
+    place-items: center;
+    img {
+        width: 25px;
+        height: 25px;
+    }
+    font-size: 18px;
+}   

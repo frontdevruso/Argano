@@ -3,9 +3,10 @@ import { TokenIcon } from '../../TokenIcon/token_icon';
 import setting_cog from '../../../assets/icons/setting-cog.svg';
 import { useWeb3React } from '@web3-react/core';
 import { useSystemContext } from '../../../systemProvider';
-import { CONTRACT_ADRESESS } from '../../../constants';
+import { CONTRACT_ADRESESS, MINT_REDEEM_KEY } from '../../../constants';
 import { MAX_INT } from '../../../constants';
-import { formatToDecimal } from '../../../utils/helpers';
+import { formatFromDecimal, formatToDecimal } from '../../../utils/helpers';
+import { message } from 'antd';
 
 export const Redeem = () => {
 
@@ -14,10 +15,13 @@ export const Redeem = () => {
     const { setMintRedeemCurrencyModal, mintRedeemCurrency, contracts, tokens, getTokenBalance } = useSystemContext();
     const [approved, setApproved] = useState(null);
     const [input, setInput] = useState(null);
+    const [redeemBalances, setRedeemBalances] = useState(null)
+
 
     useEffect(() => {
         getAllowance()
-    }, [])
+        getRedemption()
+    }, [mintRedeemCurrency])
 
 
     console.log(contracts);
@@ -37,22 +41,81 @@ export const Redeem = () => {
 
     }
 
+    const getRedemption = async () => {
 
-    console.log(approved);
+        let redemptionCollateral;
+        let redemptionShare;
+
+        if (mintRedeemCurrency === "AGOUSD") {
+            redemptionCollateral = formatFromDecimal(await contracts.POOL_AGOUSD.methods.redeem_collateral_balances(account).call(), tokens.USDT.decimals);
+            redemptionShare = formatFromDecimal(await contracts.POOL_AGOUSD.methods.redeem_share_balances(account).call(), tokens.CNUSD.decimals); 
+        }
+
+        else {
+            redemptionCollateral = formatFromDecimal(await contracts.POOL_AGOBTC.methods.redeem_collateral_balances(account).call(), tokens.WBTC.decimals);
+            redemptionShare = formatFromDecimal(await contracts.POOL_AGOBTC.methods.redeem_share_balances(account).call(), tokens.CNBTC.decimals); 
+        }
+
+        setRedeemBalances({redemptionCollateral, redemptionShare})
+
+    }
 
     const handleRedeem = async () => {
-        if (mintRedeemCurrency === "AGOUSD") {
-            await contracts.POOL_AGOUSD.methods.redeem(formatToDecimal(input, tokens.AGOUSD.decimals), 0, 0).send({from: account})
+        if (input === "0" || !input) {
+            message.error({content: `Please enter amount greather than 0`, key: MINT_REDEEM_KEY, duration: 3, className: "ant-argano-message"})
+            return
         }
+        try {
+            message.loading({content: `Redeeming ${mintRedeemCurrency}`, key: MINT_REDEEM_KEY, duration: 3000, className: "ant-argano-message"})
+            if (mintRedeemCurrency === "AGOUSD") {
+                await contracts.POOL_AGOUSD.methods.redeem(formatToDecimal(input, tokens.AGOUSD.decimals), 0, 0).send({from: account}) 
+            }
+            else {
+                await contracts.POOL_AGOBTC.methods.redeem(formatFromDecimal(input, tokens.AGOBTC.decimals), 0, 0).send({from: account})
+            }
+            message.success({content: `Successfully redeemed ${mintRedeemCurrency} !`, key: MINT_REDEEM_KEY, duration: 3, className: "ant-argano-message"})
+        }
+        catch {
+            message.error({content: `Something went wrong !`, key: MINT_REDEEM_KEY, duration: 3, className: "ant-argano-message"})
+        }
+
     }
 
     const handleApprove = async () => {
-        if (mintRedeemCurrency === "AGOUSD") {
-            await tokens.AGOUSD.instance.methods.approve(CONTRACT_ADRESESS.POOL_AGOUSD, MAX_INT).send({from: account})
+        try {
+            message.loading({content: `Approve`, key: MINT_REDEEM_KEY, duration: 3000, className: "ant-argano-message"})
+            if (mintRedeemCurrency === "AGOUSD") {
+                await tokens.AGOUSD.instance.methods.approve(CONTRACT_ADRESESS.POOL_AGOUSD, MAX_INT).send({from: account})
+            }
+            else {
+                await tokens.AGOBTC.instance.methods.approve(CONTRACT_ADRESESS.POOL_AGOBTC, MAX_INT).send({from: account})
+            }
+            message.success({content: `Successfully approved !`, key: MINT_REDEEM_KEY, duration: 3, className: "ant-argano-message"})
         }
-        else {
-            await tokens.AGOBTC.instance.methods.approve(CONTRACT_ADRESESS.POOL_AGOBTC, MAX_INT).send({from: account})
+        catch {
+            message.error({content: `Something went wrong !`, key: MINT_REDEEM_KEY, duration: 3, className: "ant-argano-message"})
         }
+
+    }
+
+    const collectRedemption = async () => {
+
+        try {
+            message.loading({content: `Collect redemption`, key: MINT_REDEEM_KEY, duration: 3000, className: "ant-argano-message"})
+            if (mintRedeemCurrency === "AGOUSD") {
+                await contracts.POOL_AGOUSD.methods.collectRedemption().send({from: account});
+            }
+    
+            else {
+                await contracts.POOL_AGOBTC.methods.collectRedemption().send({from: account}); 
+            }
+            message.success({content: `Successfully collected redemption !`, key: MINT_REDEEM_KEY, duration: 3, className: "ant-argano-message"})
+
+        }
+        catch {
+            message.error({content: `Something went wrong !`, key: MINT_REDEEM_KEY, duration: 3, className: "ant-argano-message"})
+        }
+
     }
 
 
@@ -61,11 +124,11 @@ export const Redeem = () => {
             <div className='collect-redemption'> 
                 <div>
                     <h3> Collect redemption </h3>
-                    <button> Collect </button>
+                    <button disabled={collectRedemption.redemptionCollateral === "0" && collectRedemption.redemptionShare === "0"} onClick={() => collectRedemption()}> Collect </button>
                 </div>
                 <div> 
-                    <h3> 0.0 <b>{mintRedeemCurrency === "AGOUSD" ? "USDT" : "WBTC"}</b> </h3>
-                    <h3> 0.0 <b>{mintRedeemCurrency}</b> </h3>
+                    <h3> {redeemBalances?.redemptionCollateral} <b>{mintRedeemCurrency === "AGOUSD" ? "USDT" : "WBTC"}</b> </h3>
+                    <h3> {redeemBalances?.redemptionShare} <b>{mintRedeemCurrency}</b> </h3>
                 </div>
             </div>
         <div className='redeem-window'>

@@ -50,8 +50,6 @@ export const Dashboard = () => {
 
     }, [])
 
-
-
     return (
         <>
                 {error ? <Error/> :

@@ -4,6 +4,7 @@ import Web3 from 'web3';
 import { App } from './components/App/App';
 import { Web3ReactProvider } from '@web3-react/core';
 import {SystemProvider} from './systemProvider';
+import { DashboardProvider } from './providers/dashboard-provider';
 import './index.scss';
 
 const getLibrary = (provider) => {
@@ -15,7 +16,9 @@ ReactDOM.render(
   <React.StrictMode>
     <Web3ReactProvider getLibrary={getLibrary}>
       <SystemProvider>
-        <App/>
+        <DashboardProvider>
+          <App/>
+        </DashboardProvider>
       </SystemProvider>
     </Web3ReactProvider>
   </React.StrictMode>,

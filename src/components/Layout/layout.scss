@@ -293,9 +293,9 @@
 
     }
     &__content {
+        display: grid;
         grid-area: cn;
         overflow-y: auto;
-
     }
 }
 

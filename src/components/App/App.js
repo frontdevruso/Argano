@@ -1,10 +1,7 @@
-import React, {useState, createContext, useEffect} from 'react'
+import React from 'react'
 import {BrowserRouter as Router, Route, Switch}  from "react-router-dom"
 import {WalletModal} from "../WalletModal/wallet_modal"
 import { CurrencySwitchModal } from '../MintRedeem/CurrencySwitchModal/currency-switch-modal';
-import {
-    isMobile
-} from "react-device-detect";
 
 // Pages
 import Dashboard from '../Dashboard/dashboard';

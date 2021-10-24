@@ -63,11 +63,20 @@
                 height: 30px;
                 border-radius: 10px;
             }
+
+            select {
+                background-color: transparent;
+                color: white;
+                border-radius: 15px;
+                border: 1px solid #40BA93;
+            }
+
             .active-time-frame {
                 background-color: #40BA93;
                 color: white;
             }
         }
+
         .chart-switcher {
             position: absolute;
             top: 5%;

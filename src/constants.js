@@ -8,6 +8,19 @@ export const USD_PRICE_ENDPOINT = (contractAddress) => {
 
 export const MATIC_USD_PRICE_ENDPOINT = 'https://api.coingecko.com/api/v3/simple/token_price/polygon-pos?contract_addresses=0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270&vs_currencies=usd';
 
+
+export const COINGECKO_IDS = {
+    AGO: "uniswap",
+    AGOUSD: "tether", 
+    CNUSD: "usd-coin",
+    AGOBTC: "wrapped-bitcoin",
+    CNBTC: "adamant",
+    WMATIC: "wmatic", 
+    USDT: "tether", 
+    WBTC: "wrapped-bitcoin",
+}
+
+
 export const CONTRACT_ADRESESS = {
     AGO: "0xc3e2A3Aca375c5408C2DeA4ACcb518C26cb0cb3C",
     AGOUSD: "0x16Cf2E9b884E1E355995Dc094BA38e2dc3c09d9D", 
@@ -18,6 +31,7 @@ export const CONTRACT_ADRESESS = {
     USDT: "0xc2132d05d31c914a87c6611c10748aeb04b58e8f", 
     WBTC: "0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6",
     POOL_AGOUSD: "0xF0c04bb6Af39a3fb06dD8E7f45d70bcb588Ac148",
+    ORACLE_AGOUSD: "0x39dFCFF38d9BA1deA0CEe694097376349be567EE",
     POOL_AGOBTC: "0x98273aEC2E1157BAfA77cfAe5d02e4F70Bd14aB7",
     TREASURY_AGOUSD: "0xA566508d5dF315d4abF01Db781bBD86fA77Baf6b"
 }
