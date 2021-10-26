@@ -20,7 +20,7 @@ export const AccHistory = ({isOpened, setIsOpened}) => {
 
         
         const fetchData = async () => {
-            const {data} = await axios.get("https://argano-rest-api-sever.herokuapp.com/api/userActions/?address=0x6e6Baf3A4fE4b2290C7E9C40a06dEe9026931fF5")
+            const {data} = await axios.get(`https://argano-rest-api-sever.herokuapp.com/api/userActions/?address=${account}`)
             setData(data)
         }
 
