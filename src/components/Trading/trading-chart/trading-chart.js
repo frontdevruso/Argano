@@ -156,11 +156,11 @@ export const TradingChart = ({candleData, lineData, chartType }) => {
     
             const candlestickSeries = chartInst.addCandlestickSeries({
                 upColor: '#40BA93',
-                downColor: '#028E62',
+                downColor: '#EF3725',
                 borderVisible: false,
                 wickVisible: true,
                 wickUpColor: "#40BA93",
-                wickDownColor: "#028E62",
+                wickDownColor: "#EF3725",
             });
     
             const lineSeriesInst = chartInst.addLineSeries({

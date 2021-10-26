@@ -52,25 +52,25 @@ export const Dashboard = () => {
 
     return (
         <>
-                {error ? <Error/> :
-                    <DashboardContext.Provider value={dashboardProviderValue}>
-                        <div className={theme === "dark" ? 'dashboard' : 'dashboard dash-light'}>
-                                {loading ? <Loader/> :
-                                    <>
-                                        <div className='dash-header'>
-                                            <h1> Dashboard </h1> 
-                                        </div>
-                                        <TokenPricesCharts/>
-                                        <div className='dash-tvl-volume'>
-                                            <TVLChart/>
-                                            <Volume24h/>
-                                        </div>
-                                        <TokenTransactionTable/>
-                                    </>
-                                }
-                        </div>
-                    </DashboardContext.Provider>
-                }
+            {error ? <Error/> :
+                <DashboardContext.Provider value={dashboardProviderValue}>
+                    <div className={theme === "dark" ? 'dashboard' : 'dashboard dash-light'}>
+                            {loading ? <Loader/> :
+                                <>
+                                    <div className='dash-header'>
+                                        <h1> Dashboard </h1> 
+                                    </div>
+                                    <TokenPricesCharts/>
+                                    <div className='dash-tvl-volume'>
+                                        <TVLChart/>
+                                        <Volume24h/>
+                                    </div>
+                                    <TokenTransactionTable/>
+                                </>
+                            }
+                    </div>
+                </DashboardContext.Provider>
+            }
         </>
     )
 }
