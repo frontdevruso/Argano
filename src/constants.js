@@ -46,6 +46,14 @@ export const MOCK_PRICE_ADDRESS = {
     USDT: "0xc2132d05d31c914a87c6611c10748aeb04b58e8f",
     WBTC: "0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6"
 }
+
+export const TX_OPERATIONS = {
+    collectRedemption: "Collect Redemption",
+    mint: "Mint",
+    redeem: "Redeem"
+}
+
+
 // Connectors
 export const metaMask = new InjectedConnector({ supportedChainIds: [137] });
 export const network = new NetworkConnector({ urls: { 137: "https://rpc-mainnet.maticvigil.com/" }, defaultChainId: 137 })
