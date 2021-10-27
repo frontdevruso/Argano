@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Loader} from "../../Loader/loader";
 import { useSystemContext } from '../../../systemProvider';
 import axios from 'axios';
-import { formatDate, formatFromDecimal } from '../../../utils/helpers';
+import { formatFromDecimal } from '../../../utils/helpers';
 import { CONTRACT_ADRESESS, TX_OPERATIONS } from '../../../constants';
 import socketIOClient from "socket.io-client";
 const ENDPOINT = "https://dashboard.heroku.com/apps/argano-rest-api-sever";
@@ -10,8 +10,14 @@ const ENDPOINT = "https://dashboard.heroku.com/apps/argano-rest-api-sever";
 export const TokenTransactionTable = () => {
 
     const {theme, tokens} = useSystemContext();
-    const [loading, setLoading] = useState(true);
+
     const [data, setData] = useState(null);
+
+    const [totalPages, setTotalPages] = useState(null);
+    const [currentClickedNumber, setCurrentClickedNumber] = useState(1);
+    const [dataPaginated, setDataPaginated] = useState(null);
+
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
 
@@ -29,27 +35,39 @@ export const TokenTransactionTable = () => {
 
         if (data) {
             setLoading(false);
+            determineNumberOfPages();
         }
 
     }, [data])
 
 
-    // useEffect(() => {
-    //     const socket = socketIOClient(ENDPOINT);
-    //     socket.on("new_tx", data => {
-    //         console.log(data);
-    //     });
-    // }, []);
-
-
-    console.log(data);
-
+    const determineNumberOfPages = () => {
+        const itemsPerPage = 10;
+    
+        let paginatedDataObject = {};
+    
+        let index = 0;
+        let dataLength = data.length;
+        let chunkArray = [];
+    
+        for (index = 0; index < dataLength; index += itemsPerPage) {
+          let newChunk = data.slice(index, index + itemsPerPage);
+          chunkArray.push(newChunk);
+        }
+    
+        chunkArray.forEach((chunk, i) => {
+          paginatedDataObject[i + 1] = chunk;
+        });
+    
+        setTotalPages(chunkArray.length);
+        setDataPaginated(paginatedDataObject);
+    };
 
     const TableBody = () => {
 
         return (
             <>
-                {data && data.map((item) => {
+                {dataPaginated && dataPaginated[`${currentClickedNumber}`].map((item) => {
 
 
                     const token1 = Object.entries(CONTRACT_ADRESESS).find(item_loc => item_loc[1].toLocaleLowerCase() === item.token_flow[0].token.toLowerCase())
@@ -100,10 +118,6 @@ export const TokenTransactionTable = () => {
             <div className={'transactions-heading'}>
                 <h2>Transactions</h2>
                 <div className={'transactions-heading__viewTypes'}>
-                    {/* <button onClick={() => handleTabChange("All")} className={activeTab === "All" ? 'transactions-heading__viewTypes__button transactions-heading__viewTypes__button--active' : 'transactions-heading__viewTypes__button'}> All </button> */}
-                    {/* <button onClick={() => handleTabChange("Swap")} className={activeTab === "Swap" ? 'transactions-heading__viewTypes__button transactions-heading__viewTypes__button--active' : 'transactions-heading__viewTypes__button'}> Swaps </button> */}
-                    {/* <button onClick={() => handleTabChange("Add")} className={activeTab === "Add" ?'transactions-heading__viewTypes__button transactions-heading__viewTypes__button--active' : 'transactions-heading__viewTypes__button'}> Adds </button> */}
-                    {/* <button onClick={() => handleTabChange("Remove")} className={activeTab === "Remove" ? 'transactions-heading__viewTypes__button transactions-heading__viewTypes__button--active' : 'transactions-heading__viewTypes__button'}> Removes </button> */}
                 </div>
             </div>
             <div className={'transactions__table'}>
@@ -120,14 +134,13 @@ export const TokenTransactionTable = () => {
 
                 {loading ? <Loader/> : <TableBody/>}
 
-                {/* <div className={'transactions__table__pagination'}>
+                <div className={'transactions__table__pagination'}>
                     <div>
-                        <button onClick={() => handlePageChange("-")}> Prev </button>
-                        <span>Page {page} of {pageMax} </span>
-                        <button onClick={() => handlePageChange("+")}> Next </button>
-
+                        <button onClick={() => setCurrentClickedNumber(prevNum => prevNum !== 1 ? prevNum - 1 : prevNum)}> Prev </button>
+                        <span>Page {currentClickedNumber} of {totalPages} </span>
+                        <button onClick={() => setCurrentClickedNumber(prevNum => prevNum < totalPages ? prevNum + 1 : prevNum)}> Next </button>
                     </div>
-                </div> */}
+                </div>
             </div>
         </div>
     )
