@@ -296,6 +296,13 @@
         display: grid;
         grid-area: cn;
         overflow-y: auto;
+        grid-template-rows: 10% auto;
+        &__header {
+            font-weight: 600;
+            font-size: 36px;
+            color: white;
+            align-self: flex-end;
+        }
     }
 }
 

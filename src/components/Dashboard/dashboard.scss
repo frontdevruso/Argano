@@ -1,12 +1,13 @@
 // Dashboard container styles
 .dashboard {
     display: grid;
-    grid-template-rows: 5% auto 45% auto;
+    position: relative;
+    grid-template-rows: minmax(min-content, max-content) 3fr 3fr;
     height: 100%;
-   grid-column-gap: 20px;
-   grid-row-gap: 6%;
-   padding: 20px;
-   justify-items: center;
+    grid-column-gap: 20px;
+    grid-row-gap: 5%;
+    padding: 20px;
+    justify-items: center;
  }
  
 
@@ -38,6 +39,8 @@
       @media only screen and (max-width: 1500px) {
         height: 150px;
       }
+      padding: 20px 20px;
+      grid-gap: 2%;
       box-sizing: border-box;
       width: 100%;
       max-width: 1685px;
@@ -51,7 +54,10 @@
         align-items: center;
         grid-template-columns: 1fr;
         justify-items: flex-start;
-        padding: 20px 20px 20px 80px;
+        border-right: 1px solid #40BA93;
+        &:last-child {
+          border-right: 0;
+        }
         h3 {
           color: white;
           font-size: 18px;
@@ -60,6 +66,8 @@
         h1 {
           margin: 0;
           color: #40BA93;
+          font-size: 36px;
+          font-weight: 600;
           @media only screen and (max-width: 1500px) {
             font-size: 26px;
           }

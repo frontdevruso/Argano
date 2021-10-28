@@ -108,7 +108,6 @@ export const TokenTransactionTable = () => {
         else {
             diff = parseFloat(diff).toFixed(0) + " minutes ago"
         }
-
         return diff;
     }
 

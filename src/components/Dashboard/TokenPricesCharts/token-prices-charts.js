@@ -1,11 +1,52 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import { formattedNum } from '../../../utils/helpers';
 import arrowUp from './arrow-up.svg';
 import arrowDown from './arrow-down.svg';
-import { LineChart, XAxis, Line, ResponsiveContainer, Tooltip } from 'recharts';
+import { LineChart, XAxis, YAxis, Line, ResponsiveContainer, Tooltip } from 'recharts';
 import {  } from '../../App/App';
 import { useSystemContext } from '../../../systemProvider';
 import { useDashboardContext } from '../../../providers/dashboard-provider';
+import styled from 'styled-components';
+
+
+const TokenPriceChartWrapper = styled.div`
+    position: relative;
+    width: 100%;
+    transition: 0.3s all;
+    height: ${props => props.isWindowExpanded ? "547px" : "206px"};
+    background: radial-gradient(61.16% 3404.86% at 48.28% 79.61%, rgba(30, 117, 89, 0.3) 0%, rgba(9, 33, 25, 0.3) 100%), linear-gradient(90.99deg, #272727 2.18%, #1C1C1C 104.4%);
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.25);
+    border-radius: 40px;
+    box-sizing: border-box;
+    padding: 35px 43px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+`
+
+const SinglePriceBlock = styled.div`
+    border-right: ${props => props.isWindowExpanded ? props.isShowDivider ? "1px solid #40BA93" : "none" : "1px solid #40BA93"};
+    padding-left: 40px;
+    &:last-child {
+        border-right: none;
+    }
+    h3 {
+        font-size: 18px;
+        color: white;
+    }
+    h1 {
+        font-size: 36px;
+        color: #40BA93;
+    }
+    span {
+        font-size: 14px;
+        color: white;
+        span {
+            color: #4F4F4F;
+        }
+    }
+
+`
+
 export const TokenPricesCharts = () => {
 
     const [expandWindow, setExpandWindow] = useState(false);
@@ -38,19 +79,17 @@ export const TokenPricesCharts = () => {
         const tickColor = theme === "light" ? "black" : "white"
         
         return (
-            <ResponsiveContainer width={'100%'} height={"80%"}>
+            <ResponsiveContainer width={'100%'} height={"100%"}>
                 <LineChart
                 margin={{
                     top: 50,
-                    right: 30,
-                    left: 30,
                     bottom: 1,
                 }}  
                 data={data}
                 >
                 
                 <Line
-                    type="monotone"
+                    type="basis"
                     dataKey="value"
                     stroke="#40BA93"
                     strokeWidth={5}
@@ -78,58 +117,31 @@ export const TokenPricesCharts = () => {
 
     }
 
-    const [showChart, setShowChart] = useState({active: false, index: null })
+    const [showChart, setShowChart] = useState({active: true, index: 0 })
 
     return (
-        <div 
-            onClick={() => setExpandWindow(!expandWindow)}
-            className={`charts-wrapper-block ${expandWindow ? "expanded-chart-block" : ""} dashBox ${theme === "light" ? " dashBoxLight" : ""}`}
-
-        >
+        <TokenPriceChartWrapper isWindowExpanded={expandWindow} onClick={() => setExpandWindow(!expandWindow)}>
             {dashTokens.map((item, _ind) => {
 
-
-                const Arrow = item.change24h.charAt(0) === "-" ? <img src={arrowDown}/> : <img src={arrowUp}/>
-
-                const expandClassName = showChart.active && showChart.index === _ind ? "expand-price-block" : "";
+                const Arrow = item.change24h.charAt(0) === "-" ? <img src={arrowDown} alt="arrow-down-percent"/> : <img src={arrowUp} alt="arrow-up-percent"/>
 
                 return (
-                    <div className={`price-block ${ expandWindow ? "" : expandClassName}`}
+                    <SinglePriceBlock
                         onMouseEnter={() => expandWindow ? null : setShowChart({active: true, index: _ind})}
                         onMouseLeave={() => expandWindow ? null : setShowChart({active: false, index: null})}
                         key={_ind}
+                        isShowDivider={_ind === 1}
+                        isWindowExpanded={expandWindow}
                     > 
                         <h3> {item.name} </h3>
                         <h1> ${item.currentPrice} </h1>
                         <span> {Arrow} {item.change24h} <span>(24h)</span> </span>
-                        {_ind !== dashTokens.length - 1 ? 
-                            <div id={_ind + "-line-block"} className='price-block__border-line' style={{display: expandWindow && (_ind === 0 || _ind === 2) ? "none" : "block"}}> </div> 
-                            :
-                            ""
-                        }
-                        {showChart.active && showChart.index === _ind ? 
 
-                            <div className='chart-mini-block'>
-                                <Chart data={item.chartPrices} fullSize={false}/>
-                            </div>
-                            :
-                            ""
-                        }
-                        {expandWindow ?
-                            <>
-                                <Chart data={item.chartPrices} fullSize={true}/>
-                                <span className='supply'>  <text>Supply:</text> <b> {formattedNum(item.supply)} $ </b> </span>
-                                <span className='market-cap'> <text>Market cap: </text>  <b>{ formattedNum(item.marketCap)} $</b> </span>
-                            </>
-                            :
-                            ""                        
-                        }
-
-                    </div>
+                    </SinglePriceBlock>
                 )
 
             })}                
-        </div>
+        </TokenPriceChartWrapper>
     )
 
 }

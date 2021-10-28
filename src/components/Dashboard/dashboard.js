@@ -57,9 +57,6 @@ export const Dashboard = () => {
                     <div className={theme === "dark" ? 'dashboard' : 'dashboard dash-light'}>
                             {loading ? <Loader/> :
                                 <>
-                                    <div className='dash-header'>
-                                        <h1> Dashboard </h1> 
-                                    </div>
                                     <TokenPricesCharts/>
                                     <div className='dash-tvl-volume'>
                                         <TVLChart/>

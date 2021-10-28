@@ -43,13 +43,15 @@ export const Layout = ({children}) => {
     const [balancesExpanded, setBalancesExpaned] = useState(false);
 
     const pages = [
-        {path: "/dashboard", img: dashboard_black, imgActive: dashboard_active},
-        {path: "/mint-redeem", img: mint_redeem_black, imgActive: mint_redeem_active},
-        {path: "/staking", img: staking_black, imgActive: staking_active},
-        {path: "/liqudity-pools", img: liquidity_pools_black, imgActive: liquidity_pools_active},
-        {path: "/trading", img: trading_black, imgActive: trading_active},
-        {path: "/accounts", img: accounts_black, imgActive: accounts_acitve},
+        {path: "/dashboard", name: "Dashboard", img: dashboard_black, imgActive: dashboard_active},
+        {path: "/mint-redeem", name: "Mint/Redeem", img: mint_redeem_black, imgActive: mint_redeem_active},
+        {path: "/staking", name: "Staking", img: staking_black, imgActive: staking_active},
+        {path: "/liqudity-pools", name: "Liquidity-Pools", img: liquidity_pools_black, imgActive: liquidity_pools_active},
+        {path: "/trading", name: "Trading", img: trading_black, imgActive: trading_active},
+        {path: "/accounts", name: "Accounts", img: accounts_black, imgActive: accounts_acitve},
     ]
+
+    console.log(history.location.pathname);
 
     const loadingIcon = <LoadingOutlined style={{fontSize: 100, color: "#40BA93", position: "fixed", top: "50%", left: "50%"}}/>
 
@@ -122,6 +124,7 @@ export const Layout = ({children}) => {
             </div>
             <div className='layout-wrapper__content'> 
                     <>
+                        <h1 className='layout-wrapper__content__header'>{pages.find(item => item.path === history.location.pathname).name} </h1>
                         {loading ?
                             <Spin size="large" indicator={loadingIcon}/>  
                         :
