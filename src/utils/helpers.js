@@ -90,6 +90,24 @@ export const formatFromDecimal = (value, decimals) => {
     return returned_amount;
 }
 
+export const calculateTimeDifference = (timestamp) => {
+
+    const currentTime = new Date();
+    const txTime = new Date(timestamp * 1000);
+    let diff = (Math.abs(currentTime - txTime))/(1000 * 60);
+
+    if (diff >= 60) {
+        diff = (diff / 60).toFixed(0) + " hour ago"
+    }
+    else if (diff < 1) {
+        diff = "< 1 minute ago"
+    }
+    else {
+        diff = parseFloat(diff).toFixed(0) + " minutes ago"
+    }
+    return diff;
+}
+
 
 // Get current ETH price to format tokens derivedETH to USD
 export const getEthPrice = async () => {

@@ -13,13 +13,14 @@ const TokenPriceChartWrapper = styled.div`
     position: relative;
     width: 100%;
     transition: 0.3s all;
-    height: ${props => props.isWindowExpanded ? "547px" : "206px"};
+    height: ${props => props.isWindowExpanded ? "51vh" : "21vh"};
     background: radial-gradient(61.16% 3404.86% at 48.28% 79.61%, rgba(30, 117, 89, 0.3) 0%, rgba(9, 33, 25, 0.3) 100%), linear-gradient(90.99deg, #272727 2.18%, #1C1C1C 104.4%);
     box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.25);
-    border-radius: 40px;
+    border-radius: 2vw;
     box-sizing: border-box;
-    padding: 35px 43px;
+    padding: 2.5% 3%;
     display: grid;
+    align-items: ${props => props.isWindowExpanded ? "flex-start" : "center"};;
     grid-template-columns: repeat(4, 1fr);
 `
 
@@ -30,16 +31,20 @@ const SinglePriceBlock = styled.div`
         border-right: none;
     }
     h3 {
-        font-size: 18px;
+        font-size: 1vw;
         color: white;
     }
     h1 {
-        font-size: 36px;
+        font-size: 2.1vw;
         color: #40BA93;
     }
     span {
-        font-size: 14px;
+        font-size: 0.8vw;
         color: white;
+        img {
+            width: 1.1vw;
+            height: 1.1vw;
+        }
         span {
             color: #4F4F4F;
         }
@@ -51,7 +56,7 @@ export const TokenPricesCharts = () => {
 
     const [expandWindow, setExpandWindow] = useState(false);
     const {theme} = useSystemContext();
-    const {dashTokens} = useDashboardContext()
+    const {dashTokens} = useDashboardContext();
 
     const CustomToolTip = ({active, payload, label}) => {
 
@@ -63,11 +68,9 @@ export const TokenPricesCharts = () => {
                     <div className='custom-tooltip'>
                         <span> {value}$ </span>
                     </div>
-    
                 )
             }
         }
-
 
         return null;
 
@@ -139,7 +142,6 @@ export const TokenPricesCharts = () => {
 
                     </SinglePriceBlock>
                 )
-
             })}                
         </TokenPriceChartWrapper>
     )

@@ -1,10 +1,44 @@
-import React, {useState, useRef, useContext} from 'react';
+import React, { useState, useRef } from 'react';
 import { BarChart, XAxis, Bar, Tooltip, ResponsiveContainer } from 'recharts';
 import { useSystemContext } from '../../../systemProvider';
 import { formattedNum } from '../../../utils/helpers';
+import { useMediaQuery } from 'react-responsive';
+import styled from 'styled-components';
+
+const Volume24hChartWrapper = styled.div`
+    background: ${props => props.mobile ? "transparent" : " radial-gradient(61.16% 3404.86% at 48.28% 79.61%, rgba(30, 117, 89, 0.3) 0%, rgba(9, 33, 25, 0.3) 100%), linear-gradient(90.99deg, #272727 2.18%, #1C1C1C 104.4%)"};
+    box-shadow: ${props => props.mobile ? "none" : "0px 4px 16px rgba(0, 0, 0, 0.25)"};
+    border-radius: 2vw;
+    height: ${props => props.mobile ? "100%" : "45vh"};
+    width: 100%;
+    display: grid;
+    align-self: center;
+    box-sizing: border-box;
+    justify-self: flex-start;
+    grid-template-rows: 30% 70%;
+    padding: ${props => props.mobile ? "0" : "4.5% 11.5%"};
+    .volume24-info {
+        display: grid;
+        padding: ${props => props.mobile ? "0 7.5%" : "0"};
+        grid-template-rows: ${props => props.mobile ? " 2fr 1fr" : " 1fr 3fr 1fr"};
+        p {
+            font-weight: 500;
+           font-size: ${props => props.mobile ? "12px" : "1.1vw"};
+           color: ${props => props.mobile ? "#BDBDBD" : "white"};
+        }
+        h1 {
+            color: ${props => props.mobile ? "white" : "#40BA93"};
+           font-weight: ${props => props.mobile ? "600" : "500"};
+           font-size: ${props => props.mobile ? "24px" : "2.1vw"};
+           align-self: flex-end;
+        }
+    }
+`
+
 export const Volume24h = () => {
 
     const {theme} = useSystemContext();
+    const isMobileScreen = useMediaQuery({ query: '(max-width: 767px)' })
 
     const data = [
         {time: '01', uv: 100000, date: "Jul 1, 2021"},
@@ -58,25 +92,23 @@ export const Volume24h = () => {
       }) => {
         return (
           <g>
-            <rect x={x} y={y} fill={fill} width={width} height={height} rx="7" />
+            <rect x={x} y={y} fill={fill} width={width} height={height} rx="1%" />
           </g>
         )
     }
 
     return (
-        <div className={`dashBox volume24 ${theme === "light" ? " dashBoxLight" : ""}`}> 
+        <Volume24hChartWrapper mobile={isMobileScreen}> 
             <div className={'volume24-info'}>
-                <p>Volume 24h</p>
+                {!isMobileScreen ? <p>Volume 24h</p> : null}
                 <h1>${formattedNum(chartValue.value)}</h1>
                 <p>{chartValue.time}</p>
             </div>
             <div className={'volume24-chart'}>
-                <ResponsiveContainer width={"100%"} height={'90%'}>
+                <ResponsiveContainer width={"100%"} height={'100%'}>
                     <BarChart
                         margin={{
                             top: 5,
-                            right: 30,
-                            left: 20,
                             bottom: 1,
                         }}  
                         width={block?.current?.clientWidth - 200} 
@@ -107,15 +139,14 @@ export const Volume24h = () => {
                             dataKey="time"
                             axisLine={false}
                             tickLine={false}
+                            tick={{fontSize:  isMobileScreen ? "14px" : "1vw"}}
                             stroke={theme === "light" ? "black" : "white"}
-                            minTickGap={10}
+                            minTickGap={isMobileScreen ?  0 : 15}
                         />
-
                     </BarChart>
                 </ResponsiveContainer>
-
             </div>
-        </div>
+        </Volume24hChartWrapper>
     )
 
 }
