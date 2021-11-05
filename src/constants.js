@@ -1,5 +1,21 @@
 import { InjectedConnector } from '@web3-react/injected-connector';
 import { NetworkConnector } from '@web3-react/network-connector';
+// Dark theme icons.
+import dashboard_black from './assets/icons/nav-links/dark-theme/dashboard-black.svg';
+import mint_redeem_black from './assets/icons/nav-links/dark-theme/mint-redeem-black.svg';
+import staking_black from './assets/icons/nav-links/dark-theme/staking-black.svg';
+import liquidity_pools_black from './assets/icons/nav-links/dark-theme/liquidity-pools-black.svg';
+import trading_black from './assets/icons/nav-links/dark-theme/trading-black.svg';
+import accounts_black from './assets/icons/nav-links/dark-theme/accounts-black.svg';
+// Light theme icons.
+
+// Active icons.
+import dashboard_active from './assets/icons/nav-links/active/dashboard-active.svg';
+import mint_redeem_active from './assets/icons/nav-links/active/mint-redeem-active.svg';
+import staking_active from './assets/icons/nav-links/active/staking-active.svg';
+import liquidity_pools_active from './assets/icons/nav-links/active/liq-pools-active.svg';
+import trading_active from './assets/icons/nav-links/active/trading-active.svg';
+import accounts_acitve from './assets/icons/nav-links/active/accounts-active.svg';
 
 export const USD_PRICE_ENDPOINT = (contractAddress) => {
 
@@ -63,3 +79,12 @@ export const MINT_REDEEM_KEY = "MINT_REDEEM_KEY";
 
 // Other
 export const MAX_INT = '115792089237316195423570985008687907853269984665640564039457584007913129639935';
+
+export const PAGES = [
+    {path: "/", name: "Dashboard", img: dashboard_black, imgActive: dashboard_active},
+    {path: "/mint-redeem", name: "Mint/Redeem", img: mint_redeem_black, imgActive: mint_redeem_active},
+    {path: "/staking", name: "Staking", img: staking_black, imgActive: staking_active},
+    {path: "/liqudity-pools", name: "Liquidity-Pools", img: liquidity_pools_black, imgActive: liquidity_pools_active},
+    {path: "/trading", name: "Trading", img: trading_black, imgActive: trading_active},
+    {path: "/accounts", name: "Accounts", img: accounts_black, imgActive: accounts_acitve},
+]

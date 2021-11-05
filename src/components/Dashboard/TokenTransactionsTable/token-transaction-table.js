@@ -2,16 +2,103 @@ import React, {useEffect, useState} from 'react';
 import {Loader} from "../../Loader/loader";
 import { useSystemContext } from '../../../systemProvider';
 import axios from 'axios';
-import { formatDate, formatFromDecimal } from '../../../utils/helpers';
+import { formatFromDecimal, calculateTimeDifference } from '../../../utils/helpers';
 import { CONTRACT_ADRESESS, TX_OPERATIONS } from '../../../constants';
-import socketIOClient from "socket.io-client";
-const ENDPOINT = "https://dashboard.heroku.com/apps/argano-rest-api-sever";
+import styled from 'styled-components';
+
+const TokenTransactionTableWrapper = styled.div`
+    width: 100%;
+    height: 60vh;
+    background: radial-gradient(34.28% 208.17% at 30.1% 58.42%, rgba(30, 91, 72, 0.2) 0%, rgba(9, 33, 25, 0.2) 100%), linear-gradient(97.95deg, #272727 -6.91%, #1C1C1C 101.49%);
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.25);
+    border-radius: 2vw;
+    box-sizing: border-box;
+    padding: 2.25% 5.5%;
+    display: grid;
+    grid-template-rows: 1fr 5fr 1fr;
+    .transactions-heading {
+        font-size: 1.5vw;
+        color: white;
+    }
+`
+const Table = styled.div`
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 7fr;
+    row-gap: 15px;
+    color: white;
+`
+const TableHead = styled.div`
+    display: grid;
+    grid-template-columns: 25% 10% 15% 15% 15% 15%;
+    span {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 1vw;  
+        &:last-child {
+            justify-self: flex-end;
+            padding-right: 45px;
+        }
+    }
+`
+
+const TableBody = styled.div`
+    display: grid;
+    grid-template-columns: 25% 10% 15% 15% 15% 15%;
+    div {
+        font-style: normal;
+        font-weight: 300;
+        font-size: 1vw;
+        line-height: 21px;
+    }
+    .operation{
+        color: #40BA93;
+    }
+    .acc{
+        color: #40BA93;
+    }
+    .time {
+        justify-self: flex-end;
+    }
+`
+
+const TablePagination = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    div {
+        display: grid;
+        grid-template-columns: 1fr 2fr 1fr;
+        span {
+            color: white;
+            font-size: 1.1vw;
+        }
+        button {
+            background: transparent;
+            font-size: 0.8vw;
+            color: #40BA93;
+            border: none;
+            cursor: pointer;
+            &:active {
+                outline: none;
+                border: none;
+                box-shadow: none;
+            }
+        }
+    }
+`
 
 export const TokenTransactionTable = () => {
 
     const {theme, tokens} = useSystemContext();
-    const [loading, setLoading] = useState(true);
+
     const [data, setData] = useState(null);
+
+    const [totalPages, setTotalPages] = useState(null);
+    const [currentClickedNumber, setCurrentClickedNumber] = useState(1);
+    const [dataPaginated, setDataPaginated] = useState(null);
+
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
 
@@ -29,107 +116,87 @@ export const TokenTransactionTable = () => {
 
         if (data) {
             setLoading(false);
+            determineNumberOfPages();
         }
 
     }, [data])
 
-
-    // useEffect(() => {
-    //     const socket = socketIOClient(ENDPOINT);
-    //     socket.on("new_tx", data => {
-    //         console.log(data);
-    //     });
-    // }, []);
-
-
-    console.log(data);
-
-
-    const TableBody = () => {
-
-        return (
-            <>
-                {data && data.map((item) => {
-
-
-                    const token1 = Object.entries(CONTRACT_ADRESESS).find(item_loc => item_loc[1].toLocaleLowerCase() === item.token_flow[0].token.toLowerCase())
-                    const token2 = Object.entries(CONTRACT_ADRESESS).find(item_loc => item_loc[1].toLocaleLowerCase() === item.token_flow[1]?.token.toLowerCase())
-
-                    const token1Spent = formatFromDecimal(item.token_flow[0].amount.$numberDecimal, tokens[token1[0]].decimals); 
-                    const token2Spent = item.token_flow[1] ? formatFromDecimal(item.token_flow[1]?.amount.$numberDecimal, tokens[token2[0]].decimals) : "-";
-
-                    return (
-                        <div className={'transactions__table__body'}>
-                            <div className={'transactions__table__body__item transactions__table__body__item__name'}>{TX_OPERATIONS[item.method]}</div>
-                            {/* TODO: Need to calculate sum depends on USD price of each token (Use our/coingecko current token-price) */}
-                            <div className={'transactions__table__body__item'}> {token2 ? (parseFloat(token1Spent) + parseFloat(token2Spent)).toFixed(2) : parseFloat(token1Spent).toFixed(2)}</div>
-                            <div className={'transactions__table__body__item'}>{parseFloat(token1Spent).toFixed(2)} {token1[0]}</div>
-                            <div className={'transactions__table__body__item'}>{token2 ?  parseFloat(token2Spent).toFixed(2) : "-"} {token2 ? token2[0] : ""}</div>
-                            <div className={'transactions__table__body__item transactions__table__body__item__acc'}>{`${item.account.slice(0, 6)}...${item.account.slice(-4)}`}</div>
-                            <div className={'transactions__table__body__item transactions__table__body__item__time'}>{item.block_timestamp ? calculateTimeDifference(item.block_timestamp) : "A long time ago" }</div>
-                        </div>
-                    )
-                })}
-            </>
-        )
-    }
-
-    const calculateTimeDifference = (timestamp) => {
-
-        const currentTime = new Date();
-        const txTime = new Date(timestamp * 1000);
-        let diff = (Math.abs(currentTime - txTime))/(1000 * 60);
-
-
-        if (diff >= 60) {
-            diff = (diff / 60).toFixed(0) + " hour ago"
+    const determineNumberOfPages = () => {
+        const itemsPerPage = 10;
+    
+        let paginatedDataObject = {};
+    
+        let index = 0;
+        let dataLength = data.length;
+        let chunkArray = [];
+    
+        for (index = 0; index < dataLength; index += itemsPerPage) {
+          let newChunk = data.slice(index, index + itemsPerPage);
+          chunkArray.push(newChunk);
         }
-        else if (diff < 1) {
-            diff = "< 1 minute ago"
-        }
-        else {
-            diff = parseFloat(diff).toFixed(0) + " minutes ago"
-        }
-
-        return diff;
-    }
+    
+        chunkArray.forEach((chunk, i) => {
+          paginatedDataObject[i + 1] = chunk;
+        });
+    
+        setTotalPages(chunkArray.length);
+        setDataPaginated(paginatedDataObject);
+    };
 
 
     return (
-        <div className={`transactions dashBox ${theme === "light" ? " dashBoxLightTxs" : ""}`}>
-            <div className={'transactions-heading'}>
-                <h2>Transactions</h2>
-                <div className={'transactions-heading__viewTypes'}>
-                    {/* <button onClick={() => handleTabChange("All")} className={activeTab === "All" ? 'transactions-heading__viewTypes__button transactions-heading__viewTypes__button--active' : 'transactions-heading__viewTypes__button'}> All </button> */}
-                    {/* <button onClick={() => handleTabChange("Swap")} className={activeTab === "Swap" ? 'transactions-heading__viewTypes__button transactions-heading__viewTypes__button--active' : 'transactions-heading__viewTypes__button'}> Swaps </button> */}
-                    {/* <button onClick={() => handleTabChange("Add")} className={activeTab === "Add" ?'transactions-heading__viewTypes__button transactions-heading__viewTypes__button--active' : 'transactions-heading__viewTypes__button'}> Adds </button> */}
-                    {/* <button onClick={() => handleTabChange("Remove")} className={activeTab === "Remove" ? 'transactions-heading__viewTypes__button transactions-heading__viewTypes__button--active' : 'transactions-heading__viewTypes__button'}> Removes </button> */}
+        <TokenTransactionTableWrapper>
+            <h2 className={'transactions-heading'}>Transactions</h2>
+            <Table>
+                <TableHead>
+                    <span></span>
+                    <span>Total Value</span>
+                    <span>Token Amount</span>
+                    <span>Token Amount</span>
+                    <span>Account</span>
+                    <span>Time</span>
+                </TableHead>
+                {loading
+                    ? 
+                    <Loader/>
+                    : 
+                    <TableBody>
+                        {dataPaginated && dataPaginated[`${currentClickedNumber}`].map((item) => {
+
+                            const token1 = Object.entries(CONTRACT_ADRESESS).find(item_loc => item_loc[1].toLocaleLowerCase() === item.token_flow[0].token.toLowerCase())
+                            const token2 = Object.entries(CONTRACT_ADRESESS).find(item_loc => item_loc[1].toLocaleLowerCase() === item.token_flow[1]?.token.toLowerCase())
+
+                            const token1Spent = formatFromDecimal(item.token_flow[0].amount.$numberDecimal, tokens[token1[0]].decimals); 
+                            const token2Spent = item.token_flow[1] ? formatFromDecimal(item.token_flow[1]?.amount.$numberDecimal, tokens[token2[0]].decimals) : "-";
+
+                            return (
+                                <>
+                                    <div className='operation'>{TX_OPERATIONS[item.method]}</div>
+                                    {/* TODO: Need to calculate sum depends on USD price of each token (Use our/coingecko current token-price) */}
+                                    <div> {token2 ? (parseFloat(token1Spent) + parseFloat(token2Spent)).toFixed(2) : parseFloat(token1Spent).toFixed(2)}</div>
+                                    <div>{parseFloat(token1Spent).toFixed(2)} {token1[0]}</div>
+                                    <div>{token2 ?  parseFloat(token2Spent).toFixed(2) : "-"} {token2 ? token2[0] : ""}</div>
+                                    <div className='acc'>{`${item.account.slice(0, 6)}...${item.account.slice(-4)}`}</div>
+                                    <div className='time'>{item.block_timestamp ? calculateTimeDifference(item.block_timestamp) : "A long time ago" }</div>
+                                </>
+                            )
+                        })}
+                    </TableBody>
+                }
+            </Table>
+            <TablePagination>
+                <div>
+                    <button 
+                        onClick={() => setCurrentClickedNumber(prevNum => prevNum !== 1 ? prevNum - 1 : prevNum)}>
+                        Prev 
+                    </button>
+                    <span>Page {currentClickedNumber} of {totalPages} </span>
+                    <button 
+                        onClick={() => setCurrentClickedNumber(prevNum => prevNum < totalPages ? prevNum + 1 : prevNum)}>
+                        Next 
+                    </button>
                 </div>
-            </div>
-            <div className={'transactions__table'}>
-                <div className={'transactions__table__head'}>
-                    <div className={'transactions__table__head__item'}></div>
-                    <div className={'transactions__table__head__item'}>Total Value</div>
-                    <div className={'transactions__table__head__item'}>Token Amount</div>
-                    <div className={'transactions__table__head__item'}>Token Amount</div>
-                    <div className={'transactions__table__head__item'}>Account</div>
-                    <div className={'transactions__table__head__item transactions__table__head__item__time'}>Time</div>
-                </div>
-                <div className={'border-line-transactions'}></div>
-
-
-                {loading ? <Loader/> : <TableBody/>}
-
-                {/* <div className={'transactions__table__pagination'}>
-                    <div>
-                        <button onClick={() => handlePageChange("-")}> Prev </button>
-                        <span>Page {page} of {pageMax} </span>
-                        <button onClick={() => handlePageChange("+")}> Next </button>
-
-                    </div>
-                </div> */}
-            </div>
-        </div>
+            </TablePagination>
+        </TokenTransactionTableWrapper>
     )
-
 }

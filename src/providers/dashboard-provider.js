@@ -8,7 +8,10 @@ export const useDashboardContext = () => useContext(DashboardContext);
 
 export const DashboardProvider = ({children}) => {
 
-    const [dashTokens, setDashTokens] = useState([]);
+    const [dashTokens, setDashTokens] = useState(null);
+
+    const [dashboardLoading, setDashboardLoading] = useState(true);
+
     const mockTokenCresd = {
         AGOUSD: "0xc2132d05d31c914a87c6611c10748aeb04b58e8f",
         CNUSD: "0x831753dd7087cac61ab5644b308642cc1c33dc13",
@@ -16,13 +19,22 @@ export const DashboardProvider = ({children}) => {
         CNBTC: "0xd6df932a45c0f255f85145f286ea0b292b21c90b",
     }
         
-
     useEffect(() => {
         getData();
     }, [])
 
+    useEffect(() => {
+
+        if (dashTokens) {
+            setDashboardLoading(false);
+        }
+
+    }, [dashTokens])
+
 
     const getData = async () => {
+
+        let tokens = [];
 
         Object.entries(mockTokenCresd).map(async (item) => {
 
@@ -42,24 +54,24 @@ export const DashboardProvider = ({children}) => {
                 return {time: new Date(chart_item[0]).getDate(), value: chart_item[1].toFixed(2)}
             })
 
-            setDashTokens(prevState => {
-                const newObj = {
-                    name: item[0],
-                    currentPrice: Math.round(main_data.market_data.current_price.usd),
-                    change24h: main_data.market_data.price_change_percentage_24h.toFixed(2)  + "%",
-                    chartPrices: prices,
-                    supply: main_data.market_data.circulating_supply,
-                    marketCap: main_data.market_data.market_cap.usd,
-                }
-                
-                return [...prevState, newObj];
+            const newObj = {
+                name: item[0],
+                currentPrice: Math.round(main_data.market_data.current_price.usd),
+                change24h: main_data.market_data.price_change_percentage_24h.toFixed(2)  + "%",
+                chartPrices: prices,
+                supply: main_data.market_data.circulating_supply,
+                marketCap: main_data.market_data.market_cap.usd,
+            }
 
-            })
+            tokens.push(newObj);
         })
+
+        setDashTokens(tokens);
     }
 
     const contextValues = {
-        dashTokens
+        dashTokens,
+        dashboardLoading
     }
 
     return (

@@ -1,10 +1,45 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
-import { LineChart, Line, Tooltip, XAxis, ResponsiveContainer } from 'recharts';
+import { AreaChart, Area, LineChart, Line, Tooltip, XAxis, ResponsiveContainer } from 'recharts';
 import { useSystemContext } from '../../../systemProvider';
 import { formattedNum } from '../../../utils/helpers';
+import styled from 'styled-components';
+import {useMediaQuery} from 'react-responsive';
+
+const TVLChartWrapper = styled.div`
+    background: ${props => props.mobile ? "transparent" : " radial-gradient(61.16% 3404.86% at 48.28% 79.61%, rgba(30, 117, 89, 0.3) 0%, rgba(9, 33, 25, 0.3) 100%), linear-gradient(90.99deg, #272727 2.18%, #1C1C1C 104.4%)"};
+    box-shadow: ${props => props.mobile ? "none" : "0px 4px 16px rgba(0, 0, 0, 0.25)"};
+    border-radius: 2vw;
+    height: ${props => props.mobile ? "100%" : "45vh"};
+    width: 100%;
+    display: grid;
+    align-self: center;
+    box-sizing: border-box;
+    justify-self: flex-start;
+    grid-template-rows: 30% 70%;
+    padding: ${props => props.mobile ? "0" : "4.5% 11.5%"};
+    .tvl-info {
+        display: grid;
+
+        padding: ${props => props.mobile ? "0 7.5%" : "0"};
+        grid-template-rows: ${props => props.mobile ? " 2fr 1fr" : " 1fr 3fr 1fr"};
+        p {
+           font-weight: 500;
+           font-size: ${props => props.mobile ? "12px" : "1.1vw"};
+           color: ${props => props.mobile ? "#BDBDBD" : "white"};
+        }
+        h1 {
+           color: ${props => props.mobile ? "white" : "#40BA93"};
+           font-weight: ${props => props.mobile ? "600" : "500"};
+           font-size: ${props => props.mobile ? "24px" : "2.1vw"};
+           align-self: flex-end;
+        }
+    }
+`
+
 export const TVLChart = () => {
 
     const {theme} = useSystemContext();
+    const isMobileScreen = useMediaQuery({ query: '(max-width: 767px)' })
 
     const data = [
         {time: '01', uv: 100000, date: "Jul 1, 2021"},
@@ -30,21 +65,33 @@ export const TVLChart = () => {
         value: data[data.length-1].uv
     })
 
-
-
-
     // TODO: Make a more better and accurate styles for this window. See /dashboards
     return (
-
-        <div className={`dashBox tvl ${theme === "light" ? " dashBoxLight" : ""}`}>
+        <TVLChartWrapper mobile={isMobileScreen}>
             <div className={'tvl-info'}>
-                <p>Total Value Locked</p>
+                {!isMobileScreen ? <p>Total Value Locked</p> : null}
                 <h1>${formattedNum(chartValue.value)}</h1>
                 <p>{chartValue.time}</p>
             </div>
             <div className={'tvl-chart'}>
-                <ResponsiveContainer width={"100%"} height={"90%"}>
-                    <LineChart
+                <ResponsiveContainer width={"100%"} height={"100%"}>
+                    {isMobileScreen ? 
+                        <AreaChart data={data}>
+                            <defs> 
+                            <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="10%" stopColor="#40BA93" stopOpacity={1}/>
+                                <stop offset="90%" stopColor="rgba(64, 186, 147, 0)" stopOpacity={0}/>
+                            </linearGradient>
+                            </defs>
+                        <XAxis dataKey="time"
+                            axisLine={false}
+                            tickLine={false}
+                            stroke={theme === "light" ? "black" : "white"}
+                        />
+                        <Area type="monotone" strokeWidth={1} dataKey="uv" stroke="#40BA93" fill="url(#colorUv)" />
+                        </AreaChart>
+                        :
+                        <LineChart
                         margin={{
                             top: 5,
                             right: 30,
@@ -57,12 +104,11 @@ export const TVLChart = () => {
                             value: data[data.length-1].uv
                         })}
                         >
-                        
                         <Line
                             type="monotone"
                             dataKey="uv"
-                            stroke="rgba(64, 186, 147, 0.1)"
-                            strokeWidth={10}
+                            stroke="rgba(64, 186, 147, 0.05)"
+                            strokeWidth={"1vw"}
                             dot={false}
                             activeDot={true}
                         />
@@ -70,15 +116,7 @@ export const TVLChart = () => {
                             type="monotone"
                             dataKey="uv"
                             stroke="#40BA93"
-                            strokeWidth={5}
-                            dot={false}
-                            activeDot={true}
-                        />
-                        <Line
-                            type="monotone"
-                            dataKey="uv"
-                            stroke="rgba(0, 0, 0, 0.6);"
-                            strokeWidth={10}
+                            strokeWidth={"0.25vw"}
                             dot={false}
                             activeDot={true}
                         />
@@ -95,14 +133,14 @@ export const TVLChart = () => {
                             dataKey="time"
                             axisLine={false}
                             tickLine={false}
+                            tick={{fontSize: "1vw"}}
                             stroke={theme === "light" ? "black" : "white"}
                         />
-
                     </LineChart>
+                    }
                 </ResponsiveContainer>
-
             </div>
-        </div>
+        </TVLChartWrapper>
     )
 
 }

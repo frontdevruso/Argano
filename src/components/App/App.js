@@ -22,7 +22,7 @@ export const App = () => {
             <Router>
                 <Layout>
                     <Switch>
-                        <Route path="/dashboard" component={Dashboard} exact/>
+                        <Route path="/" component={Dashboard} exact/>
                         <Route path="/mint-redeem" component={MintRedeem} exact/>
                         <Route path="/staking" component={StakingRewards} exact/>
                         <Route path="/liqudity-pools" component={LiquidityPools} exact/>

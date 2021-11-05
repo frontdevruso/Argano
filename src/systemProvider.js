@@ -11,6 +11,8 @@ import TOKEN_ORACLE_ABI from './abi/TOKEN_ORACLE.json';
 import { CONTRACT_ADRESESS, MOCK_PRICE_ADDRESS, USD_PRICE_ENDPOINT } from './constants';
 import { formatFromDecimal } from './utils/helpers';
 import { message } from 'antd';
+import { ethErrors } from 'eth-rpc-errors'
+import { EthereumRpcError, EthereumProviderError } from 'eth-rpc-errors'
 
 
 const SystemContext = React.createContext();
@@ -36,6 +38,7 @@ export const SystemProvider = ({children}) => {
 
     const [loading, setLoading] = useState(true);
 
+    // 1. Check if user are already connected trough MetaMask if yes then connect him again.
     useEffect(() => {
         metaMask.isAuthorized()
         .then((res) => {
@@ -44,11 +47,11 @@ export const SystemProvider = ({children}) => {
             }
             else {
                 activate(network);
-                setLoading(false);
             }
         })
-
     }, [])
+
+
 
     useEffect(() => {
 
@@ -63,26 +66,37 @@ export const SystemProvider = ({children}) => {
 
     }, [error])
 
-
+    // 2. Inits contracts and tokens not-depend if user connected or not.
     useEffect(() => {
-
-        if (library && !tokens && !contracts) {
+        if (active && !tokens && !contracts) {
             initTokens();
             initContracts();
         }
-        else if (tokens && account) {
-            getUserPortfolio();
-        }
-
-    }, [active, library, tokens, account]);
+    }, [active])
 
     useEffect(() => {
 
-        if (contracts && account) {
-            getMintRedeemInfo();
+        if (contracts && tokens) {
+            if (account) {
+                getUserPortfolio();
+                setLoading(false);
+            }
+            else {
+                setLoading(false);
+            }
         }
 
-    }, [contracts, mintRedeemCurrency])
+    }, [account, contracts, tokens])
+
+
+
+    // useEffect(() => {
+
+    //     if (contracts && account) {
+    //         getMintRedeemInfo();
+    //     }
+
+    // }, [contracts, mintRedeemCurrency])
 
     useEffect(() => {
 
