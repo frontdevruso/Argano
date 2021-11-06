@@ -8,24 +8,13 @@ import { formatFromDecimal, formatToDecimal } from '../../../utils/helpers';
 import { TokenIcon } from '../../TokenIcon/token_icon';
 
 
-export const Mint = () => {
+export const Mint = ({info}) => {
 
     const {account} = useWeb3React();
-    const { setMintRedeemCurrencyModal, mintRedeemCurrency, contracts, tokens, userProtfolio, getTokenBalance, mintRedeemInfo } = useSystemContext();
+    const { setMintRedeemCurrencyModal, mintRedeemCurrency, contracts, tokens, userProtfolio, getTokenBalance } = useSystemContext();
 
     const [collateralInput, setCollateralInput] = useState(0);
     const [catenaInput, setCatenaInput] = useState(0);
-
-    const [prices, setPrices] = useState({
-        sharePrice: 0,
-        stablePrice: 0
-    })
-
-    const [inputsTCRpercent, setInputsTCRpercent] = useState({
-        first: 0,
-        second: 0
-    });
-
     const [outputInput, setOutputInput] = useState(0);
 
     const [approved, setApproved] = useState({
@@ -38,13 +27,11 @@ export const Mint = () => {
     useEffect(() => {
         if (account) {
             getAllowance()
-            getTCR()
         }
     }, [account])
 
 
     useEffect(() => {
-
 
         if (account) {
             const usdt = getTokenBalance("USDT");
@@ -78,7 +65,6 @@ export const Mint = () => {
             share = await tokens.CNBTC.instance.methods.allowance(account, CONTRACT_ADRESESS.POOL_AGOBTC).call();
         }
 
-
         setApproved( prevState => ({
             ...prevState,
             collateral,
@@ -86,61 +72,15 @@ export const Mint = () => {
         }))
     }
 
-    const getTCR = async () => {
-
-        let first;
-        let second;
-        let sharePrice;
-        let stablePrice;
-        // console.log(await contracts.TREASURY_AGOUSD.methods.info(account).call());
-
-        if (mintRedeemCurrency === "AGOUSD") {
-            first = formatFromDecimal(await contracts.TREASURY_AGOUSD.methods.target_collateral_ratio().call(), 6) * 100
-            second = 100 - first;
-
-            sharePrice = await contracts.TREASURY_AGOUSD.methods.sharePrice().call()
-            stablePrice = await contracts.TREASURY_AGOUSD.methods.dollarPrice().call()
-        }
-
-        setInputsTCRpercent({
-            first,
-            second
-        })
-
-        setPrices({
-            sharePrice,
-            stablePrice
-        })
-    }
-
     const handleCollateralInput = (value) => {
 
-        let stableOutPut;
-        let catenaOutPut;
-        // const newDollar = (collateralInputField.current.value * 1e18 * collateralPrice + shareInputField.current.value * 1e18 * sharePrice) / dollarPrice * (1 - mintingFee)
-
-
-        if (mintRedeemCurrency === "AGOUSD") {
-            if (inputsTCRpercent.first === 100) {
-                stableOutPut = (formatToDecimal(value, tokens.USDT.decimals)  * 1) / formatFromDecimal(prices.stablePrice, tokens.AGOUSD.decimals);
-                stableOutPut = stableOutPut - ((stableOutPut * mintRedeemInfo.mintFee) / 100);
-            }
-            else {
-                // TODO: When TCR would be less than 100% that write logic here. ASK PAVEL for that!
-                // stableOutPut = (formatToDecimal(value, tokens.AGOUSD.decimals) * formatToDecimal(catenaInput, tokens.CNUSD.decimals) * parseInt(prices.sharePrice)) / parseInt(prices.stablePrice) // FIXME: add * (1 - mintingFee) whooot?
-            }
-            // stableOutPut = (formatToDecimal(value, tokens.AGOUSD.decimals) * formatToDecimal(catenaInput, tokens.CNUSD.decimals) * parseInt(prices.sharePrice)) / parseInt(prices.stablePrice) // FIXME: add * (1 - mintingFee) whooot?
-        }
+        const shareOutput = ((value * info.sharePrice) - ((value * info.sharePrice) * (info.mintFee / 100))) * ((100 - info.targetCollateralRatio) / 100);
+        const stableOutput = ((value * 1.0001) - ((value / 1.001) * (info.mintFee / 100))) * (info.targetCollateralRatio / 100);
 
         setCollateralInput(value)
-
-        // TODO: Set catena input too!
-
-        setOutputInput(formatFromDecimal(stableOutPut, 18))
+        setOutputInput(stableOutput + shareOutput)
+        setCatenaInput(shareOutput)
     }
-
-    console.log(outputInput);
-    console.log(prices);
 
     const handleCatenaInput = (value) => {
         setCatenaInput(value)
@@ -222,6 +162,10 @@ export const Mint = () => {
 
     }
 
+    const handleRefreshCollateralRatio = async () => {
+        await contracts.TREASURY_AGOUSD.methods.refreshCollateralRatio().send({from: account});
+    }
+
     return (
         <div className='mint-wrapper'> 
             <div className='mint-window'>
@@ -230,7 +174,7 @@ export const Mint = () => {
                     <button onClick={() => setMintRedeemCurrencyModal(true)}> <img src={setting_cog} alt="settings"/> </button>
                 </div>
                 <div className='mint-window-input-row'> 
-                    <span> <h3> Input <b> -{inputsTCRpercent.first}% </b> </h3> </span>
+                    <span> <h3> Input <b> -{info.targetCollateralRatio}% </b> </h3> </span>
                     <span className='balance'> <h3> Balance: {getTokenBalance(mintRedeemCurrency === "AGOUSD" ? "USDT" : "WBTC")}  </h3> </span>
                     <input type='number' placeholder="0.00" onChange={(e) => handleCollateralInput(e.target.value)} value={collateralInput}/>
                     <span className='currency'> <TokenIcon iconName={ mintRedeemCurrency === "AGOUSD" ? "USDT" : "WBTC"}/> {mintRedeemCurrency === "AGOUSD" ? "USDT" : "WBTC"} </span>
@@ -239,9 +183,9 @@ export const Mint = () => {
                     <i className="fas fa-plus"/>
                 </div>
                 <div className='mint-window-input-row'> 
-                    <span> <h3> Input <b> -{inputsTCRpercent.second}% </b> </h3> </span>
+                    <span> <h3> Input <b> -{info.targetCollateralRatio - 100}% </b> </h3> </span>
                     <span className='balance'> <h3> Balance: {getTokenBalance(mintRedeemCurrency === "AGOUSD" ? "CNUSD" : "CNBTC")} </h3> </span>
-                    <input type='number' disabled={inputsTCRpercent.second === 0} placeholder={inputsTCRpercent.second === 0 ? "TCR is 100%" : "0.00"} onChange={(e) => handleCatenaInput(e.target.value)} value={inputsTCRpercent.second === 0 ? "" : catenaInput}/>
+                    <input type='number' disabled={info.targetCollateralRatio === 100} placeholder={info.targetCollateralRatio === 100 ? "TCR is 100%" : "0.00"} onChange={(e) => handleCatenaInput(e.target.value)} value={info.targetCollateralRatio === 100 ? "" : catenaInput}/>
                     <span className='currency'> <TokenIcon iconName={mintRedeemCurrency === "AGOUSD" ? "CNUSD" : "CNBTC"}/> {mintRedeemCurrency === "AGOUSD" ? "CNUSD" : "CNBTC"}</span>
                 </div>
                 <div className='mint-window-op-sign-row'> 
@@ -253,6 +197,7 @@ export const Mint = () => {
                     <input disabled type='number' placeholder="0.00" value={outputInput}/>
                     <span className='currency'> <TokenIcon iconName={mintRedeemCurrency}/> {mintRedeemCurrency} </span>
                 </div>
+                <button style={{background: "pink", width: "200px", height: "50px"}} onClick={() => handleRefreshCollateralRatio()}> Pablo refresh TCR </button>
                 <MintButton/>
             </div>
         </div>

@@ -9,8 +9,6 @@ import MintRedeem from '../MintRedeem/mint_redeem';
 import { StakingRewards } from '../StakingRewards/staking-rewards';
 import LiquidityPools from '../LiquidityPools/liquidity-pools';
 import { Trading } from '../Trading/trading';
-import './App.scss';
-
 import { Layout } from '../Layout/layout';
 import { Accounts } from '../Accounts/accounts';
 import 'antd/dist/antd.css';

@@ -8,13 +8,15 @@ import { MAX_INT } from '../../../constants';
 import { formatFromDecimal, formatToDecimal } from '../../../utils/helpers';
 import { message } from 'antd';
 
-export const Redeem = () => {
+export const Redeem = ({info}) => {
 
 
     const { account } = useWeb3React();
     const { setMintRedeemCurrencyModal, mintRedeemCurrency, contracts, tokens, getTokenBalance } = useSystemContext();
     const [approved, setApproved] = useState(null);
     const [input, setInput] = useState(null);
+    const [collateralOutput, setCollateralOutput] = useState(0);
+    const [catenaOutput, setCatenaOutput] = useState(0);
     const [redeemBalances, setRedeemBalances] = useState(null)
 
 
@@ -23,8 +25,7 @@ export const Redeem = () => {
         getRedemption()
     }, [mintRedeemCurrency])
 
-
-    console.log(contracts);
+    console.log(info);
 
     const getAllowance = async () => {
 
@@ -95,7 +96,17 @@ export const Redeem = () => {
         catch {
             message.error({content: `Something went wrong !`, key: MINT_REDEEM_KEY, duration: 3, className: "ant-argano-message"})
         }
+    }
 
+    const handleStableInput = (value) => {
+
+        const collateralOutput = ((value / info.stablePrice) - ((value / info.stablePrice) * (info.redeemFee / 100))) * (info.targetCollateralRatio / 100);
+        const shareOutput = ((value / info.sharePrice) - ((value / info.sharePrice) * (info.redeemFee / 100))) * ((100 - info.targetCollateralRatio) / 100);
+
+        setCollateralOutput(collateralOutput);
+        setCatenaOutput(shareOutput);
+        
+        setInput(value);
     }
 
     const collectRedemption = async () => {
@@ -128,36 +139,36 @@ export const Redeem = () => {
                 </div>
                 <div> 
                     <h3> {redeemBalances?.redemptionCollateral} <b>{mintRedeemCurrency === "AGOUSD" ? "USDT" : "WBTC"}</b> </h3>
-                    <h3> {redeemBalances?.redemptionShare} <b>{mintRedeemCurrency}</b> </h3>
+                    <h3> {redeemBalances?.redemptionShare} <b>{mintRedeemCurrency === "AGOUSD" ? "CNUSD" : "CNBTC"}</b> </h3>
                 </div>
             </div>
         <div className='redeem-window'>
             <div className='redeem-window-header'> 
                 <h3> Redeem </h3>
-                <button onClick={() => setMintRedeemCurrencyModal(true)}> <img src={setting_cog}/> </button>
+                <button onClick={() => setMintRedeemCurrencyModal(true)}> <img src={setting_cog} alt={"settings"}/> </button>
             </div>
             <div className='redeem-window-input-row'> 
                 <span> <h3> Input </h3> </span>
                 <span className='balance'> <h3> Balance: {getTokenBalance(mintRedeemCurrency)} </h3> </span>
-                <input onChange={(e) => setInput(e.target.value)} className='inpunt-redeem' type='number' placeholder="0.00"/>
+                <input onChange={(e) => handleStableInput(e.target.value)} className='inpunt-redeem' type='number' placeholder="0.00" value={input}/>
                 <span className='currency'> <TokenIcon iconName={mintRedeemCurrency}/> {mintRedeemCurrency} </span>
             </div>
             <div className='redeem-window-op-sign-row'> 
                 <i className="fas fa-plus"/>
             </div>
             <div className='redeem-window-input-row'> 
-                <span> <h3> Output USDT - <b> 91.6392% </b> </h3> </span>
-                <span className='balance'> <h3> Balance: {getTokenBalance(mintRedeemCurrency === "AGOUSD" ? "USDT" : "WBTC")}0.0 </h3> </span>
-                <input disabled type='number' placeholder="0.00"/>
+                <span> <h3> Output USDT - <b> {info.targetCollateralRatio}% </b> </h3> </span>
+                <span className='balance'> <h3> Balance: {getTokenBalance(mintRedeemCurrency === "AGOUSD" ? "USDT" : "WBTC")} </h3> </span>
+                <input disabled type='number' placeholder="0.00" value={collateralOutput}/>
                 <span className='currency'> <TokenIcon iconName={mintRedeemCurrency === "AGOUSD" ? "USDT" : "WBTC"}/> {mintRedeemCurrency === "AGOUSD" ? "USDT" : "WBTC"} </span>
             </div>
             <div className='redeem-window-op-sign-row'> 
                 <i className="fas fa-arrow-down"/>
             </div>
             <div className='redeem-window-input-row output'> 
-                <span> <h3> Output CNUSD - <b> 8.3608% </b> </h3> </span>
-                <span className='balance'> <h3> Balance: {getTokenBalance(mintRedeemCurrency === "AGOUSD" ? "CNUSD" : "CNBTC")}0.0 </h3> </span>
-                <input disabled type='number' placeholder="0.00"/>
+                <span> <h3> Output CNUSD - <b> {100 - info.targetCollateralRatio}% </b> </h3> </span>
+                <span className='balance'> <h3> Balance: {getTokenBalance(mintRedeemCurrency === "AGOUSD" ? "CNUSD" : "CNBTC")} </h3> </span>
+                <input disabled type='number' placeholder={info.targetCollateralRatio === 100 ? "TCR is 100%" : "0.00"} value={info.targetCollateralRatio === 100 ? null : catenaOutput}/>
                 <span className='currency'> <TokenIcon iconName={mintRedeemCurrency === "AGOUSD" ? "CNUSD" : "CNBTC"}/> {mintRedeemCurrency === "AGOUSD" ? "CNUSD" : "CNBTC"} </span>
             </div>
             <button onClick={approved ? handleRedeem : handleApprove} className='redeem-window-run-mint'> {approved > "0" ? "Redeem" : `Approve ${mintRedeemCurrency}`}</button>
