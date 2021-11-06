@@ -43,10 +43,23 @@ export const SystemProvider = ({children}) => {
         metaMask.isAuthorized()
         .then((res) => {
             if (res) {
-                activate(metaMask);
+                try {
+                    activate(metaMask);
+                }
+                catch(e) {
+                    alert("Some error due activate")
+                }
+                
             }
             else {
-                activate(network);
+                try {
+                    activate(network);
+                }
+
+                catch(e) {
+                    alert("Some error due activate")
+                }
+                
             }
         })
     }, [])
@@ -69,8 +82,15 @@ export const SystemProvider = ({children}) => {
     // 2. Inits contracts and tokens not-depend if user connected or not.
     useEffect(() => {
         if (active && !tokens && !contracts) {
-            initTokens();
-            initContracts();
+            try {
+                initTokens();
+                initContracts();
+            }
+
+            catch(e) {
+                alert("Some error due init tokens and contracts");
+            }
+
         }
     }, [active])
 
@@ -78,8 +98,16 @@ export const SystemProvider = ({children}) => {
 
         if (contracts && tokens) {
             if (account) {
-                getUserPortfolio();
-                setLoading(false);
+                try {
+                    getUserPortfolio();
+                    setLoading(false);
+                }
+
+                catch(e) {
+                    alert("Some error due get user portfolio!")
+                }
+                
+                
             }
             else {
                 setLoading(false);
@@ -87,16 +115,6 @@ export const SystemProvider = ({children}) => {
         }
 
     }, [account, contracts, tokens])
-
-
-
-    // useEffect(() => {
-
-    //     if (contracts && account) {
-    //         getMintRedeemInfo();
-    //     }
-
-    // }, [contracts, mintRedeemCurrency])
 
     useEffect(() => {
 
@@ -135,7 +153,8 @@ export const SystemProvider = ({children}) => {
         const POOL_AGOUSD = new library.eth.Contract(STABLE_POOL_ABI, CONTRACT_ADRESESS.POOL_AGOUSD);
         const TREASURY_AGOUSD = new library.eth.Contract(TREASURY_ABI, CONTRACT_ADRESESS.TREASURY_AGOUSD);
         const POOL_AGOBTC = new library.eth.Contract(STABLE_POOL_ABI, CONTRACT_ADRESESS.POOL_AGOBTC);
-        setContracts({POOL_AGOUSD, TREASURY_AGOUSD, POOL_AGOBTC});
+        const TREASURY_AGOBTC = new library.eth.Contract(TREASURY_ABI, CONTRACT_ADRESESS.TREASURY_AGOBTC);
+        setContracts({POOL_AGOUSD, TREASURY_AGOUSD, POOL_AGOBTC, TREASURY_AGOBTC});
     }
 
     const connectWallet = (wallet) => {
@@ -149,26 +168,6 @@ export const SystemProvider = ({children}) => {
                 break;
         }
         setIsWalletModal(false)
-
-    }
-
-    const getMintRedeemInfo = async () => {
-
-        // FIXME: Onchange currency for AGOUSD and AGOBTC
-
-        console.log("CHANGING CURRENCY!")
-
-
-        const info = await contracts.TREASURY_AGOUSD.methods.info(account).call();
-        const poolBalance = formatFromDecimal(await contracts.POOL_AGOUSD.methods.collateralDollarBalance().call(), 18);
-        //TODO: Inputs first: TCR second: 100 - TCR,
-
-        setMintRedeemInfo({
-            mintFee: formatFromDecimal(info["5"], 6) * 100,
-            redeemFee: formatFromDecimal(info["6"], 6) * 100,
-            poolBalance,
-            rates: formatFromDecimal(info["1"], 18)
-        })
 
     }
 
@@ -211,9 +210,7 @@ export const SystemProvider = ({children}) => {
 
     const getTokenBalance = (name) => {
 
-        if (userProtfolio) {
-            return parseFloat(userProtfolio.find((item) => item.name === name).userNativeBalance).toFixed(2)
-        }
+        return parseFloat(userProtfolio?.find((item) => item.name === name).userNativeBalance).toFixed(2)
 
     }
 

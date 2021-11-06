@@ -1,8 +1,4 @@
 import { useState, useEffect } from 'react';
-import {getBlockFromTimestamp} from "./getBlocksData";
-import dayjs from 'dayjs';
-import {client} from "../api/clients";
-import {ETH_PRICE} from "../api/queries";
 import BigNumber from "bignumber.js";
 import fromExponential from "from-exponential";
 
@@ -108,39 +104,6 @@ export const calculateTimeDifference = (timestamp) => {
     return diff;
 }
 
-
-// Get current ETH price to format tokens derivedETH to USD
-export const getEthPrice = async () => {
-    const utcCurrentTime = dayjs()
-    const utcOneDayBack = utcCurrentTime.subtract(1, 'day').startOf('minute').unix()
-
-    let ethPrice = 0
-    let ethPriceOneDay = 0
-    let priceChangeETH = 0
-
-    try {
-        let oneDayBlock = await getBlockFromTimestamp(utcOneDayBack)
-        let result = await client.query({
-            query: ETH_PRICE(),
-            fetchPolicy: 'cache-first',
-        })
-
-        let resultOneDay = await client.query({
-            query: ETH_PRICE(oneDayBlock),
-            fetchPolicy: 'cache-first',
-        })
-
-        const currentPrice = result?.data?.bundles[0]?.ethPrice
-        const oneDayBackPrice = resultOneDay?.data?.bundles[0]?.ethPrice
-        priceChangeETH = getPercentChange(currentPrice, oneDayBackPrice)
-        ethPrice = currentPrice
-        ethPriceOneDay = oneDayBackPrice
-    } catch (e) {
-        console.log(e)
-    }
-
-    return [ethPrice, ethPriceOneDay, priceChangeETH]
-}
 
 // Percent change between current time and yesterday
 export const getPercentChange = (valueNow, value24HoursAgo) => {
