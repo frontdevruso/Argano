@@ -162,6 +162,11 @@ export const Mint = ({info}) => {
 
     }
 
+
+    const handleUnpause = async () => {
+        await contracts.TREASURY_AGOUSD.methods.unpauseCollateralRatio().send({from: account});
+    }
+
     const handleRefreshCollateralRatio = async () => {
         await contracts.TREASURY_AGOUSD.methods.refreshCollateralRatio().send({from: account});
     }
@@ -198,6 +203,7 @@ export const Mint = ({info}) => {
                     <span className='currency'> <TokenIcon iconName={mintRedeemCurrency}/> {mintRedeemCurrency} </span>
                 </div>
                 <button style={{background: "pink", width: "200px", height: "50px"}} onClick={() => handleRefreshCollateralRatio()}> Pablo refresh TCR </button>
+                <button style={{background: "pink", width: "200px", height: "50px"}} onClick={() => handleUnpause()}> Pablo Unpause </button>
                 <MintButton/>
             </div>
         </div>
