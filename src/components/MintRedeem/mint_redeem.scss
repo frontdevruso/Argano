@@ -1,563 +1,666 @@
 .mint-redeem-wrapper {
+  display: grid;
+  height: 100%;
+  grid-template-rows: 10% 10% 80%;
+  grid-template-columns: 1fr;
+  box-sizing: border-box;
+  padding-bottom: 2.5%;
+
+  .mint-redeem-header {
     display: grid;
-    height: 100%;
-    grid-template-rows: 10% 10% 80%;
-    grid-template-columns: 1fr;
+
+    h1 {
+      align-self: center;
+      margin: 0;
+      color: white;
+      font-size: 36px;
+      @media only screen and (max-width: 1500px) {
+        font-size: 26px;
+      }
+    }
+  }
+
+  .mint-redeem-tx-info {
+    display: grid;
+    align-items: center;
+
+    div {
+      height: 46px;
+      height: clamp(36px, 100%, 46px);
+      border-radius: 20px;
+      box-sizing: border-box;
+      background: #1E1E1E;
+      display: grid;
+      grid-gap: 5px;
+      grid-template-columns:12% 2% 20% 2% 10% 2% 20% 30%;
+      padding-left: 25px;
+      padding-right: 25px;
+      align-items: center;
+
+      .fa-circle {
+        color: #40BA93;
+        font-size: 10px;
+        @media only screen and (max-width: 1500px) {
+          font-size: 6px;
+        }
+        justify-self: center;
+      }
+
+      @media only screen and (max-width: 1500px) { //me
+        padding-bottom: 10px;
+        padding-top: 10px;
+        width: 100%;
+      }
+
+      span {
+        position: relative;
+        color: #4F4F4F;
+        font-size: 14px;
+        @media only screen and (max-width: 1500px) {
+          font-size: 6px;
+        }
+        justify-self: center;
+
+        b {
+          color: white;
+          font-weight: 600;
+        }
+
+        span {
+          color: white;
+
+          b {
+            color: #40BA93;
+          }
+        }
+
+        a {
+          color: white;
+          text-decoration: underline;
+        }
+
+        i {
+          color: white;
+        }
+
+        &:last-child {
+          justify-self: flex-end;
+        }
+      }
+    }
+  }
+
+  .mint-redeem-switcher {
+    display: grid;
+    place-items: center;
+    div {
+      button {
+        width: 90px;
+        height: 40px;
+        border-radius: 20px;
+        font-size: 18px;
+        @media only screen and (max-width: 1500px) {
+          font-size: 14px;
+        }
+        border: 0px;
+        background-color: transparent;
+        color: #4F4F4F;
+        cursor: pointer;
+      }
+    }
+
+    .active-switcher-button {
+      background-color: #40BA93;
+      color: white;
+      font-size: 18px;
+      @media only screen and (max-width: 1500px) {
+        font-size: 14px;
+      }
+    }
+  }
+
+  .mint-wrapper {
+    display: grid;
+    align-items: flex-start;
+    justify-items: center;
     box-sizing: border-box;
-    padding-bottom: 2.5%;
-    .mint-redeem-header {
-        display: grid;
-        h1 {
-            align-self: center;
-            margin: 0;
-            color: white;
-            font-size: 36px;
-            @media only screen and (max-width: 1500px) {
-                font-size: 26px;
-            }
-        }
+    @media only screen and (max-width: 1500px) { //me
+      display: flex;
+      width: 30%;
+      margin-top: 10px;
     }
 
-    .mint-redeem-tx-info {
-        display: grid;
-        align-items: center;
-        div {
-            height: 46px;
-            height: clamp(36px, 100%, 46px);
-            border-radius: 20px;
-            box-sizing: border-box;
-            background: #1E1E1E;
-            display: grid;
-            grid-gap: 5px;
-            grid-template-columns:12% 2% 20% 2% 10% 2% 20% 30%;
-            padding-left: 25px;
-            padding-right: 25px;
-            align-items: center;
-            .fa-circle {
-                color: #40BA93;
-                font-size: 10px;
-                @media only screen and (max-width: 1500px) {
-                    font-size: 6px;
-                }
-                justify-self: center;
-            }
-            span {
-                position: relative;
-                color: #4F4F4F;
-                font-size: 14px;
-                @media only screen and (max-width: 1500px) {
-                    font-size: 12px;
-                }
-                justify-self: center;
-                b{
-                    color: white;
-                    font-weight: 600;
-                }
-                span {
-                    color: white;
-                    b {
-                        color: #40BA93;
-                    }
-                }
-                a {
-                    color: white;
-                    text-decoration: underline;
-                }
-                i {
-                    color: white;
-                }
-                &:last-child {
-                    justify-self: flex-end;
-                }
-            }
-        }
-    }
+    .mint-window {
+      background: radial-gradient(61.16% 3404.86% at 48.28% 79.61%, rgba(30, 117, 89, 0.3) 0%, rgba(9, 33, 25, 0.3) 100%), linear-gradient(90.99deg, #272727 2.18%, #1C1C1C 104.4%);
+      box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.25);
+      border-radius: 40px;
+      width: clamp(498px, 50%, 798px);
+      height: clamp(393px, 100%, 693px);
+      display: grid;
+      grid-template-rows: 10% 20% 8% 20% 8% 20% 14%;
+      box-sizing: border-box;
+      padding: 2% 3.5%;
+      @media only screen and (max-width: 1500px) {
 
-    .mint-redeem-switcher {
+      }
+
+      .mint-window-header {
         display: grid;
-        place-items: center;
-        div {
-            button {
-                width: 90px;
-                height: 40px;
-                border-radius: 20px;
-                font-size: 18px;
-                @media only screen and (max-width: 1500px) {
-                    font-size: 14px;
-                }
-                border: 0px;
-                background-color: transparent;
-                color: #4F4F4F;
-                cursor: pointer;
-            }            
+        grid-template-columns: 2fr 1fr;
+
+        h3 {
+          color: white;
+          @media only screen and (max-width: 1500px) {
+            padding: 10px;
+          }
         }
-        .active-switcher-button {
+
+        button {
+          background: #171717;
+          box-shadow: -8px -8px 20px rgba(28, 27, 27, 0.25), 4px 4px 10px rgba(0, 0, 0, 0.25);
+          border-radius: 16px;
+          width: 68px;
+          height: 45px;
+
+          &:hover {
+            transition: 0.3s all;
             background-color: #40BA93;
-            color: white;
+          }
+
+          @media only screen and (max-width: 1500px) {
+            width: 48px;
+            height: 28px;
+            img {
+              width: 15px;
+              height: 15px;
+            }
+          }
+          justify-self: flex-end;
+          border: 0;
+          cursor: pointer;
+        }
+      }
+
+      .mint-window-input-row {
+        width: 100%;
+        height: clamp(86px, 100%, 106px);
+        display: grid;
+        grid-template-columns: 60% 40%;
+        background: #1E1E1E;
+        border-radius: 40px;
+        box-sizing: border-box;
+        padding: 2.5% 6%;
+
+        span {
+          color: white;
+
+          h3 {
             font-size: 18px;
             @media only screen and (max-width: 1500px) {
-                font-size: 14px;
+              font-size: 14px;
             }
-        }
-    }  
+            color: #4F4F4F;
 
-    .mint-wrapper {
+            b {
+              color: white;
+            }
+          }
+        }
+
+        .balance {
+          display: grid;
+          justify-self: flex-end;
+          color: white;
+        }
+
+        .currency {
+          display: grid;
+          grid-template-columns: 1fr 2fr;
+          align-items: center;
+          justify-self: flex-end;
+          grid-column-gap: 5px;
+          font-size: 24px;
+          @media only screen and (max-width: 1500px) {
+            font-size: 18px;
+            img {
+              width: 33px;
+              height: 33px;
+            }
+          }
+          color: white;
+        }
+
+        input {
+          background-color: transparent;
+          border: 0;
+          color: #A9AAAB;
+          font-size: 24px;
+          @media only screen and (max-width: 1500px) {
+            font-size: 18px;
+          }
+
+          &:focus {
+            outline: none;
+          }
+
+          &::placeholder {
+            color: #A9AAAB;
+            font-size: 24px;
+          }
+        }
+      }
+
+      .output {
+        input {
+          color: #40BA93;
+
+          &::placeholder {
+            color: #40BA93;
+          }
+
+          pointer-events: none;
+        }
+      }
+
+      .mint-window-op-sign-row {
         display: grid;
-        align-items: flex-start;
-        justify-items: center;
+        place-items: center;
+
+        i {
+          color: #C4C4C4;
+          font-size: 24px;
+        }
+
+        .fa-arrow-down {
+          color: #40BA93;
+        }
+      }
+
+      .mint-window-run-mint {
+        justify-self: center;
+        align-self: flex-end;
+        border: 0;
+        color: white;
+        height: clamp(51px, 80%, 71px);
+        width: 60%;
+        font-size: 24px;
+        background: #40BA93;
+        box-shadow: -6px -6px 30px rgba(51, 51, 51, 0.25), 4px 4px 20px rgba(0, 0, 0, 0.25);
+        border-radius: 30px;
+        cursor: pointer;
+
+        &:disabled {
+          background-color: lightgray;
+          cursor: none;
+          pointer-events: none;
+          color: black;
+        }
+
+        @media only screen and (max-width: 1500px) {
+          font-size: 18px;
+          margin-top: 40px;
+        }
+      }
+    }
+  }
+
+  .redeem-wrapper {
+    display: grid;
+    grid-template-columns: 25% 50% 25%;
+
+    .collect-redemption {
+      width: clamp(284px, 80%, 334px);
+      height: clamp(175px, 100%, 181px);
+      background: linear-gradient(90.99deg, #1D1D1D 2.18%, #232323 104.4%);
+      border-radius: 40px;
+      justify-self: center;
+      display: grid;
+      grid-template-columns: 1fr;
+      box-sizing: border-box;
+      padding: 9.3% 7%;
+
+      div {
+        display: grid;
+        grid-template-columns: 60% 40%;
+        align-items: center;
+
+        &:first-child {
+          h3 {
+            color: white;
+          }
+        }
+
+        h3 {
+          font-size: 14px;
+          color: #4F4F4F;
+
+          b {
+            color: #40BA93;
+          }
+        }
+
+        button {
+          width: 100%;
+          max-width: 91px;
+          justify-self: flex-end;
+          height: 50%;
+          border: 1px solid #40BA93;
+          border-radius: 20px;
+          cursor: pointer;
+          background-color: transparent;
+          color: white;
+
+          &:hover {
+            transition: 0.3s;
+            background-color: #40BA93;
+            color: white;
+          }
+        }
+
+        &:first-child {
+          border-bottom: 1px solid #333333;
+        }
+      }
+    }
+
+    .redeem-window {
+      background: radial-gradient(61.16% 3404.86% at 48.28% 79.61%, rgba(30, 117, 89, 0.3) 0%, rgba(9, 33, 25, 0.3) 100%), linear-gradient(90.99deg, #272727 2.18%, #1C1C1C 104.4%);
+      box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.25);
+      border-radius: 40px;
+      width: clamp(498px, 100%, 798px);
+      height: clamp(393px, 100%, 693px);
+      justify-self: center;
+      display: grid;
+      grid-template-rows: 10% 20% 8% 20% 8% 20% 14%;
+      box-sizing: border-box;
+      padding: 4% 7%;
+
+      .redeem-window-header {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+
+        h3 {
+          color: white;
+        }
+
+        button {
+          background: #171717;
+          box-shadow: -8px -8px 20px rgba(28, 27, 27, 0.25), 4px 4px 10px rgba(0, 0, 0, 0.25);
+          border-radius: 16px;
+          width: 68px;
+          height: 45px;
+
+          &:hover {
+            transition: 0.3s all;
+            background-color: #40BA93;
+          }
+
+          @media only screen and (max-width: 1500px) {
+            width: 48px;
+            height: 28px;
+            img {
+              width: 15px;
+              height: 15px;
+            }
+          }
+          justify-self: flex-end;
+          border: 0;
+          cursor: pointer;
+        }
+      }
+
+      .redeem-window-input-row {
+        width: 100%;
+        height: clamp(86px, 100%, 106px);
+        display: grid;
+        grid-template-columns: 60% 40%;
+        background: #1E1E1E;
+        border-radius: 40px;
         box-sizing: border-box;
-        .mint-window {
-            background: radial-gradient(61.16% 3404.86% at 48.28% 79.61%, rgba(30, 117, 89, 0.3) 0%, rgba(9, 33, 25, 0.3) 100%), linear-gradient(90.99deg, #272727 2.18%, #1C1C1C 104.4%);
-            box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.25);
-            border-radius: 40px;
-            width: clamp(498px, 50%, 798px);
-            height: clamp(393px, 100%, 693px);
-            display: grid;
-            grid-template-rows: 10% 20% 8% 20% 8% 20% 14%;
-            box-sizing: border-box;
-            padding: 2% 3.5%;
-            .mint-window-header {
-                display: grid;
-                grid-template-columns: 2fr 1fr;
-                h3 {
-                    color: white;
-                }
-                button {
-                    background: #171717;
-                    box-shadow: -8px -8px 20px rgba(28, 27, 27, 0.25), 4px 4px 10px rgba(0, 0, 0, 0.25);
-                    border-radius: 16px;
-                    width:  68px;
-                    height: 45px;
-                    &:hover {
-                        transition: 0.3s all;
-                        background-color: #40BA93;
-                    }
-                    @media only screen and (max-width: 1500px) {
-                        width: 48px;
-                        height: 28px;
-                        img {
-                            width: 15px;
-                            height: 15px;
-                        }
-                    }
-                    justify-self: flex-end;
-                    border: 0;
-                    cursor: pointer;
-                }
-            }
-            .mint-window-input-row {
-                width: 100%;
-                height: clamp(86px, 100%, 106px);
-                display: grid;
-                grid-template-columns: 60% 40%;
-                background: #1E1E1E;
-                border-radius: 40px;
-                box-sizing: border-box;
-                padding: 2.5% 6%;
+        padding: 2.5% 6%;
 
-                span {
-                    color: white;
-                    h3 {
-                        font-size: 18px;
-                        @media only screen and (max-width: 1500px) {
-                            font-size: 14px;
-                        }
-                        color: #4F4F4F;
-                        b {
-                            color: white;
-                        }
-                    }
-                }
-                .balance {
-                    display: grid;
-                    justify-self: flex-end;
-                    color: white;
-                }
-                .currency {
-                    display: grid;
-                    grid-template-columns: 1fr 2fr;
-                    align-items: center;
-                    justify-self: flex-end;
-                    grid-column-gap: 5px;
-                    font-size: 24px;
-                    @media only screen and (max-width: 1500px) {
-                        font-size: 18px;
-                        img {
-                            width: 33px;
-                            height: 33px;
-                        }
-                    }
-                    color: white;
-                }
-                input {
-                    background-color: transparent;
-                    border: 0;
-                    color: #A9AAAB;
-                    font-size: 24px;
-                    @media only screen and (max-width: 1500px) {
-                        font-size: 18px;
-                    }
-                    &:focus {
-                        outline: none;
-                    }
-                    &::placeholder {
-                        color: #A9AAAB;
-                        font-size: 24px;
-                    }
-                }
-            }
+        span {
+          color: white;
 
-            .output {
-                input {
-                    color: #40BA93;
-                    &::placeholder {
-                        color: #40BA93;
-                    }
-                    pointer-events: none;
-                }
+          h3 {
+            font-size: 18px;
+            @media only screen and (max-width: 1500px) {
+              font-size: 14px;
             }
-            .mint-window-op-sign-row {
-                display: grid;
-                place-items: center;
-                i {
-                    color: #C4C4C4;
-                    font-size: 24px;
-                }
-                .fa-arrow-down {
-                    color: #40BA93;
-                }
+            color: #4F4F4F;
+
+            b {
+              color: white;
             }
-            .mint-window-run-mint {
-                justify-self: center;
-                align-self: flex-end;
-                border: 0;
-                color: white;
-                height: clamp(51px, 80%, 71px);
-                width: 60%;
-                font-size: 24px;
-                background: #40BA93;
-                box-shadow: -6px -6px 30px rgba(51, 51, 51, 0.25), 4px 4px 20px rgba(0, 0, 0, 0.25);
-                border-radius: 30px;
-                cursor: pointer;
-                &:disabled {
-                    background-color: lightgray;
-                    cursor: none;
-                    pointer-events: none;
-                    color: black;
-                }
-            }
+          }
         }
-    }
 
-    .redeem-wrapper {
+        .balance {
+          display: grid;
+          justify-self: flex-end;
+          color: white;
+        }
+
+        .inpunt-redeem {
+          color: #A9AAAB;
+
+          &::placeholder {
+            color: #A9AAAB;
+          }
+        }
+
+        .currency {
+          display: grid;
+          grid-template-columns: 1fr 2fr;
+          align-items: center;
+          justify-self: flex-end;
+          grid-column-gap: 5px;
+          font-size: 24px;
+
+
+          @media only screen and (max-width: 1500px) {
+            font-size: 18px;
+            img {
+              width: 33px;
+              height: 33px;
+            }
+          }
+          color: white;
+        }
+
+        input {
+          background-color: transparent;
+          border: 0;
+          color: #40BA93;
+          font-size: 24px;
+
+
+          @media only screen and (max-width: 1500px) {
+            font-size: 18px;
+          }
+
+          &:focus {
+            outline: none;
+          }
+
+          &::placeholder {
+            color: #40BA93;
+            font-size: 24px;
+          }
+        }
+      }
+
+      .output {
+        input {
+          color: #40BA93;
+
+          &::placeholder {
+            color: #40BA93;
+          }
+
+          pointer-events: none;
+        }
+      }
+
+      .redeem-window-op-sign-row {
         display: grid;
-        grid-template-columns: 25% 50% 25%;
+        place-items: center;
 
-        .collect-redemption {
-            width: clamp(284px, 80%, 334px);
-            height: clamp(175px, 100%, 181px);
-            background: linear-gradient(90.99deg, #1D1D1D 2.18%, #232323 104.4%);
-            border-radius: 40px;
-            justify-self: center;
-            display: grid;
-            grid-template-columns: 1fr;
-            box-sizing: border-box;
-            padding: 9.3% 7%;
-            div {
-                display: grid;
-                grid-template-columns: 60% 40%;
-                align-items: center;
-                &:first-child {
-                    h3 {
-                        color: white;
-                    }
-                }
-                h3 {
-                    font-size: 14px;
-                    color: #4F4F4F;
-                    b {
-                        color: #40BA93;
-                    }
-                }
-                button {
-                    width: 100%;
-                    max-width: 91px;
-                    justify-self: flex-end;
-                    height: 50%;
-                    border: 1px solid #40BA93;
-                    border-radius: 20px;
-                    cursor: pointer;
-                    background-color: transparent;
-                    color: white;
-                    &:hover {
-                        transition: 0.3s;
-                        background-color: #40BA93;
-                        color: white;
-                    }
-                }
-                &:first-child {
-                    border-bottom: 1px solid #333333;
-                }
-            }
+        i {
+          color: #C4C4C4;
+          font-size: 24px;
         }
 
-        .redeem-window {
-            background: radial-gradient(61.16% 3404.86% at 48.28% 79.61%, rgba(30, 117, 89, 0.3) 0%, rgba(9, 33, 25, 0.3) 100%), linear-gradient(90.99deg, #272727 2.18%, #1C1C1C 104.4%);
-            box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.25);
-            border-radius: 40px;
-            width: clamp(498px, 100%, 798px);
-            height: clamp(393px, 100%, 693px);
-            justify-self: center;
-            display: grid;
-            grid-template-rows: 10% 20% 8% 20% 8% 20% 14%;
-            box-sizing: border-box;
-            padding: 4% 7%;
-
-            .redeem-window-header {
-                display: grid;
-                grid-template-columns: 2fr 1fr;
-                h3 {
-                    color: white;
-                }
-                button {
-                    background: #171717;
-                    box-shadow: -8px -8px 20px rgba(28, 27, 27, 0.25), 4px 4px 10px rgba(0, 0, 0, 0.25);
-                    border-radius: 16px;
-                    width:  68px;
-                    height: 45px;
-                    &:hover {
-                        transition: 0.3s all;
-                        background-color: #40BA93;
-                    }
-                    @media only screen and (max-width: 1500px) {
-                        width: 48px;
-                        height: 28px;
-                        img {
-                            width: 15px;
-                            height: 15px;
-                        }
-                    }
-                    justify-self: flex-end;
-                    border: 0;
-                    cursor: pointer;
-                }
-            }
-            .redeem-window-input-row {
-                width: 100%;
-                height: clamp(86px, 100%, 106px);
-                display: grid;
-                grid-template-columns: 60% 40%;
-                background: #1E1E1E;
-                border-radius: 40px;
-                box-sizing: border-box;
-                padding: 2.5% 6%;
-
-                span {
-                    color: white;
-                    h3 {
-                        font-size: 18px;
-                        @media only screen and (max-width: 1500px) {
-                            font-size: 14px;
-                        }
-                        color: #4F4F4F;
-                        b {
-                            color: white;
-                        }
-                    }
-                }
-                .balance {
-                    display: grid;
-                    justify-self: flex-end;
-                    color: white;
-                }
-
-                .inpunt-redeem {
-                    color: #A9AAAB;
-                    &::placeholder {
-                        color: #A9AAAB;
-                    }
-                }
-
-                .currency {
-                    display: grid;
-                    grid-template-columns: 1fr 2fr;
-                    align-items: center;
-                    justify-self: flex-end;
-                    grid-column-gap: 5px;
-                    font-size: 24px;
-
-
-                    @media only screen and (max-width: 1500px) {
-                        font-size: 18px;
-                        img {
-                            width: 33px;
-                            height: 33px;
-                        }
-                    }
-                    color: white;
-                }
-                input {
-                    background-color: transparent;
-                    border: 0;
-                    color: #40BA93;
-                    font-size: 24px;
-
-
-
-                    @media only screen and (max-width: 1500px) {
-                        font-size: 18px;
-                    }
-                    &:focus {
-                        outline: none;
-                    }
-                    &::placeholder {
-                        color: #40BA93;
-                        font-size: 24px;
-                    }
-                }
-            }
-
-            .output {
-                input {
-                    color: #40BA93;
-                    &::placeholder {
-                        color: #40BA93;
-                    }
-                    pointer-events: none;
-                }
-            }
-            .redeem-window-op-sign-row {
-                display: grid;
-                place-items: center;
-                i {
-                    color: #C4C4C4;
-                    font-size: 24px;
-                }
-                .fa-arrow-down {
-                    color: #40BA93;
-                }
-            }
-            .redeem-window-run-mint {
-                justify-self: center;
-                align-self: flex-end;
-                border: 0;
-                color: white;
-                height: clamp(51px, 80%, 71px);
-                width: 60%;
-                font-size: 24px;
-                background: #40BA93;
-                box-shadow: -6px -6px 30px rgba(51, 51, 51, 0.25), 4px 4px 20px rgba(0, 0, 0, 0.25);
-                border-radius: 30px;
-                cursor: pointer;
-            }
-
+        .fa-arrow-down {
+          color: #40BA93;
         }
+      }
+
+      .redeem-window-run-mint {
+        justify-self: center;
+        align-self: flex-end;
+        border: 0;
+        color: white;
+        height: clamp(51px, 80%, 71px);
+        width: 60%;
+        font-size: 24px;
+        background: #40BA93;
+        box-shadow: -6px -6px 30px rgba(51, 51, 51, 0.25), 4px 4px 20px rgba(0, 0, 0, 0.25);
+        border-radius: 30px;
+        cursor: pointer;
+      }
+
     }
+  }
 }
 
 
 // LIGHT THEME!
 .mint-redeem-wrapper-light {
-    .mint-redeem-header {
-        h1 {
+  .mint-redeem-header {
+    h1 {
+      color: black;
+    }
+  }
+
+  .mint-redeem-tx-info {
+    div {
+      background: #F2F2F2;
+
+      span {
+        color: #4F4F4F;
+
+        b {
+          color: #40BA93;
+        }
+
+        span {
+          color: black;
+          font-weight: 700;
+
+          b {
+            color: #40BA93;
+          }
+        }
+
+        a {
+          color: #4f4f4f;
+        }
+
+        i {
+          color: black;
+        }
+      }
+    }
+  }
+
+  .mint-wrapper {
+    .mint-window {
+      background: #FFFFFF;
+
+      .mint-window-header {
+        h3 {
+          color: black;
+        }
+
+        button {
+          background: #F2F2F2;
+          box-shadow: none;
+        }
+      }
+
+      .mint-window-input-row {
+        background: #F2F2F2;
+
+        span {
+          h3 {
+            b {
+              color: black;
+            }
+          }
+        }
+
+        .currency {
+          color: black;
+        }
+      }
+
+      .mint-window-run-mint {
+        box-shadow: none;
+      }
+    }
+  }
+
+  .redeem-wrapper {
+    .collect-redemption {
+      background: #F2F2F2;
+
+      div {
+        button {
+          color: black;
+        }
+
+        &:first-child {
+          h3 {
             color: black;
+          }
         }
+      }
     }
-    .mint-redeem-tx-info {
-        div {
-            background: #F2F2F2;
-            span {
-                color: #4F4F4F;
-                b{
-                    color: #40BA93;
-                }
-                span {
-                    color: black;
-                    font-weight: 700;
-                    b {
-                        color: #40BA93;
-                    }
-                }
-                a {
-                    color: #4f4f4f;
-                }
-                i {
-                    color: black;
-                }
-            }
-        }   
-    }
-    .mint-wrapper {
-        .mint-window {
-            background: #FFFFFF;
-            .mint-window-header {
-                h3 {
-                    color: black;
-                }
-                button {
-                    background: #F2F2F2;
-                    box-shadow: none;
-                }
-            }
-            .mint-window-input-row {
-                background: #F2F2F2;
-                span {
-                    h3 {
-                        b {
-                            color: black;
-                        }
-                    }
-                }
-                .currency {
-                    color: black;
-                }
-            }
-            .mint-window-run-mint {
-                box-shadow: none;
-            }
+
+    .redeem-window {
+      background: #FFFFFF;
+
+      .redeem-window-header {
+        h3 {
+          color: black;
         }
-    }
-    .redeem-wrapper {
-        .collect-redemption {
-            background: #F2F2F2;
-            div {
-                button {
-                    color: black;
-                }
-                &:first-child {
-                    h3 {
-                        color: black;
-                    }
-                }
-            }
+
+        button {
+          background: #F2F2F2;
+          box-shadow: none;
         }
-        .redeem-window {
-            background: #FFFFFF;
-            .redeem-window-header {
-                h3 {
-                    color: black;
-                }
-                button {
-                    background: #F2F2F2;
-                    box-shadow: none;
-                }
+      }
+
+      .redeem-window-input-row {
+        background: #F2F2F2;
+
+        span {
+          h3 {
+            b {
+              color: black;
             }
-            .redeem-window-input-row {
-                background: #F2F2F2;
-                span {
-                    h3 {
-                        b {
-                            color: black;
-                        }
-                    }
-                }
-                .currency {
-                    color: black;
-                }
-            }
-            .redeem-window-run-mint {
-                box-shadow: none;
-            }
+          }
         }
+
+        .currency {
+          color: black;
+        }
+      }
+
+      .redeem-window-run-mint {
+        box-shadow: none;
+      }
     }
+  }
 }

@@ -1,6 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { useSystemContext } from '../../systemProvider';
 import { TokenIcon } from '../TokenIcon/token_icon';
+import line from '../../assets/icons/line.svg';
+import vector from '../../assets/icons/vector.svg';
 import claimRewardIcon from './claim-reward.svg';
 import './staking-rewards.scss';
 
@@ -10,8 +12,9 @@ export const StakingRewards = () => {
 
     const stakingPools = [
         {name: "Argano", symbol: "AGO", roi: "30%", contract: "0x213fsar124f12f1r31fsdfg34t9"},
-        {name: "Argano USD", symbol: "AGOUSD", roi: "30%", contract: "0x213fsar124f12f1r31fsdfg34t9"},
-        {name: "Argano Bitcoin", symbol: "AGOBTC", roi: "30%", contract: "0x213fsar124f12f1r31fsdfg34t9"},
+        {name: "Argano", symbol: "AGOUSD", roi: "20%", contract: "0x213fsar124f12f1r31fsdfg34t9"},
+        {name: "Argano", symbol: "AGO", roi: "30%", contract: "0x213fsar124f12f1r31fsdfg34t9"},
+        {name: "Argano", symbol: "AGO", roi: "40%", contract: "0x213fsar124f12f1r31fsdfg34t9"},
     ]
 
     const [openedWindows, setOpenedWindows] = useState([]);
@@ -35,8 +38,7 @@ export const StakingRewards = () => {
 
     return (
             <div className={`staking-wrapper ${theme === "light" ? " staking-wrapper-light" : ""}`}> 
-                <div className='staking-reward-header'> 
-                    <h1> Staking reward </h1>
+                <div className='staking-reward-header'>
                     <h3> Select to stake </h3>
                 </div>
                 <div className='staking-list'> 
@@ -57,10 +59,14 @@ export const StakingRewards = () => {
                                     <div className='token'>
                                         <TokenIcon iconName={item.symbol}/>
                                         <span> {item.name} </span>
-                                        <span> {item.symbol} </span> 
+                                        <span> {item.symbol} </span>
                                     </div>
                                     <div className='roi'>
                                         <span> {item.roi} </span>
+                                    </div>
+                                    <div className='line'>
+                                        <img src={line}/>
+                                        <img src={vector}/>
                                     </div>
                                     <div className='contract'>
                                         <span>{item.contract}</span>

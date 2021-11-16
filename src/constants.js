@@ -85,7 +85,7 @@ export const MAX_INT = '11579208923731619542357098500868790785326998466564056403
 export const PAGES = [
     {path: "/", name: "Dashboard", img: dashboard_black, imgActive: dashboard_active},
     {path: "/mint-redeem", name: "Mint/Redeem", img: mint_redeem_black, imgActive: mint_redeem_active},
-    {path: "/staking", name: "Staking", img: staking_black, imgActive: staking_active},
+    {path: "/staking", name: "Staking rewards", img: staking_black, imgActive: staking_active},
     {path: "/liqudity-pools", name: "Liquidity-Pools", img: liquidity_pools_black, imgActive: liquidity_pools_active},
     {path: "/trading", name: "Trading", img: trading_black, imgActive: trading_active},
     {path: "/accounts", name: "Accounts", img: accounts_black, imgActive: accounts_acitve},

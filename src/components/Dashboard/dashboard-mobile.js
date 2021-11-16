@@ -18,10 +18,11 @@ const TVLVolumeSwitch = styled.div`
     padding: 0 5%;
 `
 const SwitchButton = styled.button`
+    margin-right: 10px;
     background: ${props => props.active ? "#2D2D2D" : "transparent"} ;
     border-radius: 20px;
     border: ${props => props.active ? "2px solid #40BA93" : "none"};
-    height: 50%;
+    height: 45%;
     align-self: flex-end;
     color: ${props => props.active ? "white" : "#BDBDBD;"};
     font-weight: ${props => props.active ? "600" : "300"} ;
@@ -29,6 +30,8 @@ const SwitchButton = styled.button`
 `
 const InfoButtonsArea = styled.div`
     display: grid;
+    margin-bottom: 30px;
+    height: 115px;
     grid-template-rows: 2fr 1fr;
     grid-template-columns: 1fr 1fr;
     justify-items: center;
