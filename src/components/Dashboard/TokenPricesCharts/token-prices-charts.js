@@ -21,12 +21,20 @@ const TokenPriceChartWrapper = styled.div`
   padding: 2.5% 2.3%;
   display: grid;
   align-items: ${props => props.isWindowExpanded ? "flex-start" : "center"};;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: 0.85fr 1.1fr 1fr 0.95fr;
+  @media screen and (min-width: 500px) and (max-width: 768px) {
+    width: 95%;
+    height: ${props => props.isWindowExpanded ? "51vh" : "12vh"};
+    padding: 0;
+  }
 `
 
 const SinglePriceBlock = styled.div`
   border-right: ${props => props.isWindowExpanded ? props.isShowDivider ? "1px solid #40BA93" : "none" : "1px solid #40BA93"};
   padding-left: 40px;
+  @media screen and (min-width: 500px) and (max-width: 768px) {
+    padding-left: 28px;
+  }
 
   &:last-child {
     border-right: none;
@@ -35,21 +43,34 @@ const SinglePriceBlock = styled.div`
   h3 {
     font-size: 1vw;
     color: white;
+    @media screen and (min-width: 500px) and (max-width: 768px) {
+      font-size: 2vw;
+    }
   }
 
   h1 {
     font-size: 2.1vw;
     color: #40BA93;
+    @media screen and (min-width: 500px) and (max-width: 768px) {
+      font-size: 2.6vw;
+    }
   }
 
   span {
     font-size: 0.6vw;
     color: white;
+    @media screen and (min-width: 500px) and (max-width: 768px) {
+      font-size: 1.2vw;
+    }
     img {
       width: 0.8vw;
       height: 1.1vw;
-      margin-right: 10px;
+      margin-right: 6px;
       margin-left: 5px;
+      @media screen and (min-width: 500px) and (max-width: 768px) {
+        width: 1vw;
+        margin-right: 2px;
+      }
     }
 
     span {

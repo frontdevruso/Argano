@@ -17,12 +17,20 @@ const DashboardWrapper = styled.div`
   grid-row-gap: 5%;
   justify-items: center;
   padding: 1.5%;
-
+  @media screen and (min-width: 500px) and (max-width: 768px) {
+    grid-row-gap: 0;
+  }
+  
   .tvl-volume {
     display: grid;
     width: 100%;
     grid-template-columns: 1fr 1fr;
     grid-column-gap: 5%;
+    @media screen and (min-width: 500px) and (max-width: 768px) {
+      grid-column-gap: 2%;
+      width: 95%;
+      margin-bottom: 15px;
+    }
   }
 `
 

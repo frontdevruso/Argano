@@ -1,44 +1,53 @@
-import React, { useState, useRef } from 'react';
-import { BarChart, XAxis, Bar, Tooltip, ResponsiveContainer } from 'recharts';
-import { useSystemContext } from '../../../systemProvider';
-import { formattedNum } from '../../../utils/helpers';
-import { useMediaQuery } from 'react-responsive';
+import React, {useState, useRef} from 'react';
+import {BarChart, XAxis, Bar, Tooltip, ResponsiveContainer} from 'recharts';
+import {useSystemContext} from '../../../systemProvider';
+import {formattedNum} from '../../../utils/helpers';
+import {useMediaQuery} from 'react-responsive';
 import styled from 'styled-components';
 
 const Volume24hChartWrapper = styled.div`
-    background: ${props => props.mobile ? "transparent" : " radial-gradient(61.16% 3404.86% at 48.28% 79.61%, rgba(30, 117, 89, 0.3) 0%, rgba(9, 33, 25, 0.3) 100%), linear-gradient(90.99deg, #272727 2.18%, #1C1C1C 104.4%)"};
-    box-shadow: ${props => props.mobile ? "none" : "0px 4px 16px rgba(0, 0, 0, 0.25)"};
-    border-radius: 2vw;
-    height: ${props => props.mobile ? "100%" : "45vh"};
-    width: 100%;
+  background: ${props => props.mobile ? "transparent" : " radial-gradient(61.16% 3404.86% at 48.28% 79.61%, rgba(30, 117, 89, 0.3) 0%, rgba(9, 33, 25, 0.3) 100%), linear-gradient(90.99deg, #272727 2.18%, #1C1C1C 104.4%)"};
+  box-shadow: ${props => props.mobile ? "none" : "0px 4px 16px rgba(0, 0, 0, 0.25)"};
+  border-radius: 2vw;
+  height: ${props => props.mobile ? "100%" : "45vh"};
+  width: 100%;
+  display: grid;
+  align-self: center;
+  box-sizing: border-box;
+  justify-self: flex-start;
+  grid-template-rows: 30% 70%;
+  padding: ${props => props.mobile ? "0" : "4.5% 11.5%"};
+  @media screen and (max-width: 480px) {
+    grid-template-rows: 20% 70%;
+  }
+  @media screen and (min-width: 500px) and (max-width: 768px) {
+    height: ${props => props.mobile ? "100%" : "23vh"};
+  }
+
+  .volume24-info {
     display: grid;
-    align-self: center;
-    box-sizing: border-box;
-    justify-self: flex-start;
-    grid-template-rows: 30% 70%;
-    padding: ${props => props.mobile ? "0" : "4.5% 11.5%"};
-    .volume24-info {
-        display: grid;
-        padding: ${props => props.mobile ? "0 7.5%" : "0"};
-        grid-template-rows: ${props => props.mobile ? " 2fr 1fr" : " 1fr 3fr 1fr"};
-        p {
-            font-weight: 500;
-           font-size: ${props => props.mobile ? "12px" : "1.1vw"};
-           color: ${props => props.mobile ? "#BDBDBD" : "white"};
-        }
-        h1 {
-            color: ${props => props.mobile ? "white" : "#40BA93"};
-           font-weight: ${props => props.mobile ? "600" : "500"};
-           font-size: ${props => props.mobile ? "24px" : "2.1vw"};
-           align-self: flex-end;
-        }
+    padding: ${props => props.mobile ? "0 7.5%" : "0"};
+    grid-template-rows: ${props => props.mobile ? " 2fr 1fr" : " 1fr 3fr 1fr"};
+
+    p {
+      font-weight: 500;
+      font-size: ${props => props.mobile ? "12px" : "1.1vw"};
+      color: ${props => props.mobile ? "#BDBDBD" : "white"};
     }
+
+    h1 {
+      color: ${props => props.mobile ? "white" : "#40BA93"};
+      font-weight: ${props => props.mobile ? "600" : "500"};
+      font-size: ${props => props.mobile ? "24px" : "2.1vw"};
+      align-self: flex-end;
+    }
+  }
 `
 
 export const Volume24h = () => {
 
     const {theme} = useSystemContext();
-    const isMobileScreen = useMediaQuery({ query: '(max-width: 767px)' })
+    const isMobileScreen = useMediaQuery({query: '(max-width: 767px)'})
 
     const data = [
         {time: '01', uv: 100000, date: "Jul 1, 2021"},
@@ -76,29 +85,29 @@ export const Volume24h = () => {
     ];
 
     const [chartValue, setChartValue] = useState({
-        time: data[data.length-1].date,
-        value: data[data.length-1].uv
+        time: data[data.length - 1].date,
+        value: data[data.length - 1].uv
     })
 
 
     const block = useRef(null)
 
     const CustomBar = ({
-        x,
-        y,
-        width,
-        height,
-        fill,
-      }) => {
+                           x,
+                           y,
+                           width,
+                           height,
+                           fill,
+                       }) => {
         return (
-          <g>
-            <rect x={x} y={y} fill={fill} width={width} height={height} rx="1%" />
-          </g>
+            <g>
+                <rect x={x} y={y} fill={fill} width={width} height={height} rx="1%"/>
+            </g>
         )
     }
 
     return (
-        <Volume24hChartWrapper mobile={isMobileScreen}> 
+        <Volume24hChartWrapper mobile={isMobileScreen}>
             <div className={'volume24-info'}>
                 {!isMobileScreen ? <p>Volume 24h</p> : null}
                 <h1>${formattedNum(chartValue.value)}</h1>
@@ -110,38 +119,39 @@ export const Volume24h = () => {
                         margin={{
                             top: 5,
                             bottom: 1,
-                        }}  
-                        width={block?.current?.clientWidth - 200} 
-                        height={block?.current?.clientHeight - 50} 
+                        }}
+                        width={block?.current?.clientWidth - 200}
+                        height={block?.current?.clientHeight - 50}
                         data={data}
                         onMouseLeave={() => setChartValue({
-                            time: data[data.length-1].date,
-                            value: data[data.length-1].uv
+                            time: data[data.length - 1].date,
+                            value: data[data.length - 1].uv
                         })}
-                        >
+                    >
                         <Bar
                             dataKey="uv"
                             shape={(props) => {
-                                return <CustomBar height={props.height} width={props.width} x={props.x} y={props.y} fill={"#40BA93"}  />
+                                return <CustomBar height={props.height} width={props.width} x={props.x} y={props.y}
+                                                  fill={"#40BA93"}/>
                             }}
                         />
                         <Tooltip
-                            contentStyle={{ display: 'none' }}
-                            cursor={{ fill: "rgba(255, 255, 255, 0.15)" }}
+                            contentStyle={{display: 'none'}}
+                            cursor={{fill: "rgba(255, 255, 255, 0.15)"}}
                             formatter={(value, name, props) => {
                                 const {payload: {date, uv}} = props;
                                 if (chartValue.value !== uv) {
                                     setChartValue({time: date, value: uv})
                                 }
-                              }}
+                            }}
                         />
                         <XAxis
                             dataKey="time"
                             axisLine={false}
                             tickLine={false}
-                            tick={{fontSize:  isMobileScreen ? "14px" : "1vw"}}
+                            tick={{fontSize: isMobileScreen ? "14px" : "1vw"}}
                             stroke={theme === "light" ? "black" : "white"}
-                            minTickGap={isMobileScreen ?  0 : 15}
+                            minTickGap={isMobileScreen ? 0 : 15}
                         />
                     </BarChart>
                 </ResponsiveContainer>

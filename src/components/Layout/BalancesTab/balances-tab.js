@@ -38,21 +38,33 @@ const BalancesTabWrapper = styled.div`
     margin-bottom: 24px;
     font-size: 15px;
   }
-
+  @media screen and (min-width: 500px) and (max-width: 768px) {
+    width: ${props => props.opened ? "100%" : "34%"};
+    margin-bottom: 50px;
+    height: 40px;
+    padding: 0;
+  }
+  
   img {
     margin-right: 5px;
     grid-row: ${props => props.mobile ? "1/3" : "1/2"};
     width: 36px;
     height: 36px;
   }
-
+  
   @media screen and (max-width: 480px) {
-    img:last-child {
+    .vector img{
       display: none;
     }
   }
+
+  /*@media screen and (min-width: 500px) and (max-width: 768px) {
+     img {
+      display: none;
+    }
+  }*/
   
-  img:last-child {
+  .vector img {
     width: 10px;
     height: 10px;
     margin-bottom: 2px;
@@ -220,8 +232,8 @@ export const BalancesTab = () => {
                                 )
                             })}
                         </BalanceListDesktop>
-                        <div>
-                            <img src={vector} style={{}}
+                        <div className='vector'>
+                            <img src={vector}
                             />
                         </div>
                     </>

@@ -15,12 +15,18 @@ const TVLChartWrapper = styled.div`
   align-self: center;
   box-sizing: border-box;
   justify-self: flex-start;
-  grid-template-rows: 30% 70%;
+  grid-template-rows: 28% 70%;
   padding: ${props => props.mobile ? "0" : "3.5% 10.5%"};
+  @media screen and (max-width: 480px) {
+    grid-template-rows: 20% 70%;
+    padding-top: 19px;
+  }
+  @media screen and (min-width: 500px) and (max-width: 768px) {
+    height: ${props => props.mobile ? "100%" : "23vh"};
+  }
 
   .tvl-info {
     display: grid;
-
     padding: ${props => props.mobile ? "0 7.5%" : "0"};
     grid-template-rows: ${props => props.mobile ? " 2fr 1fr" : " 1fr 3fr 1fr"};
 
