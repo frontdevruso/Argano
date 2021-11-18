@@ -10,10 +10,13 @@ import {ThemeSwitcher} from '../ThemeSwitcher/theme-switcher';
 
 const SideBarWrapper = styled.div`
   display: grid;
-  grid-template-rows: 75% 0% 0%;
+  grid-template-rows: 75% 15% 15%;
   align-items: center;
   justify-items: center;
   max-height: 100vh;
+  @media screen and (min-width: 500px) and (max-width: 768px) {
+    grid-template-rows: 75% 0 0;
+  }
 `
 
 const SocialMediasList = styled.div`

@@ -37,7 +37,7 @@ const Header = styled.div`
 const Content = styled.div`
   display: grid;
   overflow-y: auto;
-  grid-template-rows: ${props => props.mobile ? "none" : "5% auto"};
+  grid-template-rows: ${props => props.mobile ? "none" : "10% auto"};
   @media screen and (min-width: 500px) and (max-width: 768px) {
     grid-template-rows: ${props => props.mobile ? "none" : "2% auto"};
   }

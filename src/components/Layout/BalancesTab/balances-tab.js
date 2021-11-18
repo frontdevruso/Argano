@@ -12,7 +12,7 @@ import vector from '../../../assets/icons/whiteVector.svg';
 
 const BalancesTabWrapper = styled.div`
   transition: 0.3s all;
-  width: ${props => props.opened ? "100%" : "19%"};
+  width: ${props => props.opened ? "85%" : "19%"};
   align-self: center;
   height: 52px;
   padding: 5px 14px;
@@ -39,35 +39,40 @@ const BalancesTabWrapper = styled.div`
     font-size: 15px;
   }
   @media screen and (min-width: 500px) and (max-width: 768px) {
-    width: ${props => props.opened ? "100%" : "34%"};
+    width: ${props => props.opened ? "70%" : "34%"};
     margin-bottom: 50px;
     height: 40px;
     padding: 0;
+    padding-left: 20px;
   }
-  
+
   img {
     margin-right: 5px;
     grid-row: ${props => props.mobile ? "1/3" : "1/2"};
     width: 36px;
-    height: 36px;
+    height: 40px;
   }
-  
-  @media screen and (max-width: 480px) {
-    .vector img{
+
+  img:first-child {
+    @media screen and (min-width: 500px) and (max-width: 768px) {
       display: none;
     }
   }
 
-  /*@media screen and (min-width: 500px) and (max-width: 768px) {
-     img {
+  @media screen and (max-width: 480px) {
+    .vector img {
       display: none;
     }
-  }*/
-  
+  }
+
   .vector img {
+    position: ${props => props.opened ? "relative" : "static"};
     width: 10px;
     height: 10px;
     margin-bottom: 2px;
+    bottom: ${props => props.opened ? "28px" : "2px"};
+    left: ${props => props.opened ? "250px" : "0"};
+    transform: ${props => props.opened ? "rotate(180deg)" : "none"};
   }
 
   p {
@@ -75,6 +80,10 @@ const BalancesTabWrapper = styled.div`
     color: white;
     white-space: nowrap;
     line-height: 1;
+    @media screen and (min-width: 500px) and (max-width: 768px) {
+      font-size: 15px;
+      padding-right: 30px;
+    }
   }
 
   .balance {
@@ -179,12 +188,22 @@ const BalanceListDesktop = styled.ul`
   margin: 0;
   display: ${props => props.opened ? "grid" : "none"};
   grid-template-columns: repeat(7, auto);
+  margin-top: 0.2%;
+  margin-right: 150px;
+  gap: 3%;
+  @media screen and (min-width: 500px) and (max-width: 768px) {
+    margin-right: 150px;
+  }
 `
 
 const BalanceListItemDesktop = styled.li`
   display: grid;
   grid-template-columns: 1fr auto;
   border-right: 2px solid #4F4F4F;
+
+  &:last-child {
+    border-right: 0;
+  }
 
   img {
     width: 20px;
@@ -194,6 +213,10 @@ const BalanceListItemDesktop = styled.li`
   span {
     color: #828282;
     font-size: 12px;
+    margin-right: 20px;
+    @media screen and (min-width: 500px) and (max-width: 768px) {
+      font-size: 12px;
+    }
   }
 `
 
@@ -263,7 +286,6 @@ export const BalancesTab = () => {
                             })}
                         </BalanceList>
                         <BalanceSwipeStripe {...handlersMobileBalancesExpanded}>
-                            <div></div>
                         </BalanceSwipeStripe>
                     </BalanceExpand>
                 </>
