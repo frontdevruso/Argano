@@ -14,49 +14,54 @@
       margin: 0;
       color: white;
       font-size: 36px;
-      @media only screen and (max-width: 1500px) {
+      @media only screen and (max-width: 0) {
         font-size: 26px;
       }
     }
   }
 
   .mint-redeem-tx-info {
-    display: grid;
-    align-items: center;
 
     div {
-      height: 46px;
-      height: clamp(36px, 100%, 46px);
+      // height: 46px;
+      // height: clamp(36px, 100%, 46px);
       border-radius: 20px;
       box-sizing: border-box;
-      background: #1E1E1E;
-      display: grid;
-      grid-gap: 5px;
-      grid-template-columns:12% 2% 20% 2% 10% 2% 20% 30%;
-      padding-left: 25px;
-      padding-right: 25px;
       align-items: center;
+      background: #1E1E1E;
+      // display: grid;
+      // grid-gap: 5px;
+      // grid-template-columns:12% 2% 20% 2% 10% 2% 20% 30%;
+
+      padding-left: 61px;
+      padding-right: 78px;
 
       .fa-circle {
         color: #40BA93;
+        padding: 0 50px;
+
         font-size: 10px;
-        @media only screen and (max-width: 1500px) {
+        @media only screen and (max-width: 0) {
           font-size: 6px;
         }
         justify-self: center;
       }
 
-      @media only screen and (max-width: 1500px) { //me
+      @media only screen and (max-width: 0) { //me
         padding-bottom: 10px;
         padding-top: 10px;
         width: 100%;
+      }
+
+      .mint-redeem-bar-wrapper {
+        display: flex;
       }
 
       span {
         position: relative;
         color: #4F4F4F;
         font-size: 14px;
-        @media only screen and (max-width: 1500px) {
+        @media only screen and (max-width: 0) {
           font-size: 6px;
         }
         justify-self: center;
@@ -95,11 +100,10 @@
     place-items: center;
     div {
       button {
-        width: 90px;
-        height: 40px;
+        padding: 6px 24px;
         border-radius: 20px;
         font-size: 18px;
-        @media only screen and (max-width: 1500px) {
+        @media only screen and (max-width: 0) {
           font-size: 14px;
         }
         border: 0px;
@@ -113,7 +117,7 @@
       background-color: #40BA93;
       color: white;
       font-size: 18px;
-      @media only screen and (max-width: 1500px) {
+      @media only screen and (max-width: 0) {
         font-size: 14px;
       }
     }
@@ -124,11 +128,12 @@
     align-items: flex-start;
     justify-items: center;
     box-sizing: border-box;
-    @media only screen and (max-width: 1500px) { //me
-      display: flex;
-      width: 30%;
-      margin-top: 10px;
-    }
+
+    // @media only screen and (max-width: 0) { //me
+    //   display: flex;
+    //   width: 30%;
+    //   margin-top: 10px;
+    // }
 
     .mint-window {
       background: radial-gradient(61.16% 3404.86% at 48.28% 79.61%, rgba(30, 117, 89, 0.3) 0%, rgba(9, 33, 25, 0.3) 100%), linear-gradient(90.99deg, #272727 2.18%, #1C1C1C 104.4%);
@@ -140,18 +145,30 @@
       grid-template-rows: 10% 20% 8% 20% 8% 20% 14%;
       box-sizing: border-box;
       padding: 2% 3.5%;
-      @media only screen and (max-width: 1500px) {
+      @media only screen and (max-width: 0) {
 
       }
 
+      .fas {
+        font-weight: 200;
+      }
+
       .mint-window-header {
-        display: grid;
-        grid-template-columns: 2fr 1fr;
+        // display: grid;
+        // grid-template-columns: 2fr 1fr;
+
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        padding-bottom: 38px;
 
         h3 {
           color: white;
-          @media only screen and (max-width: 1500px) {
-            padding: 10px;
+          padding-left: 30px;
+          @media only screen and (max-width: 0) {
+            padding: 10px 10px 10px 30px;
           }
         }
 
@@ -167,7 +184,7 @@
             background-color: #40BA93;
           }
 
-          @media only screen and (max-width: 1500px) {
+          @media only screen and (max-width: 0) {
             width: 48px;
             height: 28px;
             img {
@@ -196,7 +213,7 @@
 
           h3 {
             font-size: 18px;
-            @media only screen and (max-width: 1500px) {
+            @media only screen and (max-width: 0) {
               font-size: 14px;
             }
             color: #4F4F4F;
@@ -220,7 +237,7 @@
           justify-self: flex-end;
           grid-column-gap: 5px;
           font-size: 24px;
-          @media only screen and (max-width: 1500px) {
+          @media only screen and (max-width: 0) {
             font-size: 18px;
             img {
               width: 33px;
@@ -235,7 +252,7 @@
           border: 0;
           color: #A9AAAB;
           font-size: 24px;
-          @media only screen and (max-width: 1500px) {
+          @media only screen and (max-width: 0) {
             font-size: 18px;
           }
 
@@ -296,12 +313,18 @@
           color: black;
         }
 
-        @media only screen and (max-width: 1500px) {
+        @media only screen and (max-width: 0) {
           font-size: 18px;
           margin-top: 40px;
         }
       }
     }
+  }
+
+  .mint-window-settings-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .redeem-wrapper {
@@ -375,11 +398,23 @@
       box-sizing: border-box;
       padding: 4% 7%;
 
+      .fas {
+        font-weight: 200;
+      }
+
       .redeem-window-header {
-        display: grid;
-        grid-template-columns: 2fr 1fr;
+        // display: grid;
+        // grid-template-columns: 2fr 1fr;
+
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        padding-bottom: 38px;
 
         h3 {
+          padding-left: 30px;
           color: white;
         }
 
@@ -395,7 +430,7 @@
             background-color: #40BA93;
           }
 
-          @media only screen and (max-width: 1500px) {
+          @media only screen and (max-width: 0) {
             width: 48px;
             height: 28px;
             img {
@@ -424,7 +459,7 @@
 
           h3 {
             font-size: 18px;
-            @media only screen and (max-width: 1500px) {
+            @media only screen and (max-width: 0) {
               font-size: 14px;
             }
             color: #4F4F4F;
@@ -458,7 +493,7 @@
           font-size: 24px;
 
 
-          @media only screen and (max-width: 1500px) {
+          @media only screen and (max-width: 0) {
             font-size: 18px;
             img {
               width: 33px;
@@ -475,7 +510,7 @@
           font-size: 24px;
 
 
-          @media only screen and (max-width: 1500px) {
+          @media only screen and (max-width: 0) {
             font-size: 18px;
           }
 
@@ -579,12 +614,12 @@
       background: #FFFFFF;
 
       .mint-window-header {
+
         h3 {
           color: black;
         }
 
         button {
-          background: #F2F2F2;
           box-shadow: none;
         }
       }

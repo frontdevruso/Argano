@@ -13,13 +13,114 @@ const TokenTransactionTableWrapper = styled.div`
   box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.25);
   border-radius: 2vw;
   box-sizing: border-box;
-  padding: 2.25% 5.5%;
+  padding: 2.5% 5.5% 2%;
   display: grid;
   grid-template-rows: 1fr 10fr 1fr;
+
+  margin-bottom: 70px;
+
   @media screen and (min-width: 500px) and (max-width: 768px) {
     height: 49vh;
     width: 95%;
     grid-template-rows: 1fr 8fr 1fr;
+  }
+
+  // Responsive || Width => Height
+
+  @media only screen and (max-width: 1880px) {
+    height 40vw !important;
+  }
+
+  @media only screen and (max-width: 1400px) {
+    height: 40vw !important;
+  }
+
+  @media only screen and (max-width: 900px) {
+    height: 45vw !important;
+  }
+
+  // Responsive || Height
+
+  @media screen and (min-height: 1710px) and (max-height: 2110px) {
+    height: 37vh;
+  }
+  @media screen and (min-height: 1610px) and (max-height: 1710px) {
+    height: 38vh;
+  }
+  @media screen and (min-height: 1510px) and (max-height: 1610px) {
+    height: 46vh;
+  }
+
+  @media screen and (min-height: 1340px) and (max-height: 1510px) {
+    height: 48vh;
+  }
+
+  @media screen and (min-height: 1120px) and (max-height: 1340px) {
+    height: 55vh;
+  }
+
+  @media screen and (min-height: 1080px) and (max-height: 1120px) {
+    height: 63vh;
+  }
+
+  @media screen and (min-height: 992px) and (max-height: 1080px) {
+    height: 65vh;
+  }
+
+  @media screen and (min-height: 850px) and (max-height: 992px) {
+    height: 74vh;
+  }
+
+  @media screen and (min-height: 800px) and (max-height: 850px) {
+    height: 80vh;
+  }
+
+  @media screen and (min-height: 690px) and (max-height: 800px) {
+    height: 87vh;
+  }
+
+  @media screen and (min-height: 590px) and (max-height: 690px) {
+    height: 105vh;
+  }
+
+  @media screen and (min-height: 550px) and (max-height: 590px) {
+    height: 124vh;
+  }
+
+  @media screen and (min-height: 500px) and (max-height: 550px) {
+    height: 130vh;
+  }
+
+  @media screen and (min-height: 450px) and (max-height: 500px) {
+    height: 140vh;
+  }
+
+  @media screen and (min-height: 450px) and (max-height: 500px) {
+    height: 160vh;
+  }
+
+  @media screen and (min-height: 400px) and (max-height: 450px) {
+    height: 185vh;
+  }
+
+  @media screen and (min-height: 350px) and (max-height: 400px) {
+    height: 180vh;
+  }
+
+  @media screen and (min-height: 300px) and (max-height: 350px) {
+    height: 235vh;
+  }
+
+  @media screen and (min-height: 250px) and (max-height: 300px) {
+    height: 295vh;
+  }
+
+  @media screen and (min-height: 200px) and (max-height: 250px) {
+    height: 380vh;
+  }
+
+  @media screen and (min-height: 50px) and (max-height: 200px) {
+    height: 395vh;
   }
 
   .transactions-heading {
@@ -33,16 +134,27 @@ const TokenTransactionTableWrapper = styled.div`
 const Table = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 1fr 8fr;
+  grid-template-rows: 1fr 0.5fr 15fr 0.1fr;
   row-gap: 15px;
   color: white;
   @media screen and (min-width: 500px) and (max-width: 768px) {
     grid-template-rows: 1fr 14fr;
   }
+
+  .token-transaction-separator {
+    width: 100%;
+    height: 1px;
+    background-color: #333;
+    border: 1px solid #333
+    border-radius: 5px;
+  }
 `
 const TableHead = styled.div`
   display: grid;
   grid-template-columns: 20% 11.5% 13% 13% 27% 15%;
+
+  position: relative !important;
+  
   @media screen and (min-width: 500px) and (max-width: 768px) {
     grid-template-columns: 23.5% 20.5% 15% 13.5% 21.5% 15%;
   }
@@ -50,7 +162,7 @@ const TableHead = styled.div`
   span {
     font-style: normal;
     font-weight: 500;
-    font-size: 1vw;
+    font-size: 0.8vw;
     @media screen and (min-width: 500px) and (max-width: 768px) {
       font-size: 1.2vw;
     }
@@ -72,7 +184,8 @@ const TableBody = styled.div`
   div {
     font-style: normal;
     font-weight: 300;
-    font-size: 1vw;
+    font-size: 0.8vw;
+    color: #BDBDBD;
     line-height: 21px;
     @media screen and (min-width: 500px) and (max-width: 768px) {
       font-size: 1.4vw;
@@ -103,13 +216,13 @@ const TablePagination = styled.div`
 
     span {
       color: white;
-      font-size: 1.1vw;
+      font-size: 1vw;
     }
 
     button {
       background: transparent;
       font-size: 0.8vw;
-      color: #40BA93;
+      color: #4F4F4F;
       border: none;
       cursor: pointer;
 
@@ -190,6 +303,7 @@ export const TokenTransactionTable = () => {
                     <span>Account</span>
                     <span>Time</span>
                 </TableHead>
+                <div className="token-transaction-separator"></div>
                 {loading
                     ?
                     <Loader/>
@@ -215,7 +329,7 @@ export const TokenTransactionTable = () => {
                                     <div
                                         className='time'>{item.block_timestamp ? calculateTimeDifference(item.block_timestamp) : "A long time ago"}</div>
                                 </>
-                            )
+                            );
                         })}
                     </TableBody>
                 }

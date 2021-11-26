@@ -9,7 +9,7 @@ const TVLChartWrapper = styled.div`
   background: ${props => props.mobile ? "transparent" : " radial-gradient(61.16% 3404.86% at 48.28% 79.61%, rgba(30, 117, 89, 0.3) 0%, rgba(9, 33, 25, 0.3) 100%), linear-gradient(90.99deg, #272727 2.18%, #1C1C1C 104.4%)"};
   box-shadow: ${props => props.mobile ? "none" : "0px 4px 16px rgba(0, 0, 0, 0.25)"};
   border-radius: 2vw;
-  height: ${props => props.mobile ? "100%" : "45vh"};
+  height: ${props => props.mobile ? "100%" : "50vh"};
   width: 100%;
   display: grid;
   align-self: center;
@@ -17,12 +17,120 @@ const TVLChartWrapper = styled.div`
   justify-self: flex-start;
   grid-template-rows: 28% 70%;
   padding: ${props => props.mobile ? "0" : "3.5% 10.5%"};
+  
   @media screen and (max-width: 480px) {
     grid-template-rows: 20% 70%;
     padding-top: 19px;
   }
+
+  // Responsive || Width => Height
+
+  @media only screen and (max-width: 1880px) {
+    height: ${props => props.mobile ? "100%" : "30vw"} !important;
+  }
+
+  @media only screen and (max-width: 1780px) {
+    height: ${props => props.mobile ? "100%" : "31vw"} !important;
+  }
+
+  @media only screen and (max-width: 1680px) {
+    height: ${props => props.mobile ? "100%" : "28vw"} !important;
+  }
+
+  // Responsive || HEIGHT
+
+  @media screen and (min-height: 1710px) and (max-height: 2110px) {
+    height: ${props => props.mobile ? "100%" : "29vh"};
+  }
+  
+  @media screen and (min-height: 1610px) and (max-height: 1710px) {
+    height: ${props => props.mobile ? "100%" : "30vh"};
+  }
+  
+  @media screen and (min-height: 1510px) and (max-height: 1610px) {
+    height: ${props => props.mobile ? "100%" : "32vh"};
+  }
+
+  @media screen and (min-height: 1340px) and (max-height: 1510px) {
+    height: ${props => props.mobile ? "100%" : "35vh"};
+  }
+
+  @media screen and (min-height: 1120px) and (max-height: 1340px) {
+    height: ${props => props.mobile ? "100%" : "40vh"};
+  }
+
+  @media screen and (min-height: 1120px) and (max-height: 1340px) {
+    height: ${props => props.mobile ? "100%" : "40vh"};
+  }
+
+  @media screen and (min-height: 1080px) and (max-height: 1120px) {
+    height: ${props => props.mobile ? "100%" : "45vh"};
+  }
+
+  @media screen and (min-height: 992px) and (max-height: 1080px) {
+    height: ${props => props.mobile ? "100%" : "50vh"};
+  }
+
+  @media screen and (min-height: 850px) and (max-height: 992px) {
+    height: ${props => props.mobile ? "100%" : "55vh"};
+  }
+
+  @media screen and (min-height: 800px) and (max-height: 850px) {
+    height: ${props => props.mobile ? "100%" : "60vh"};
+  }
+
+  @media screen and (min-height: 690px) and (max-height: 800px) {
+    height: ${props => props.mobile ? "100%" : "70vh"};
+  }
+
+  @media screen and (min-height: 500px) and (max-height: 690px) {
+    height: ${props => props.mobile ? "100%" : "80vh"};
+  }
+
+  @media screen and (min-height: 500px) and (max-height: 590px) {
+    height: ${props => props.mobile ? "100%" : "90vh"};
+  }
+
+  @media screen and (min-height: 500px) and (max-height: 550px) {
+    height: ${props => props.mobile ? "100%" : "100vh"};
+  }
+
+  @media screen and (min-height: 450px) and (max-height: 500px) {
+    height: ${props => props.mobile ? "100%" : "110vh"};
+  }
+
+  @media screen and (min-height: 450px) and (max-height: 500px) {
+    height: ${props => props.mobile ? "100%" : "110vh"};
+  }
+
+  @media screen and (min-height: 400px) and (max-height: 450px) {
+    height: ${props => props.mobile ? "100%" : "120vh"};
+  }
+
+  @media screen and (min-height: 350px) and (max-height: 400px) {
+    height: ${props => props.mobile ? "100%" : "130vh"};
+  }
+
+  @media screen and (min-height: 300px) and (max-height: 350px) {
+    height: ${props => props.mobile ? "100%" : "150vh"};
+  }
+
+  @media screen and (min-height: 250px) and (max-height: 300px) {
+    height: ${props => props.mobile ? "100%" : "200vh"};
+  }
+
+  @media screen and (min-height: 200px) and (max-height: 250px) {
+    height: ${props => props.mobile ? "100%" : "220vh"};
+  }
+
+  @media screen and (min-height: 50px) and (max-height: 200px) {
+    height: ${props => props.mobile ? "100%" : "280vh"};
+  }
+
+  // Responsive || Width
+
   @media screen and (min-width: 500px) and (max-width: 768px) {
-    height: ${props => props.mobile ? "100%" : "23vh"};
+    height: ${props => props.mobile ? "80%" : "23vh"};
   }
 
   .tvl-info {
@@ -45,6 +153,12 @@ const TVLChartWrapper = styled.div`
 
     @media screen and (max-width: 480px) {
       margin-bottom: 24px;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .responsive-container-chart {
+      height: 80% !important;
     }
   }
 `
@@ -87,7 +201,7 @@ export const TVLChart = () => {
                 <p>{chartValue.time}</p>
             </div>
             <div className={'tvl-chart'}>
-                <ResponsiveContainer width={"100%"} height={"100%"}>
+                <ResponsiveContainer className='responsive-container-chart' width={"100%"} height={"100%"}>
                     {isMobileScreen ?
                         <AreaChart data={data}>
                             <defs>
@@ -96,10 +210,11 @@ export const TVLChart = () => {
                                     <stop offset="90%" stopColor="rgba(64, 186, 147, 0)" stopOpacity={0}/>
                                 </linearGradient>
                             </defs>
-                            <XAxis dataKey="time"
-                                   axisLine={false}
-                                   tickLine={false}
-                                   stroke={theme === "light" ? "black" : "white"}
+                            <XAxis 
+                              dataKey="time"
+                              axisLine={false}
+                              tickLine={false}
+                              stroke={theme === "light" ? "black" : "white"}
                             />
                             <Area type="monotone" strokeWidth={1} dataKey="uv" stroke="#40BA93" fill="url(#colorUv)"/>
                         </AreaChart>

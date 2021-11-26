@@ -145,7 +145,7 @@ export const Redeem = ({info}) => {
         <div className='redeem-window'>
             <div className='redeem-window-header'> 
                 <h3> Redeem </h3>
-                <button onClick={() => setMintRedeemCurrencyModal(true)}> <img src={setting_cog} alt={"settings"}/> </button>
+                <button className='mint-window-settings-btn' onClick={() => setMintRedeemCurrencyModal(true)}> <img src={setting_cog} alt={"settings"}/> </button>
             </div>
             <div className='redeem-window-input-row'> 
                 <span> <h3> Input </h3> </span>

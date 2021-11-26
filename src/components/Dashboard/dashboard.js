@@ -17,10 +17,15 @@ const DashboardWrapper = styled.div`
   grid-row-gap: 5%;
   justify-items: center;
   padding: 1.5%;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
   @media screen and (min-width: 500px) and (max-width: 768px) {
     grid-row-gap: 0;
   }
-  
+
   .tvl-volume {
     display: grid;
     width: 100%;

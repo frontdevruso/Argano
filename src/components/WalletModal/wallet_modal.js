@@ -14,11 +14,11 @@ import { useSystemContext } from '../../systemProvider'
 
 const walletList = [
     {name:'MetaMask',       icon: <img width={40} height={40} src={metaMask}         alt={'icon'} /> },
-    // {name:'WalletConnect',  icon: <img width={40} height={40} src={walletConnect}    alt={'icon'} /> },
-    // {name:'CoinBase',    icon: <img width={40} height={40} src={trustWallet}      alt={'icon'} /> },
-    // {name:'MathWallet',     icon: <img width={40} height={40} src={mathWallet}       alt={'icon'} /> },
-    // {name:'Token Poket',    icon: <img width={40} height={40} src={tokenPocket}      alt={'icon'} /> },
-    // {name:'SafePal Wallet', icon: <img width={40} height={40} src={safepalWallet}    alt={'icon'} /> },
+    {name:'WalletConnect',  icon: <img width={40} height={40} src={walletConnect}    alt={'icon'} /> },
+    {name:'CoinBase',    icon: <img width={40} height={40} src={trustWallet}      alt={'icon'} /> },
+    {name:'MathWallet',     icon: <img width={40} height={40} src={mathWallet}       alt={'icon'} /> },
+    {name:'Token Poket',    icon: <img width={40} height={40} src={tokenPocket}      alt={'icon'} /> },
+    {name:'SafePal Wallet', icon: <img width={40} height={40} src={safepalWallet}    alt={'icon'} /> },
 ]
 
 

@@ -176,7 +176,7 @@ export const Mint = ({info}) => {
             <div className='mint-window'>
                 <div className='mint-window-header'> 
                     <h3> Mint </h3>
-                    <button onClick={() => setMintRedeemCurrencyModal(true)}> <img src={setting_cog} alt="settings"/> </button>
+                    <button className='mint-window-settings-btn' onClick={() => setMintRedeemCurrencyModal(true)}> <img src={setting_cog} alt="settings"/> </button>
                 </div>
                 <div className='mint-window-input-row'> 
                     <span> <h3> Input <b> -{info.targetCollateralRatio}% </b> </h3> </span>
@@ -202,8 +202,8 @@ export const Mint = ({info}) => {
                     <input disabled type='number' placeholder="0.00" value={outputInput}/>
                     <span className='currency'> <TokenIcon iconName={mintRedeemCurrency}/> {mintRedeemCurrency} </span>
                 </div>
-                <button style={{background: "pink", width: "200px", height: "50px"}} onClick={() => handleRefreshCollateralRatio()}> Pablo refresh TCR </button>
-                <button style={{background: "pink", width: "200px", height: "50px"}} onClick={() => handleUnpause()}> Pablo Unpause </button>
+                {/* <button style={{background: "pink", width: "200px", height: "50px"}} onClick={() => handleRefreshCollateralRatio()}> Pablo refresh TCR </button>
+                <button style={{background: "pink", width: "200px", height: "50px"}} onClick={() => handleUnpause()}> Pablo Unpause </button> */}
                 <MintButton/>
             </div>
         </div>

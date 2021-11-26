@@ -8,7 +8,7 @@ import arrowDown from '../../TokenPricesCharts/arrow-down.svg';
 
 const SingleTokenItemWrapper = styled.div`
     display: grid;
-    grid-template-rows: 10% 10% 10% 50% 10% 10%;
+    grid-template-rows: 10% 10% 10% 48% 10% 2% 10%;
     border-right: 1px solid #40BA93;
     box-sizing: border-box;
     padding: 0px 10px;
@@ -16,6 +16,7 @@ const SingleTokenItemWrapper = styled.div`
         border-right: none;
     }
     h1 {
+        width: 100%;
         font-size: 18px;
         color: #40BA93;
         justify-self: flex-start;
@@ -29,6 +30,14 @@ const SingleTokenItemWrapper = styled.div`
             width: 12px;
             height: 12px;
         }
+    }
+
+    .single-token-name-time {
+        font-size: 14px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
 `
 
@@ -61,7 +70,10 @@ export const SingleTokenPriceItem = ({token}) => {
 
     return (
         <SingleTokenItemWrapper> 
-            <h3> {name} </h3>
+            <div className='single-token-name-time'>
+                <h3> {name} </h3>
+                <p>(24)</p>
+            </div>
             <h1> $ {formattedNum(currentPrice)} </h1>
             <h5> {Arrow} {change24h} </h5>
             <ResponsiveContainer width="100%" height="100%">
@@ -83,6 +95,7 @@ export const SingleTokenPriceItem = ({token}) => {
                 </AreaChart>
             </ResponsiveContainer>
             <BottomInfo> <span>Supply:</span> <span> {formattedNum(supply)} </span></BottomInfo>
+            <div></div>
             <BottomInfo> <span>Market cap:</span> <span> {formattedNum(marketCap)} </span></BottomInfo>
         </SingleTokenItemWrapper>
     )
